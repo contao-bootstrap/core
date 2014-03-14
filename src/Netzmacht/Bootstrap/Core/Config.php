@@ -54,17 +54,18 @@ class Config
 	public function set($key, $value)
 	{
 		$chunks = explode('.', $key);
+		$name	= array_shift($chunks);
 		$config = &$this->config;
 
 		while (($chunk = array_shift($chunks)) !== null) {
-			if (!array_key_exists($chunk, $value)) {
+			if (!array_key_exists($chunk, $config)) {
 				$config[$chunk] = array();
 			}
 
 			$config = &$config[$chunk];
 		}
 
-		$config = $value;
+		$config[$name] = $value;
 
 		return $this;
 	}

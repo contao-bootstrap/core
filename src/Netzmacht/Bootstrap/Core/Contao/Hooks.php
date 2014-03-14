@@ -21,9 +21,9 @@ class Hooks
 
 
 	/**
-	 * @param $eventDispatcher
+	 *
 	 */
-	function __construct($eventDispatcher)
+	function __construct()
 	{
 		$this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
 	}
