@@ -66,4 +66,14 @@ class Bootstrap
 		return Environment::getInstance()->getIcons();
 	}
 
+
+	/**
+	 * @param $name
+	 * @return mixed
+	 */
+	public static function getHelper($name)
+	{
+		return Environment::getInstance()->getHelper($name);
+	}
+
 } 
