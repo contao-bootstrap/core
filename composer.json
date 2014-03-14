@@ -31,7 +31,7 @@
     "extra":{
         "contao": {
             "sources":{
-                "module": "system/modules/bootstrap_core"
+                "module": "system/modules/bootstrap-core"
             }
         }
     }
