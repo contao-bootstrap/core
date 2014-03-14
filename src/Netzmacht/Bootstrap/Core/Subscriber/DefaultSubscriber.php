@@ -69,13 +69,18 @@ class DefaultSubscriber implements EventSubscriberInterface
 		$config   = $event->getConfig();
 		$iconSet  = $config->get('icons.activeIconSet');
 		$template = $config->get(sprintf('icons.icon-sets.%s.template', $iconSet));
-		$path     = $config->get(sprintf('icons.icon-sets.%s.paths', $iconSet));
-		$icons    = include $path;
+		$path     = $config->get(sprintf('icons.icon-sets.%s.path', $iconSet));
 
-		$event
-			->setIcons($icons)
-			->setIconSetName($iconSet)
-			->setTemplate($template);
+		if($iconSet) {
+			if($path) {
+				$icons = include TL_ROOT . '/' . $path;
+				$event->setIcons($icons);
+			}
+
+			$event
+				->setIconSetName($iconSet)
+				->setTemplate($template);
+		}
 	}
 
 
