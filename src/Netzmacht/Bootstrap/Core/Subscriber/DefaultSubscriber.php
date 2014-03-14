@@ -41,7 +41,7 @@ class DefaultSubscriber implements EventSubscriberInterface
 		return array(
 			Events::INITIALZE => array('handleInitialize', 1000),
 			Events::SELECT_ICON_SET => array('selectIconSet', 1000),
-			Events::AUTOLOAD_TEMPLATES => array('loadDynamicTemplates', 1000)
+			//Events::AUTOLOAD_TEMPLATES => array('loadDynamicTemplates', 1000)
 		);
 	}
 
