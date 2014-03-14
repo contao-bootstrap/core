@@ -31,4 +31,45 @@ class Module
 		return $modules;
 	}
 
+
+	/**
+	 * get all templates. A templatePrefix can be defined using eval.templatePrefix
+	 *
+	 * @param $dc
+	 *
+	 * @return array
+	 */
+	public function getTemplates($dc)
+	{
+		$config = array();
+		$prefix = '';
+		$key    = null;
+
+		// MCW compatibility
+		if($dc instanceof \MultiColumnWizard) {
+			$field = $dc->strField;
+			$table = $dc->strTable;
+		}
+		else {
+			$field = $dc->field;
+			$table = $dc->table;
+		}
+
+		if(array_key_exists('eval', $GLOBALS['TL_DCA'][$table]['fields'][$field])) {
+			$config = $GLOBALS['TL_DCA'][$table]['fields'][$field]['eval'];
+		}
+
+		if(array_key_exists('templatePrefix', $config)) {
+			$prefix = $config['templatePrefix'];
+		}
+
+		if(array_key_exists('templateThemeId', $config)) {
+			$key = $config['templateThemeId'];
+		}
+
+		$key = $key == '' ? null : $dc->activeRecord->$key;
+
+		return \Controller::getTemplateGroup($prefix, $key);
+	}
+
 } 
