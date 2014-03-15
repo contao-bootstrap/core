@@ -54,10 +54,10 @@ class Config
 	public function set($key, $value)
 	{
 		$chunks = explode('.', $key);
-		$name	= array_shift($chunks);
+		$name	= array_pop($chunks);
 		$config = &$this->config;
 
-		while (($chunk = array_shift($chunks)) !== null) {
+		foreach($chunks as $chunk) {
 			if (!array_key_exists($chunk, $config)) {
 				$config[$chunk] = array();
 			}
