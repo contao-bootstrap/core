@@ -35,6 +35,16 @@ class Bootstrap
 
 
 	/**
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public static function setConfigVar($key, $value)
+	{
+		static::getConfig()->set($key, $value);
+	}
+
+
+	/**
 	 * Returns the bootstrap configuration
 	 *
 	 * @return Config
