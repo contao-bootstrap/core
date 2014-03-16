@@ -7,3 +7,16 @@ $GLOBALS['TL_HOOKS']['replaceInsertTags']['bootstrap-core'] = array('Netzmacht\B
 // Event subscribers
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\DefaultSubscriber';
 
+// Bootstrap config
+
+$GLOBALS['BOOTSTRAP']['dropdown'] = array
+(
+	// element which is used as download toggler
+	'toggle' => '<b class="caret"></b>',
+
+	'formless' => array
+	(
+		'mod_quicklink',
+		/* 'mod_quicknav' */
+	),
+);
