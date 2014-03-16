@@ -8,7 +8,7 @@ use Netzmacht\Bootstrap\Core\Helper\Icons;
 $container = $GLOBALS['container'];
 
 $container['bootstrap.environment'] = $container->share(function(\Pimple $c) {
-	$config = new Config();
+	$config = new Config($GLOBALS['BOOTSTRAP']);
 	$icons  = new Icons();
 
 	return new Environment($config, $icons, $c['event-dispatcher']);
