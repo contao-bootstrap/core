@@ -93,23 +93,4 @@ class Environment
 		return $this;
 	}
 
-
-	/**
-	 * @param $name
-	 * @return mixed
-	 * @throws
-	 */
-	public function getHelper($name)
-	{
-		/** @var \Pimple $container */
-		$container = $GLOBALS['container'];
-		$key       = 'bootstrap.helper-' . $name;
-
-		if(isset($container[$key])) {
-			return $container[$key];
-		}
-
-		throw new \Exception(sprintf('Unknown helper "%s"', $key));
-	}
-
 } 
