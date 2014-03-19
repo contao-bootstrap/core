@@ -2,14 +2,17 @@
 
 use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Environment;
-use Netzmacht\Bootstrap\Core\Helper\Icons;
+use Netzmacht\Bootstrap\Core\Helper\IconSet;
 
 /** @var \Pimple $container */
 $container = $GLOBALS['container'];
 
 $container['bootstrap.environment'] = $container->share(function(\Pimple $c) {
 	$config = new Config($GLOBALS['BOOTSTRAP']);
-	$icons  = new Icons();
 
-	return new Environment($config, $icons, $c['event-dispatcher']);
+	return new Environment($config, $c['bootstrap.icon-set'], $c['event-dispatcher']);
+});
+
+$container['bootstrap.icon-set'] = $container->share(function(\Pimple $c) {
+	return new IconSet();
 });
