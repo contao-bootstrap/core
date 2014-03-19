@@ -17,12 +17,12 @@ class Wrapper
 	/**
 	 * @var int
 	 */
-	const TRIGGER_CREATE = 1;
+	const TRIGGER_CREATE = 'triggerCreate';
 
 	/**
 	 * @var int
 	 */
-	const TRIGGER_DELETE = 2;
+	const TRIGGER_DELETE = 'triggerDelete';
 
 	/**
 	 * order const ascending
@@ -69,7 +69,8 @@ class Wrapper
 
 
 		// check for existing parent element and try to create it if not existing
-		if($wrapper->isTypeOf($start)) {
+		if(!$wrapper->isTypeOf($start)) {
+
 			if($record->bootstrap_parentId == '') {
 				$parent = $wrapper->findPreviousElement($start);
 
@@ -86,9 +87,8 @@ class Wrapper
 						$set['sorting'] = $end->sorting - 2;
 					}
 
-					// set relation to parent element
-					if(!$wrapper->isTypeOf($start)) {
-						$set['sorting'] = $parent->id;
+					foreach($set as $name => $v) {
+						$record->$name = $v;
 					}
 
 					\Database::getInstance()
@@ -116,7 +116,7 @@ class Wrapper
 		// create separators if possible
 		if(!$wrapper->isTypeOf($sep) &&
 			($this->isTrigger($wrapper->getType(), $sep) ||
-				$this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_DELETE))
+				$this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_CREATE))
 		) {
 			$config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
 
@@ -162,7 +162,7 @@ class Wrapper
 
 		// cereate end element
 		if($wrapper->isTypeOf($start) && $this->isTrigger($wrapper->getType(), $stop)) {
-			$end = $wrapper->countRelatedElements($record, $stop);
+			$end = $wrapper->countRelatedElements($stop);
 
 			if(!$end) {
 				$this->createElement($record, $sorting, $stop);
@@ -183,6 +183,7 @@ class Wrapper
 
 		try {
 			$wrapper = Helper::create($model);
+			$this->wrapper = $wrapper;
 		}
 		catch(\Exception $e) {
 			return;
@@ -276,20 +277,19 @@ class Wrapper
 	 */
 	protected function isTrigger($trigger, $target, $action = Wrapper::TRIGGER_CREATE)
 	{
-		$config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()));
-		$key    = $action == static::TRIGGER_DELETE ? 'triggerDelete' : 'triggerCreate';
+		$config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
 
-		if(isset($config[$trigger][$key]) && $config[$trigger][$key]) {
+		if(array_key_exists($action, $config[$trigger]) && $config[$trigger][$action]) {
 			$key = $action == static::TRIGGER_DELETE ? 'autoDelete' : 'autoCreate';
 
 			// check if count callback is defined
-			if($target == Helper::TYPE_SEPARATOR) {
+			if($target == Helper::TYPE_SEPARATOR && $action == static::TRIGGER_CREATE) {
 				if(!isset($config[$target]['countExisting']) || !isset($config[$target]['countRequired'])) {
 					return false;
 				}
 			}
 
-			return(isset($config[$target][$key]) && $config[$target][$key]);
+			return(array_key_exists($key, $config[$target]) && $config[$target][$key]);
 		}
 
 		return false;

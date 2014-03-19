@@ -69,7 +69,7 @@ class Helper
 	 */
 	public function isTypeOf($type)
 	{
-		return $this->model->type == $type;
+		return $this->getType() == $type;
 	}
 
 

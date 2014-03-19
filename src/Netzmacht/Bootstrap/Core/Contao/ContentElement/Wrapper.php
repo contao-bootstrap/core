@@ -48,7 +48,7 @@ abstract class Wrapper extends \Module
 			return '';
 		}
 
-		$this->wrapperType = $this->objWrapper->getType();
+		$this->wrapperType = $this->wrapper->getType();
 
 		return parent::generate();
 	}
