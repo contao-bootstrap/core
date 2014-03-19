@@ -2,11 +2,7 @@
 
 namespace Netzmacht\Bootstrap\Core;
 
-use Netzmacht\Bootstrap\Core\Event\Events;
-use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
-use Netzmacht\Bootstrap\Core\Event\LoadDynamicTemplatesEvent;
-use Netzmacht\Bootstrap\Core\Event\SelectIconSetEvent;
-use Netzmacht\Bootstrap\Core\Helper\Icons;
+use Netzmacht\Bootstrap\Core\Helper\IconSet;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
@@ -28,20 +24,20 @@ class Environment
 	protected $config;
 
 	/**
-	 * @var Icons
+	 * @var IconSet
 	 */
-	protected $icons;
+	protected $iconSet;
 
 
 	/**
 	 * @param Config $config
-	 * @param Icons $icons
+	 * @param IconSet $iconSet
 	 * @param EventDispatcherInterface $eventDispatcher
 	 */
-	function __construct(Config $config, Icons $icons, EventDispatcherInterface $eventDispatcher)
+	function __construct(Config $config, IconSet $iconSet, EventDispatcherInterface $eventDispatcher)
 	{
 		$this->config          = $config;
-		$this->icons           = $icons;
+		$this->iconSet         = $iconSet;
 		$this->eventDispatcher = $eventDispatcher;
 	}
 
@@ -56,11 +52,11 @@ class Environment
 
 
 	/**
-	 * @return Icons
+	 * @return IconSet
 	 */
-	public function getIcons()
+	public function getIconSet()
 	{
-		return $this->icons;
+		return $this->iconSet;
 	}
 
 

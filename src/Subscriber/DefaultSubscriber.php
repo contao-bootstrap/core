@@ -92,7 +92,7 @@ class DefaultSubscriber implements EventSubscriberInterface
 	public function replaceIconInsertTag(InsertTagEvent $event)
 	{
 		if($event->getTag() == 'icon' || $event->getTag() == 'i') {
-			$icon = Bootstrap::getIcon($event->getParam(0), $event->getParam(1));
+			$icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
 			$event->setHtml($icon);
 		}
 	}

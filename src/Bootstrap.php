@@ -62,18 +62,18 @@ class Bootstrap
 	 * @param null $class
 	 * @return string
 	 */
-	public static function getIcon($icon, $class=null)
+	public static function generateIcon($icon, $class=null)
 	{
-		return static::getIcons()->generateIcon($icon, $class);
+		return static::getIconSet()->generateIcon($icon, $class);
 	}
 
 
 	/**
-	 * @return Helper\Icons
+	 * @return Helper\IconSet
 	 */
-	public static function getIcons()
+	public static function getIconSet()
 	{
-		return Environment::getInstance()->getIcons();
+		return Environment::getInstance()->getIconSet();
 	}
 
 

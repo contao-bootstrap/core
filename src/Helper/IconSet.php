@@ -2,7 +2,7 @@
 
 namespace Netzmacht\Bootstrap\Core\Helper;
 
-class Icons
+class IconSet
 {
 
 	/**

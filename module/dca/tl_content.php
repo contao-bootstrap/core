@@ -27,3 +27,14 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_parentId'] = array
 (
 	'sql'                     => "int(10) unsigned NULL"
 );
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_icon'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_icon'],
+	'exclude'                 => true,
+	'inputType'               => 'icon',
+	'options'                 => \Netzmacht\Bootstrap\Core\Bootstrap::getIcons()->getIcons(),
+	'reference'               => &$GLOBALS['TL_LANG']['tl_content'],
+	'eval'                    => array('tl_class' => 'w50', 'iconTemplate' => \Netzmacht\Bootstrap\Core\Helper\Icons::getIconTemplate()),
+	'sql'                     => "varchar(32) NOT NULL default ''",
+);
