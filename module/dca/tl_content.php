@@ -38,3 +38,35 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_icon'] = array
 	'eval'                    => array('tl_class' => 'w50', 'iconTemplate' => \Netzmacht\Bootstrap\Core\Bootstrap::getIconSet()->getTemplate()),
 	'sql'                     => "varchar(32) NOT NULL default ''",
 );
+
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes'],
+	'exclude'                 => true,
+	'inputType'               => 'multiColumnWizard',
+	'eval'                    => array(
+		'tl_class'=>'clr',
+		'columnFields' => array
+		(
+			'name' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes_name'],
+				'exclude'                 => true,
+				'inputType'               => 'select',
+				'options'                 => $GLOBALS['BOOTSTRAP']['form']['dataAttributes'],
+				'reference'               => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_buttons_types'],
+				'eval'                    => array('style' => 'width: 145px;', 'includeBlankOption' => true),
+			),
+
+			'value' => array
+			(
+				'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes_value'],
+				'exclude'                 => true,
+				'inputType'               => 'text',
+				'eval'                    => array('style' => 'width: 160px', 'allowHtml' => true),
+			),
+		)
+	),
+	'sql' => "blob NULL"
+);
