@@ -74,7 +74,7 @@ class DefaultSubscriber implements EventSubscriberInterface
 		$path     = $config->get(sprintf('icons.icon-sets.%s.path', $iconSet));
 
 		if($iconSet) {
-			if($path) {
+			if($path && file_exists($path)) {
 				$icons = include TL_ROOT . '/' . $path;
 				$event->setIcons($icons);
 			}

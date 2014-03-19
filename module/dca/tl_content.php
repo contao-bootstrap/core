@@ -33,8 +33,8 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_icon'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_icon'],
 	'exclude'                 => true,
 	'inputType'               => 'icon',
-	'options'                 => \Netzmacht\Bootstrap\Core\Bootstrap::getIcons()->getIcons(),
+	'options'                 => \Netzmacht\Bootstrap\Core\Bootstrap::getIconSet()->getIcons(),
 	'reference'               => &$GLOBALS['TL_LANG']['tl_content'],
-	'eval'                    => array('tl_class' => 'w50', 'iconTemplate' => \Netzmacht\Bootstrap\Core\Helper\Icons::getIconTemplate()),
+	'eval'                    => array('tl_class' => 'w50', 'iconTemplate' => \Netzmacht\Bootstrap\Core\Bootstrap::getIconSet()->getTemplate()),
 	'sql'                     => "varchar(32) NOT NULL default ''",
 );
