@@ -14,6 +14,24 @@ $GLOBALS['TL_DCA']['tl_settings']['fields']['bootstrapEnabled'] = array
 	)
 );
 
+$GLOBALS['TL_DCA']['tl_settings']['fields']['bootstrapUseComponentCss'] = array
+(
+	'label'                 => &$GLOBALS['TL_LANG']['tl_config']['bootstrapUseComponentCss'],
+	'inputType'             => 'checkbox',
+	'eval'                  => array(
+		'tl_class'           => 'clr w50',
+	)
+);
+
+$GLOBALS['TL_DCA']['tl_settings']['fields']['bootstrapUseComponentJs'] = array
+(
+	'label'                 => &$GLOBALS['TL_LANG']['tl_config']['bootstrapUseComponentJs'],
+	'inputType'             => 'checkbox',
+	'eval'                  => array(
+		'tl_class'           => 'w50',
+	)
+);
+
 $GLOBALS['TL_DCA']['tl_settings']['fields']['bootstrapIconSet'] = array
 (
 	'label'                 => &$GLOBALS['TL_LANG']['tl_config']['bootstrapIconSet'],

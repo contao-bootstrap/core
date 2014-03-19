@@ -58,6 +58,8 @@ class DefaultSubscriber implements EventSubscriberInterface
 		// set global enabled state to config so that components can access it
 		$config->set('environment.global-enabled', $event->getEnabled());
 		$config->set('icons.active-icon-set', $GLOBALS['TL_CONFIG']['bootstrapIconSet']);
+		$config->set('assets.use-component-js', $GLOBALS['TL_CONFIG']['bootstrapUseComponentJs']);
+		$config->set('assets.use-component-css', $GLOBALS['TL_CONFIG']['bootstrapUseComponentCss']);
 	}
 
 
