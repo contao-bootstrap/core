@@ -80,14 +80,14 @@ class Hooks
 	 */
 	protected function selectIconSet()
 	{
-		$config = Bootstrap::getConfig();
-		$icons  = Bootstrap::getIcons();
+		$config  = Bootstrap::getConfig();
+		$iconSet = Bootstrap::getIconSet();
 
 		// select icon set
 		$event  = new SelectIconSetEvent($config);
 		$this->eventDispatcher->dispatch(Events::SELECT_ICON_SET, $event);
 
-		$icons
+		$iconSet
 			->setIconSetName($event->getIconSetName())
 			->setTemplate($event->getTemplate())
 			->setIcons($event->getIcons());
