@@ -25,5 +25,5 @@ $GLOBALS['BOOTSTRAP']['dropdown'] = array
 
 // Add
 if(TL_MODE == 'BE') {
-	$GLOBALS['TL_CSS']['bootstrap-core'] = 'system/modules/bootstrap-core/assets/css/backend.css|static';
+	$GLOBALS['TL_CSS']['bootstrap-core'] = 'system/modules/bootstrap-core/assets/css/backend.css|all|static';
 }

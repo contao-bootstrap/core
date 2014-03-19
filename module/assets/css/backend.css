@@ -23,7 +23,7 @@
     margin-bottom: 0 !important;
 }
 
-.bootstrapMultiColumnWizard.hideSubLabels table table thead {
+.bootstrapMultiColumnWizard.hideSubLabels table table thead{
     display: none;
 }
 
@@ -62,5 +62,5 @@ input[readonly] {
     background-position: left center;
     background-repeat: no-repeat;
     margin-left: 15px;
-    background-image: url('../img/icon.png');
+    /*background-image: url('../img/icon.png');*/
 }
