@@ -35,7 +35,7 @@ class Hooks
 	 * @param bool $cache
 	 * @return string
 	 */
-	public function replaceInsertTags($tag, $cache=true)
+	public function replaceInsertTags($tag, $cache = true)
 	{
 		$params = explode('::', $tag);
 		$tag    = array_shift($params);
@@ -43,7 +43,7 @@ class Hooks
 
 		$this->eventDispatcher->dispatch(Events::REPLACE_INSERT_TAGS, $event);
 
-		return $event->getHtml() ?: false;
+		return $event->getHtml() ? : false;
 	}
 
 
@@ -54,52 +54,52 @@ class Hooks
 	{
 		$this->initializeEnvironment();
 
-        // initialize environment will enable bootstrap
-        if(Bootstrap::isEnabled()) {
-            $this->loadDynamicTemplates();
-            $this->selectIconSet();
-        }
+		// initialize environment will enable bootstrap
+		if(Bootstrap::isEnabled()) {
+			$this->loadDynamicTemplates();
+			$this->selectIconSet();
+		}
 	}
 
 
-    /**
-     * @param $buffer
-     * @param $templateName
-     * @return mixed
-     */
-    public function rewriteCssClasses($buffer, $templateName)
-    {
-        if(!Bootstrap::isEnabled()) {
-            return $buffer;
-        }
+	/**
+	 * @param $buffer
+	 * @param $templateName
+	 * @return mixed
+	 */
+	public function rewriteCssClasses($buffer, $templateName)
+	{
+		if(!Bootstrap::isEnabled()) {
+			return $buffer;
+		}
 
-        $event  = new RewriteCssClassesEvent($templateName, TL_MODE);
-        $this->eventDispatcher->dispatch(Events::REWRITE_CSS_CLASSES, $event);
+		$event = new RewriteCssClassesEvent($templateName, TL_MODE);
+		$this->eventDispatcher->dispatch(Events::REWRITE_CSS_CLASSES, $event);
 
-        $rewrite = $event->getClasses();
-        $buffer  = preg_replace_callback(
-            '~class="([^"]+)"~',
-            function ($matches) use($rewrite) {
-                $classes = explode(' ', $matches[1]);
-                $classes = array_filter($classes);
-                $classes = array_map(function($class) use($rewrite) {
-                    if(isset($rewrite[$class])) {
-                        return $rewrite[$class];
-                    }
+		$rewrite = $event->getClasses();
+		$buffer  = preg_replace_callback(
+			'~class="([^"]+)"~',
+			function ($matches) use ($rewrite) {
+				$classes = explode(' ', $matches[1]);
+				$classes = array_filter($classes);
+				$classes = array_map(function ($class) use ($rewrite) {
+					if(isset($rewrite[$class])) {
+						return $rewrite[$class];
+					}
 
-                    return $class;
-                }, $classes);
+					return $class;
+				}, $classes);
 
-                return sprintf('class="%s"', implode(' ', $classes));
-            },
-            $buffer
-        );
+				return sprintf('class="%s"', implode(' ', $classes));
+			},
+			$buffer
+		);
 
-        return $buffer;
-    }
+		return $buffer;
+	}
 
 
-    /**
+	/**
 	 * Initialize bootstrap environment
 	 */
 	protected function initializeEnvironment()
@@ -117,10 +117,10 @@ class Hooks
 	}
 
 
-    /**
-     * select an icon se
-     */
-    protected function selectIconSet()
+	/**
+	 * select an icon se
+	 */
+	protected function selectIconSet()
 	{
 		$config  = Bootstrap::getConfig();
 		$iconSet = Bootstrap::getIconSet();
