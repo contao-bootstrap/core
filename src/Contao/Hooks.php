@@ -6,8 +6,9 @@ use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Environment;
 use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
-use Netzmacht\Bootstrap\Core\Event\InsertTagEvent;
+use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
 use Netzmacht\Bootstrap\Core\Event\LoadDynamicTemplatesEvent;
+use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
 use Netzmacht\Bootstrap\Core\Event\SelectIconSetEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -38,8 +39,8 @@ class Hooks
 	{
 		$params = explode('::', $tag);
 		$tag    = array_shift($params);
+		$event  = new ReplaceInsertTagEvent($tag, $params, $cache);
 
-		$event = new InsertTagEvent($tag, $params, $cache);
 		$this->eventDispatcher->dispatch(Events::REPLACE_INSERT_TAGS, $event);
 
 		return $event->getHtml() ?: false;
@@ -57,7 +58,41 @@ class Hooks
 	}
 
 
-	/**
+    /**
+     * @param $buffer
+     * @param $templateName
+     * @return mixed
+     */
+    public function rewriteCssClasses($buffer, $templateName)
+    {
+        $event  = new RewriteCssClassesEvent($templateName, TL_MODE);
+        $this->eventDispatcher->dispatch(Events::REWRITE_CSS_CLASSES, $event);
+
+        $rewrite = $event->getClasses();
+
+        $buffer  = preg_replace_callback(
+            '~class="([^"]+)"~',
+            function ($matches) use($rewrite) {
+                $classes = explode(' ', $matches[1]);
+                $classes = array_filter($classes);
+                $classes = array_map(function($class) use($rewrite) {
+                    if(isset($rewrite[$class])) {
+                        return $rewrite[$class];
+                    }
+
+                    return $class;
+                }, $classes);
+
+                return sprintf('class="%s"', implode(' ', $classes));
+            },
+            $buffer
+        );
+
+        return $buffer;
+    }
+
+
+    /**
 	 * Initialize bootstrap environment
 	 */
 	protected function initializeEnvironment()
@@ -75,16 +110,15 @@ class Hooks
 	}
 
 
-	/**
-	 *
-	 */
-	protected function selectIconSet()
+    /**
+     * select an icon se
+     */
+    protected function selectIconSet()
 	{
 		$config  = Bootstrap::getConfig();
 		$iconSet = Bootstrap::getIconSet();
+		$event   = new SelectIconSetEvent($config);
 
-		// select icon set
-		$event  = new SelectIconSetEvent($config);
 		$this->eventDispatcher->dispatch(Events::SELECT_ICON_SET, $event);
 
 		$iconSet

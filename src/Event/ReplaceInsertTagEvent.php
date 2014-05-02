@@ -4,7 +4,7 @@ namespace Netzmacht\Bootstrap\Core\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class InsertTagEvent extends Event
+class ReplaceInsertTagEvent extends Event
 {
 
 	/**

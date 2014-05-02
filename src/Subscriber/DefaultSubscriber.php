@@ -5,7 +5,8 @@ namespace Netzmacht\Bootstrap\Core\Subscriber;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
-use Netzmacht\Bootstrap\Core\Event\InsertTagEvent;
+use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
+use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
 use Netzmacht\Bootstrap\Core\Event\SelectIconSetEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -41,6 +42,7 @@ class DefaultSubscriber implements EventSubscriberInterface
 		return array(
 			Events::INITIALZE => array('handleInitialize', 1000),
 			Events::SELECT_ICON_SET => array('selectIconSet', 1000),
+            Events::REWRITE_CSS_CLASSES => array('rewriteCssClasses', 1000),
 			//Events::AUTOLOAD_TEMPLATES => array('loadDynamicTemplates', 1000)
 		);
 	}
@@ -87,14 +89,24 @@ class DefaultSubscriber implements EventSubscriberInterface
 
 
 	/**
-	 * @param \Netzmacht\Bootstrap\Core\Event\InsertTagEvent $event
+	 * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent $event
 	 */
-	public function replaceIconInsertTag(InsertTagEvent $event)
+	public function replaceIconInsertTag(ReplaceInsertTagEvent $event)
 	{
 		if($event->getTag() == 'icon' || $event->getTag() == 'i') {
 			$icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
 			$event->setHtml($icon);
 		}
 	}
+
+
+    /**
+     * @param RewriteCssClassesEvent $event
+     */
+    public function rewriteCssClasses(RewriteCssClassesEvent $event)
+    {
+        $config = Bootstrap::getConfigVar('templates.rewrite-css-classes', array());
+        $event->addClasses($config);
+    }
 
 }

@@ -18,4 +18,6 @@ class Events
 	const AUTOLOAD_TEMPLATES = 'bootstrap.autoload-templates';
 
 	const REPLACE_INSERT_TAGS = 'bootstrap.replace-insert-tags';
+
+    const REWRITE_CSS_CLASSES = 'bootstrap.rewrite-css-classes';
 } 
