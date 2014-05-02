@@ -53,8 +53,12 @@ class Hooks
 	public function initializeSystem()
 	{
 		$this->initializeEnvironment();
-		$this->loadDynamicTemplates();
-		$this->selectIconSet();
+
+        // initialize environment will enable bootstrap
+        if(Bootstrap::isEnabled()) {
+            $this->loadDynamicTemplates();
+            $this->selectIconSet();
+        }
 	}
 
 
@@ -65,11 +69,14 @@ class Hooks
      */
     public function rewriteCssClasses($buffer, $templateName)
     {
+        if(!Bootstrap::isEnabled()) {
+            return $buffer;
+        }
+
         $event  = new RewriteCssClassesEvent($templateName, TL_MODE);
         $this->eventDispatcher->dispatch(Events::REWRITE_CSS_CLASSES, $event);
 
         $rewrite = $event->getClasses();
-
         $buffer  = preg_replace_callback(
             '~class="([^"]+)"~',
             function ($matches) use($rewrite) {
