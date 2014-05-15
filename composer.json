@@ -25,6 +25,9 @@
         "contao-community-alliance/event-dispatcher": "~1.0",
         "contao-community-alliance/dependency-container": "~1.4"
     },
+    "conflict": {
+        "netzmacht/contao-bootstrap": "*"
+    },
     "autoload": {
         "psr-4": { "Netzmacht\\Bootstrap\\Core\\": "src/" }
     },
