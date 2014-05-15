@@ -71,12 +71,12 @@ class DefaultSubscriber implements EventSubscriberInterface
 	public function selectIconSet(SelectIconSetEvent $event)
 	{
 		$config   = $event->getConfig();
-		$iconSet  = $config->get('icons.activeIconSet');
+		$iconSet  = $config->get('icons.active-icon-set');
 		$template = $config->get(sprintf('icons.icon-sets.%s.template', $iconSet));
 		$path     = $config->get(sprintf('icons.icon-sets.%s.path', $iconSet));
 
 		if($iconSet) {
-			if($path && file_exists($path)) {
+			if($path && file_exists(TL_ROOT . '/' . $path)) {
 				$icons = include TL_ROOT . '/' . $path;
 				$event->setIcons($icons);
 			}
