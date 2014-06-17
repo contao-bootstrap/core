@@ -1,6 +1,6 @@
 <?php
 
-namespace Netzmacht\Bootstrap\Core\Helper;
+namespace Netzmacht\Bootstrap\Core;
 
 class IconSet
 {

@@ -2,7 +2,7 @@
 
 use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Environment;
-use Netzmacht\Bootstrap\Core\Helper\IconSet;
+use Netzmacht\Bootstrap\Core\IconSet;
 
 /** @var \Pimple $container */
 $container = $GLOBALS['container'];

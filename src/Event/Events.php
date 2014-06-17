@@ -20,4 +20,4 @@ class Events
 	const REPLACE_INSERT_TAGS = 'bootstrap.replace-insert-tags';
 
     const REWRITE_CSS_CLASSES = 'bootstrap.rewrite-css-classes';
-} 
+}

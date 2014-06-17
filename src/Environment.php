@@ -2,7 +2,7 @@
 
 namespace Netzmacht\Bootstrap\Core;
 
-use Netzmacht\Bootstrap\Core\Helper\IconSet;
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 

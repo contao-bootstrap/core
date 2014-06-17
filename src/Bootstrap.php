@@ -69,44 +69,11 @@ class Bootstrap
 
 
 	/**
-	 * @return Helper\IconSet
+	 * @return \Netzmacht\Bootstrap\Core\IconSet
 	 */
 	public static function getIconSet()
 	{
 		return Environment::getInstance()->getIconSet();
-	}
-
-
-	/**
-	 * @param $file
-	 * @param null $identifier
-	 */
-	public static function addComponentCss($file, $identifier=null)
-	{
-		if(static::getConfigVar('assets.use-component-css')) {
-			if($identifier) {
-				$GLOBALS['TL_CSS'][$identifier] = $file;
-			}
-			else {
-				$GLOBALS['TL_CSS'][] = $file;
-			}
-		}
-	}
-
-	/**
-	 * @param $file
-	 * @param null $identifier
-	 */
-	public static function addComponentJs($file, $identifier=null)
-	{
-		if(static::getConfigVar('assets.use-component-js')) {
-			if($identifier) {
-				$GLOBALS['TL_JAVASCRIPT'][$identifier] = $file;
-			}
-			else {
-				$GLOBALS['TL_JAVASCRIPT'][] = $file;
-			}
-		}
 	}
 
 } 
