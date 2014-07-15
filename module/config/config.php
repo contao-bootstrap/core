@@ -7,6 +7,7 @@ $GLOBALS['TL_HOOKS']['parseFrontendTemplate']['bootstrap-core'] = array('Netzmac
 
 // Event subscribers
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\DefaultSubscriber';
+$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\AssetsCollector';
 
 // Add
 if(TL_MODE == 'BE') {
