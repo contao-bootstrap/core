@@ -8,7 +8,6 @@ use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
 use Netzmacht\Bootstrap\Core\Event\LoadDynamicTemplatesEvent;
-use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
 use Netzmacht\Bootstrap\Core\Event\SelectIconSetEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

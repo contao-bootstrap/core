@@ -15,4 +15,6 @@ if(TL_MODE == 'BE') {
 	$GLOBALS['TL_CSS']['bootstrap-core'] = 'system/modules/bootstrap-core/assets/css/backend.css|all|static';
 }
 
-require_once TL_ROOT . '/system/modules/bootstrap-core/config/bootstrap.php';
+// Bootstrap config
+$GLOBALS['BOOTSTRAP']['dropdown']['toggle']     = '<b class="caret"></b>';
+$GLOBALS['BOOTSTRAP']['dropdown']['formless'][] = 'mod_quicklink';
