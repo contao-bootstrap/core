@@ -1,5 +1,5 @@
 {
-    "name":"netzmacht/contao-bootstrap-core",
+    "name":"contao-bootstrap/core",
     "description":"Frontend module for bootstrap navbar",
     "keywords":["bootstrap", "navbar", "component", "navigation", "contao"],
     "type":"contao-module",
