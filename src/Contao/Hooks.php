@@ -63,43 +63,6 @@ class Hooks
 
 
 	/**
-	 * @param $buffer
-	 * @param $templateName
-	 * @return mixed
-	 */
-	public function rewriteCssClasses($buffer, $templateName)
-	{
-		if(!Bootstrap::isEnabled()) {
-			return $buffer;
-		}
-
-		$event = new RewriteCssClassesEvent($templateName, TL_MODE);
-		$this->eventDispatcher->dispatch(Events::REWRITE_CSS_CLASSES, $event);
-
-		$rewrite = $event->getClasses();
-		$buffer  = preg_replace_callback(
-			'~class="([^"]+)"~',
-			function ($matches) use ($rewrite) {
-				$classes = explode(' ', $matches[1]);
-				$classes = array_filter($classes);
-				$classes = array_map(function ($class) use ($rewrite) {
-					if(isset($rewrite[$class])) {
-						return $rewrite[$class];
-					}
-
-					return $class;
-				}, $classes);
-
-				return sprintf('class="%s"', implode(' ', $classes));
-			},
-			$buffer
-		);
-
-		return $buffer;
-	}
-
-
-	/**
 	 * Initialize bootstrap environment
 	 */
 	protected function initializeEnvironment()

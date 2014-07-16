@@ -1,9 +1,10 @@
 <?php
 
 // Hooks
-$GLOBALS['TL_HOOKS']['initializeSystem']['bootstrap-core']      = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'initializeSystem');
-$GLOBALS['TL_HOOKS']['replaceInsertTags']['bootstrap-core']     = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'replaceInsertTags');
-$GLOBALS['TL_HOOKS']['parseFrontendTemplate']['bootstrap-core'] = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'rewriteCssClasses');
+$GLOBALS['TL_HOOKS']['initializeSystem'][]      = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'initializeSystem');
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][]     = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'replaceInsertTags');
+$GLOBALS['TL_HOOKS']['parseTemplate'][]         = array('Netzmacht\Bootstrap\Core\Contao\Template\Modifier', 'execute');
+$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array('Netzmacht\Bootstrap\Core\Contao\Template\Modifier', 'parse');
 
 // Event subscribers
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\DefaultSubscriber';
