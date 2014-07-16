@@ -31,10 +31,8 @@ class Modifier
 			return;
 		}
 
-
-
 		foreach((array) Bootstrap::getConfigVar('templates', 'modifiers') as $config) {
-			if($config['disabled'] || !$this->isTemplateAffected($template->getName(), $config['templates'])) {
+			if($config['disabled'] || !$this->isTemplateAffected($template->getName(), (array) $config['templates'])) {
 				continue;
 			}
 
@@ -68,7 +66,7 @@ class Modifier
 
 		foreach((array) Bootstrap::getConfigVar('templates', 'parsers') as $config)
 		{
-			if($config['disabled'] || !$this->isTemplateAffected($templateName, $config['templates'])) {
+			if($config['disabled'] || !$this->isTemplateAffected($templateName, (array) $config['templates'])) {
 				continue;
 			}
 
