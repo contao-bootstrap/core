@@ -32,6 +32,7 @@ class AssetsCollector implements EventSubscriberInterface
 		);
 	}
 
+
 	/**
 	 * @param CollectAssetsEvent $event
 	 */
