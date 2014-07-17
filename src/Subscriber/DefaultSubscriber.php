@@ -41,9 +41,23 @@ class DefaultSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
+			Events::INITIALZE           => array('importContaoSettings', 1000),
 			Events::SELECT_ICON_SET     => array('selectIconSet', 1000),
             Events::REWRITE_CSS_CLASSES => array('rewriteCssClasses', 1000),
 		);
+	}
+
+
+	/**
+	 * @param InitializeEvent $event
+	 */
+	public function importContaoSettings(InitializeEvent $event)
+	{
+		$config = $event->getConfig();
+
+		if($GLOBALS['TL_CONFIG']['bootstrapIconSet']) {
+			$config->set('icons.active', $GLOBALS['TL_CONFIG']['bootstrapIconSet']);
+		}
 	}
 
 

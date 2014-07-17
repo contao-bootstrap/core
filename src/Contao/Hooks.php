@@ -52,12 +52,7 @@ class Hooks
 	public function initializeSystem()
 	{
 		$this->initializeEnvironment();
-
-		// initialize environment will enable bootstrap
-		if(Bootstrap::isEnabled()) {
-			$this->loadDynamicTemplates();
-			$this->selectIconSet();
-		}
+		$this->selectIconSet();
 	}
 
 
@@ -73,9 +68,6 @@ class Hooks
 		// initialize event
 		$event = new InitializeEvent($config, $enabled);
 		$this->eventDispatcher->dispatch(Events::INITIALZE, $event);
-
-		// pass enabled state back to environment
-		//$environment->setEnabled($event->getEnabled());
 	}
 
 
