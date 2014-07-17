@@ -12,7 +12,7 @@ class Settings
 	 */
 	public function getIconSets()
 	{
-		$sets = Bootstrap::getConfigVar('icons.icon-sets', array());
+		$sets = Bootstrap::getConfigVar('icons.sets', array());
 		$sets = array_keys($sets);
 		sort($sets);
 

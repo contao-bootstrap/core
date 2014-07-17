@@ -75,7 +75,20 @@ class Hooks
 		$this->eventDispatcher->dispatch(Events::INITIALZE, $event);
 
 		// pass enabled state back to environment
-		$environment->setEnabled($event->getEnabled());
+		//$environment->setEnabled($event->getEnabled());
+	}
+
+
+	/**
+	 *
+	 *
+	 * @param \PageModel   $page
+	 * @param \LayoutModel $layout
+	 */
+	public function initializeLayout($page, \LayoutModel $layout)
+	{
+		$environment = Environment::getInstance();
+		$environment->setEnabled($layout->layoutType == 'bootstrap');
 	}
 
 
