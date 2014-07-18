@@ -8,7 +8,6 @@ use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
 use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
-use Netzmacht\Bootstrap\Core\Event\SelectIconSetEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -62,38 +61,15 @@ class DefaultSubscriber implements EventSubscriberInterface
 
 
 	/**
-	 * @param SelectIconSetEvent $event
-	 */
-	public function selectIconSet(SelectIconSetEvent $event)
-	{
-		$config   = $event->getConfig();
-		$iconSet  = $config->get('icons.active');
-		$template = $config->get(sprintf('icons.sets.%s.template', $iconSet));
-		$path     = $config->get(sprintf('icons.sets.%s.path', $iconSet));
-
-
-
-		if($iconSet) {
-			if($path && file_exists(TL_ROOT . '/' . $path)) {
-				$icons = include TL_ROOT . '/' . $path;
-				$event->setIcons($icons);
-			}
-
-			$event
-				->setIconSetName($iconSet)
-				->setTemplate($template);
-		}
-	}
-
-
-	/**
 	 * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent $event
 	 */
 	public function replaceIconInsertTag(ReplaceInsertTagEvent $event)
 	{
 		if($event->getTag() == 'icon' || $event->getTag() == 'i') {
 			$icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
+
 			$event->setHtml($icon);
+			$event->stopPropagation();
 		}
 	}
 

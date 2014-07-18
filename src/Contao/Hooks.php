@@ -89,16 +89,21 @@ class Hooks
 	 */
 	protected function selectIconSet()
 	{
-		$config  = Bootstrap::getConfig();
-		$iconSet = Bootstrap::getIconSet();
-		$event   = new SelectIconSetEvent($config);
+		$config   = Bootstrap::getConfig();
+		$iconSet  = Bootstrap::getIconSet();
+		$active   = $config->get('icons.active');
+		$template = $config->get(sprintf('icons.sets.%s.template', $active));
+		$path     = $config->get(sprintf('icons.sets.%s.path', $active));
 
-		$this->eventDispatcher->dispatch(Events::SELECT_ICON_SET, $event);
-
-		$iconSet
-			->setIconSetName($event->getIconSetName())
-			->setTemplate($event->getTemplate())
-			->setIcons($event->getIcons());
+		if($active) {
+			if($path && file_exists(TL_ROOT . '/' . $path)) {
+				$icons = include TL_ROOT . '/' . $path;
+				$iconSet
+					->setIconSetName($active)
+					->setIcons($icons)
+					->setTemplate($template);
+			}
+		}
 	}
 
 
