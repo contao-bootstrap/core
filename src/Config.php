@@ -18,9 +18,9 @@ class Config
 	/**
 	 * @param array $config
 	 */
-	function __construct(array $config=array())
+	function __construct(array &$config)
 	{
-		$this->config = $config;
+		$this->config = &$config;
 	}
 
 
