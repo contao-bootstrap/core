@@ -6,7 +6,8 @@ use Contao\LayoutModel;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
-use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
+use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
+use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -40,9 +41,8 @@ class DefaultSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			Events::INITIALZE           => array('importContaoSettings', 1000),
-			Events::SELECT_ICON_SET     => array('selectIconSet', 1000),
-            Events::REWRITE_CSS_CLASSES => array('rewriteCssClasses', 1000),
+			InitializeEnvironmentEvent::NAME => array('importContaoSettings', 1000),
+			ReplaceInsertTagsEvent::NAME     => 'replaceIconInsertTag',
 		);
 	}
 
@@ -52,7 +52,7 @@ class DefaultSubscriber implements EventSubscriberInterface
 	 */
 	public function importContaoSettings(InitializeEnvironmentEvent $event)
 	{
-		$config = $event->getConfig();
+		$config = $event->getEnvironment()->getConfig();
 
 		if($GLOBALS['TL_CONFIG']['bootstrapIconSet']) {
 			$config->set('icons.active', $GLOBALS['TL_CONFIG']['bootstrapIconSet']);
@@ -61,9 +61,9 @@ class DefaultSubscriber implements EventSubscriberInterface
 
 
 	/**
-	 * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent $event
+	 * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent $event
 	 */
-	public function replaceIconInsertTag(ReplaceInsertTagEvent $event)
+	public function replaceIconInsertTag(ReplaceInsertTagsEvent $event)
 	{
 		if($event->getTag() == 'icon' || $event->getTag() == 'i') {
 			$icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
@@ -72,15 +72,5 @@ class DefaultSubscriber implements EventSubscriberInterface
 			$event->stopPropagation();
 		}
 	}
-
-
-    /**
-     * @param RewriteCssClassesEvent $event
-     */
-    public function rewriteCssClasses(RewriteCssClassesEvent $event)
-    {
-        $config = Bootstrap::getConfigVar('templates.rewrite-css-classes', array());
-        $event->addClasses($config);
-    }
 
 }

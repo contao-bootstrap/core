@@ -2,67 +2,34 @@
 
 namespace Netzmacht\Bootstrap\Core\Event;
 
-use Netzmacht\Bootstrap\Core\Config;
+use Netzmacht\Bootstrap\Core\Environment;
 use Symfony\Component\EventDispatcher\Event;
 
 final class InitializeEnvironmentEvent extends Event
 {
+	const NAME = 'bootstrap.initialize-environment';
 
 	/**
-	 * @var Config
+	 * @var Environment
 	 */
-	protected $config;
-
-	/**
-	 * @var bool
-	 */
-	protected $enabled;
+	protected $environment;
 
 
 	/**
-	 * @param $config
-	 * @param $enabled
+	 * @param Environment $environment
 	 */
-	function __construct(Config $config, $enabled)
+	function __construct(Environment $environment)
 	{
-		$this->config  = $config;
-		$this->enabled = $enabled;
+		$this->environment  = $environment;
 	}
 
 
 	/**
-	 * @param \Netzmacht\Bootstrap\Core\Config $config
+	 * @return Environment
 	 */
-	public function setConfig($config)
+	public function getEnvironment()
 	{
-		$this->config = $config;
-	}
-
-
-	/**
-	 * @return \Netzmacht\Bootstrap\Core\Config
-	 */
-	public function getConfig()
-	{
-		return $this->config;
-	}
-
-
-	/**
-	 * @param boolean $enabled
-	 */
-	public function setEnabled($enabled)
-	{
-		$this->enabled = $enabled;
-	}
-
-
-	/**
-	 * @return boolean
-	 */
-	public function getEnabled()
-	{
-		return $this->enabled;
+		return $this->environment;
 	}
 
 } 

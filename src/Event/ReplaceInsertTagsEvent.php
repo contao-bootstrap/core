@@ -4,8 +4,9 @@ namespace Netzmacht\Bootstrap\Core\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class ReplaceInsertTagEvent extends Event
+class ReplaceInsertTagsEvent extends Event
 {
+	const NAME = 'bootstrap.replace-insert-tags';
 
 	/**
 	 * @var string

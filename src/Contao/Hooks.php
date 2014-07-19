@@ -7,8 +7,7 @@ use Netzmacht\Bootstrap\Core\Environment;
 use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
-use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
-use Netzmacht\Bootstrap\Core\Event\LoadDynamicTemplatesEvent;
+use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Hooks
@@ -38,9 +37,9 @@ class Hooks
 	{
 		$params = explode('::', $tag);
 		$tag    = array_shift($params);
-		$event  = new ReplaceInsertTagEvent($tag, $params, $cache);
+		$event  = new ReplaceInsertTagsEvent($tag, $params, $cache);
 
-		$this->eventDispatcher->dispatch(Events::REPLACE_INSERT_TAGS, $event);
+		$this->eventDispatcher->dispatch($event::NAME, $event);
 
 		return $event->getHtml() ? : false;
 	}
@@ -62,12 +61,9 @@ class Hooks
 	protected function initializeEnvironment()
 	{
 		$environment = Environment::getInstance();
-		$config      = $environment->getConfig();
-		$enabled     = $environment->isEnabled();
 
-		// initialize event
-		$event = new InitializeEnvironmentEvent($config, $enabled);
-		$this->eventDispatcher->dispatch(Events::INITIALZE, $event);
+		$event = new InitializeEnvironmentEvent($environment);
+		$this->eventDispatcher->dispatch($event::NAME, $event);
 	}
 
 
