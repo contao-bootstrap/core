@@ -76,4 +76,13 @@ class Bootstrap
 		return Environment::getInstance()->getIconSet();
 	}
 
+
+	/**
+	 * @return \LayoutModel|null
+	 */
+	public static function getPageLayout()
+	{
+		return Environment::getInstance()->getLayout();
+	}
+
 } 

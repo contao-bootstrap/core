@@ -4,18 +4,16 @@ namespace Netzmacht\Bootstrap\Core\Subscriber;
 
 use Contao\LayoutModel;
 use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
-use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
-use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 
 /**
  * Class DefaultSubscriber
  * @package Netzmacht\Bootstrap\Subscriber
  */
-class DefaultSubscriber implements EventSubscriberInterface
+class CoreSubscriber implements EventSubscriberInterface
 {
 
 	/**

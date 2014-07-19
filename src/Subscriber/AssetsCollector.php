@@ -16,6 +16,11 @@ use Netzmacht\ThemePlusImporter\Event\CollectAssetsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
+/**
+ * Class AssetsCollector collects assets which can be imported using the Theme+ importer
+ *
+ * @package Netzmacht\Bootstrap\Core\Subscriber
+ */
 class AssetsCollector implements EventSubscriberInterface
 {
 
