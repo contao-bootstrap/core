@@ -5,10 +5,10 @@ namespace Netzmacht\Bootstrap\Core\Contao;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Environment;
 use Netzmacht\Bootstrap\Core\Event\Events;
-use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
+use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
+use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
 use Netzmacht\Bootstrap\Core\Event\LoadDynamicTemplatesEvent;
-use Netzmacht\Bootstrap\Core\Event\SelectIconSetEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Hooks
@@ -66,26 +66,30 @@ class Hooks
 		$enabled     = $environment->isEnabled();
 
 		// initialize event
-		$event = new InitializeEvent($config, $enabled);
+		$event = new InitializeEnvironmentEvent($config, $enabled);
 		$this->eventDispatcher->dispatch(Events::INITIALZE, $event);
 	}
 
 
 	/**
-	 *
+	 * Initialize Layout
 	 *
 	 * @param \PageModel   $page
 	 * @param \LayoutModel $layout
 	 */
-	public function initializeLayout($page, \LayoutModel $layout)
+	public function initializeLayout(\PageModel $page, \LayoutModel $layout)
 	{
 		$environment = Environment::getInstance();
+		$environment->setLayout($layout);
 		$environment->setEnabled($layout->layoutType == 'bootstrap');
+
+		$event = new InitializeLayoutEvent($environment, $layout, $page);
+		$this->eventDispatcher->dispatch($event::NAME, $event);
 	}
 
 
 	/**
-	 * select an icon se
+	 * select an icon set
 	 */
 	protected function selectIconSet()
 	{

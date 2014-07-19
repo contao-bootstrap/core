@@ -28,6 +28,11 @@ class Environment
 	 */
 	protected $iconSet;
 
+	/**
+	 * @var \LayoutModel
+	 */
+	private $layout;
+
 
 	/**
 	 * @param Config $config
@@ -87,6 +92,22 @@ class Environment
 		$this->enabled = $enabled;
 
 		return $this;
+	}
+
+	/**
+	 * @param \LayoutModel $layout
+	 */
+	public function setLayout(\LayoutModel $layout)
+	{
+		$this->layout = $layout;
+	}
+
+	/**
+	 * @return \LayoutModel
+	 */
+	public function getLayout()
+	{
+		return $this->layout;
 	}
 
 } 

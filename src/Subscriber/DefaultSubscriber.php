@@ -5,7 +5,7 @@ namespace Netzmacht\Bootstrap\Core\Subscriber;
 use Contao\LayoutModel;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Event\Events;
-use Netzmacht\Bootstrap\Core\Event\InitializeEvent;
+use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagEvent;
 use Netzmacht\Bootstrap\Core\Event\RewriteCssClassesEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -48,9 +48,9 @@ class DefaultSubscriber implements EventSubscriberInterface
 
 
 	/**
-	 * @param InitializeEvent $event
+	 * @param InitializeEnvironmentEvent $event
 	 */
-	public function importContaoSettings(InitializeEvent $event)
+	public function importContaoSettings(InitializeEnvironmentEvent $event)
 	{
 		$config = $event->getConfig();
 

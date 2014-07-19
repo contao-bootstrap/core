@@ -5,7 +5,7 @@ namespace Netzmacht\Bootstrap\Core\Event;
 use Netzmacht\Bootstrap\Core\Config;
 use Symfony\Component\EventDispatcher\Event;
 
-class InitializeEvent extends Event
+final class InitializeEnvironmentEvent extends Event
 {
 
 	/**
