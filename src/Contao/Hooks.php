@@ -110,20 +110,4 @@ class Hooks
 		}
 	}
 
-
-	/**
-	 * Load dynamic templates
-	 */
-	protected function loadDynamicTemplates()
-	{
-		$environment = Environment::getInstance();
-		$config      = $environment->getConfig();
-
-		// load dynamic templates
-		$event = new LoadDynamicTemplatesEvent($config);
-		$this->eventDispatcher->dispatch(Events::AUTOLOAD_TEMPLATES, $event);
-
-		\TemplateLoader::addFiles($event->getTemplates()->getArrayCopy());
-	}
-
 } 
