@@ -4,7 +4,6 @@ namespace Netzmacht\Bootstrap\Core\Contao;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Environment;
-use Netzmacht\Bootstrap\Core\Event\Events;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
@@ -18,13 +17,19 @@ class Hooks
 	 */
 	protected $eventDispatcher;
 
+	/**
+	 * @var Environment
+	 */
+	protected $environment;
+
 
 	/**
-	 *
+	 * Construct
 	 */
 	function __construct()
 	{
 		$this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+		$this->environment     = $GLOBALS['container']['bootstrap.environment'];
 	}
 
 
@@ -60,9 +65,7 @@ class Hooks
 	 */
 	protected function initializeEnvironment()
 	{
-		$environment = Environment::getInstance();
-
-		$event = new InitializeEnvironmentEvent($environment);
+		$event = new InitializeEnvironmentEvent($this->environment);
 		$this->eventDispatcher->dispatch($event::NAME, $event);
 	}
 
@@ -75,7 +78,7 @@ class Hooks
 	 */
 	public function initializeLayout(\PageModel $page, \LayoutModel $layout)
 	{
-		$environment = Environment::getInstance();
+		$environment = $this->environment;
 		$environment->setLayout($layout);
 		$environment->setEnabled($layout->layoutType == 'bootstrap');
 
