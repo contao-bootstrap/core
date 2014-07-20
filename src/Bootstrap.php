@@ -87,10 +87,11 @@ class Bootstrap
 		return static::getEnvironment()->getLayout();
 	}
 
+
 	/**
 	 * @return \Netzmacht\Bootstrap\Core\Environment
 	 */
-	private static function getEnvironment()
+	public static function getEnvironment()
 	{
 		if(!self::$environment) {
 			self::$environment = $GLOBALS['container']['bootstrap.environment'];
