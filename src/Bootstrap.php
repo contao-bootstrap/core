@@ -2,8 +2,6 @@
 
 namespace Netzmacht\Bootstrap\Core;
 
-use Netzmacht\Bootstrap\Core\Helper;
-
 /**
  * Class Bootstrap provides access to core bootstrap component module
  *
@@ -11,6 +9,10 @@ use Netzmacht\Bootstrap\Core\Helper;
  */
 class Bootstrap
 {
+	/**
+	 * @var Environment
+	 */
+	private static $environment;
 
 	/**
 	 * Returns true if Bootstrap is enabled
@@ -19,7 +21,7 @@ class Bootstrap
 	 */
 	public static function isEnabled()
 	{
-		return Environment::getInstance()->isEnabled();
+		return static::getEnvironment()->isEnabled();
 	}
 
 
@@ -51,7 +53,7 @@ class Bootstrap
 	 */
 	public static function getConfig()
 	{
-		return Environment::getInstance()->getConfig();
+		return static::getEnvironment()->getConfig();
 	}
 
 
@@ -73,7 +75,7 @@ class Bootstrap
 	 */
 	public static function getIconSet()
 	{
-		return Environment::getInstance()->getIconSet();
+		return static::getEnvironment()->getIconSet();
 	}
 
 
@@ -82,7 +84,19 @@ class Bootstrap
 	 */
 	public static function getPageLayout()
 	{
-		return Environment::getInstance()->getLayout();
+		return static::getEnvironment()->getLayout();
+	}
+
+	/**
+	 * @return \Netzmacht\Bootstrap\Core\Environment
+	 */
+	private static function getEnvironment()
+	{
+		if(!self::$environment) {
+			self::$environment = $GLOBALS['container']['bootstrap.environment'];
+		}
+		
+		return self::$environment;
 	}
 
 } 

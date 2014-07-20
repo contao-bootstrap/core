@@ -48,15 +48,6 @@ class Environment
 
 
 	/**
-	 * @return Environment
-	 */
-	public static function getInstance()
-	{
-		return $GLOBALS['container']['bootstrap.environment'];
-	}
-
-
-	/**
 	 * @return IconSet
 	 */
 	public function getIconSet()
