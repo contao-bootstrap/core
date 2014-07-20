@@ -1,7 +1,7 @@
 {
     "name":"contao-bootstrap/core",
-    "description":"Frontend module for bootstrap navbar",
-    "keywords":["bootstrap", "navbar", "component", "navigation", "contao"],
+    "description":"Core of Contao Bootstrap extension",
+    "keywords":["bootstrap", "contao", "core"],
     "type":"contao-module",
     "license":"LGPL-3.0+",
     "authors":[
