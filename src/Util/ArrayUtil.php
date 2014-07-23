@@ -32,19 +32,18 @@ class ArrayUtil
 	/**
 	 * @param $array1
 	 * @param $array2
-	 * @return mixed
+	 * @return array
 	 */
 	private static function mergeDistinct($array1, $array2)
 	{
 		$merged = $array1;
 
-		foreach ($array2 as $key => &$value)
-		{
+		foreach ($array2 as $key => &$value) {
 			if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-				$merged [$key] = static::mergeDistinct($merged[$key], $value);
+				$merged[$key] = static::mergeDistinct($merged[$key], $value);
 			}
 			else {
-				$merged [$key] = $value;
+				$merged[$key] = $value;
 			}
 		}
 

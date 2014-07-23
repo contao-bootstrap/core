@@ -25,7 +25,7 @@ class Modifier
 	 *
 	 * @param \Template $template
 	 */
-	public function execute(\Template $template)
+	public function modify(\Template $template)
 	{
 		if(!Bootstrap::isEnabled()) {
 			return;

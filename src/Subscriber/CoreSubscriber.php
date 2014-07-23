@@ -26,7 +26,7 @@ class CoreSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			InitializeEnvironmentEvent::NAME => array(array('loadConfig', 1000), array('importContaoSettings', 995)),
+			InitializeEnvironmentEvent::NAME => array(array('loadConfig', 1000), array('importContaoSettings', 1000)),
 			ReplaceInsertTagsEvent::NAME     => 'replaceIconInsertTag',
 		);
 	}
