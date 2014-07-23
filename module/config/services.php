@@ -8,11 +8,5 @@ use Netzmacht\Bootstrap\Core\IconSet;
 $container = $GLOBALS['container'];
 
 $container['bootstrap.environment'] = $container->share(function(\Pimple $c) {
-	$config = new Config($GLOBALS['BOOTSTRAP']);
-
-	return new Environment($config, $c['bootstrap.icon-set'], $c['event-dispatcher']);
-});
-
-$container['bootstrap.icon-set'] = $container->share(function(\Pimple $c) {
-	return new IconSet();
+	return new Environment(new Config(), new IconSet(), $c['event-dispatcher']);
 });

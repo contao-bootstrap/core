@@ -16,19 +16,3 @@ $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\Assets
 if(TL_MODE == 'BE') {
 	$GLOBALS['TL_CSS']['bootstrap-core'] = 'system/modules/bootstrap-core/assets/css/backend.css|all|static';
 }
-
-// Dropdown config
-$GLOBALS['BOOTSTRAP']['dropdown']['toggle']     = '<b class="caret"></b>';
-$GLOBALS['BOOTSTRAP']['dropdown']['formless'][] = 'mod_quicklink';
-
-// icon sets
-$GLOBALS['BOOTSTRAP']['icons']['active']             = 'glyphicons';
-$GLOBALS['BOOTSTRAP']['icons']['sets']['glyphicons'] = array
-(
-	'path'       => 'system/modules/bootstrap-core/config/glyphicons.php',
-	'stylesheet' => 'system/modules/bootstrap-core/assets/css/glyphicons.css',
-	'template'   => '<span class="glyphicon glyphicon-%s"></span>',
-);
-
-// add layoutType to palette
-$GLOBALS['BOOTSTRAP']['layout']['metapalette']['+title'][] = 'layoutType';

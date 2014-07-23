@@ -26,9 +26,30 @@ class CoreSubscriber implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return array(
-			InitializeEnvironmentEvent::NAME => array('importContaoSettings', 1000),
+			InitializeEnvironmentEvent::NAME => array(array('loadConfig', 1000), array('importContaoSettings', 995)),
 			ReplaceInsertTagsEvent::NAME     => 'replaceIconInsertTag',
 		);
+	}
+
+
+	/**
+	 * @param InitializeEnvironmentEvent $event
+	 */
+	public function loadConfig(InitializeEnvironmentEvent $event)
+	{
+		$config = $event->getEnvironment()->getConfig();
+
+		// load config from module files
+		$files = glob(TL_ROOT . '/system/modules/*/config/contao-bootstrap.php');
+
+		foreach($files as $file) {
+			$config->import($file);
+		}
+
+		// support deprecated config
+		if(isset($GLOBALS['BOOTSTRAP'])) {
+			$config->merge($GLOBALS['BOOTSTRAP']);
+		}
 	}
 
 

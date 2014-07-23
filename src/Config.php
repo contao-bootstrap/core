@@ -1,6 +1,7 @@
 <?php
 
 namespace Netzmacht\Bootstrap\Core;
+use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
 
 /**
  * Class Config
@@ -18,9 +19,9 @@ class Config
 	/**
 	 * @param array $config
 	 */
-	function __construct(array &$config)
+	function __construct(array $config=array())
 	{
-		$this->config = &$config;
+		$this->config = $config;
 	}
 
 
@@ -73,6 +74,30 @@ class Config
 
 	/**
 	 * @param $key
+	 * @return $this
+	 */
+	public function remove($key)
+	{
+		$chunks = explode('.', $key);
+		$name	= array_pop($chunks);
+		$config = &$this->config;
+
+		foreach($chunks as $chunk) {
+			if (!array_key_exists($chunk, $config)) {
+				return $this;
+			}
+
+			$config = &$config[$chunk];
+		}
+
+		unset($config[$name]);
+
+		return $this;
+	}
+
+
+	/**
+	 * @param $key
 	 * @return bool
 	 */
 	public function has($key)
@@ -93,14 +118,44 @@ class Config
 
 
 	/**
-	 * @param $data
+	 * @param array $data
+	 * @param null $path
 	 * @return $this
 	 */
-	public function import(array $data)
+	public function merge(array $data, $path=null)
 	{
-		$this->config = array_merge_recursive($this->config, $data);
+		if($path) {
+			$config = (array) $this->get($path);
+			$config = ArrayUtil::merge($config, $data);
+
+			$this->set($path, $config);
+		}
+		else {
+			$this->config = ArrayUtil::merge($this->config, $data);
+		}
 
 		return $this;
+	}
+
+
+	/**
+	 * @param $file
+	 * @throws \RuntimeException
+	 * @throws \InvalidArgumentException
+	 */
+	public function import($file)
+	{
+		if(!file_exists($file)) {
+			throw new \InvalidArgumentException(sprintf('File "%s" not found', $file));
+		}
+
+		$config = include $file;
+
+		if(!is_array($config)) {
+			throw new \RuntimeException('Loaded config is not an array');
+		}
+
+		$this->merge($config);
 	}
 
 } 
