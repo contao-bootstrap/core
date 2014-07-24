@@ -117,8 +117,8 @@ class Helper
 
 		if($this->isTypeOf(static::TYPE_START)) {
 			if($type === null) {
-				$column = 'bootstrap_parentId';
-				$values = $model->id;
+				$column = array('bootstrap_parentId=?');
+				$values = array($model->id);
 			}
 			else {
 				$column = array('bootstrap_parentId=?', 'type=?');
@@ -130,14 +130,17 @@ class Helper
 			$values = array($model->id, $model->bootstrap_parentId, $model->bootstrap_parentId);
 		}
 		elseif($type == static::TYPE_START) {
-			$column = 'id';
-			$values = $model->bootstrap_parentId;
+			$column = array('id=?');
+			$values = array($model->bootstrap_parentId);
 		}
 		else {
 			$column = array('id !=?', 'bootstrap_parentId=?', 'type=?');
 			$values = array($model->id, $model->bootstrap_parentId, $this->getTypeName($type));
 
 		}
+
+		$column[] = 'invisible=?';
+		$values[] = '';
 
 		return \ContentModel::countBy($column, $values);
 	}
