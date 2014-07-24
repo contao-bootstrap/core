@@ -54,7 +54,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
 				'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes_name'],
 				'exclude'                 => true,
 				'inputType'               => 'select',
-				'options'                 => \Netzmacht\Bootstrap\Core\Bootstrap::getConfigVar('form.dataAttributes', array()),
+				'options'                 => \Netzmacht\Bootstrap\Core\Bootstrap::getConfigVar('form.data-attributes', array()),
 				'reference'               => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_buttons_types'],
 				'eval'                    => array('style' => 'width: 145px;', 'includeBlankOption' => true),
 			),

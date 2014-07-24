@@ -17,12 +17,12 @@ class Wrapper
 	/**
 	 * @var int
 	 */
-	const TRIGGER_CREATE = 'triggerCreate';
+	const TRIGGER_CREATE = 'trigger-create';
 
 	/**
 	 * @var int
 	 */
-	const TRIGGER_DELETE = 'triggerDelete';
+	const TRIGGER_DELETE = 'trigger-delete';
 
 	/**
 	 * order const ascending
@@ -120,11 +120,11 @@ class Wrapper
 		) {
 			$config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
 
-			$callback = $config['countExisting'];
+			$callback = $config['count-existing'];
 			$instance = \Controller::importStatic($callback[0]);
 			$existing = $instance->$callback[1]($record, $wrapper);
 
-			$callback = $config['countRequired'];
+			$callback = $config['count-required'];
 			$instance = \Controller::importStatic($callback[0]);
 			$required = $instance->$callback[1]($record, $wrapper);
 
@@ -280,11 +280,11 @@ class Wrapper
 		$config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
 
 		if(array_key_exists($action, $config[$trigger]) && $config[$trigger][$action]) {
-			$key = $action == static::TRIGGER_DELETE ? 'autoDelete' : 'autoCreate';
+			$key = $action == static::TRIGGER_DELETE ? 'auto-delete' : 'auto-create';
 
 			// check if count callback is defined
 			if($target == Helper::TYPE_SEPARATOR && $action == static::TRIGGER_CREATE) {
-				if(!isset($config[$target]['countExisting']) || !isset($config[$target]['countRequired'])) {
+				if(!isset($config[$target]['count-existing']) || !isset($config[$target]['count-required'])) {
 					return false;
 				}
 			}
