@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_empty_'] = array
 );
 
 // wrapper elements
-$GLOBALS['TL_DCA']['tl_content']['config']['ondelete_callback'][] = array('Netzmacht\Bootstrap\Core\Contao\DataContainer\Wrapper', 'delete');
+$GLOBALS['TL_DCA']['tl_content']['config']['ondelete_callback'][]     = array('Netzmacht\Bootstrap\Core\Contao\DataContainer\Wrapper', 'delete');
 $GLOBALS['TL_DCA']['tl_content']['fields']['type']['save_callback'][] = array('Netzmacht\Bootstrap\Core\Contao\DataContainer\Wrapper', 'save');
 
 
