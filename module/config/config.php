@@ -11,8 +11,13 @@ $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array('Netzmacht\Bootstrap\Cor
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\CoreSubscriber';
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\AssetsCollector';
 
-// Add backend stylesheet
-// TODO: Check if styles are still required
 if(TL_MODE == 'BE') {
+	// Add backend stylesheet
+	// TODO: Check if styles are still required
 	$GLOBALS['TL_CSS']['bootstrap-core'] = 'system/modules/bootstrap-core/assets/css/backend.css|all|static';
+
+	// load stylepicker config
+	if(\Input::get('key') == 'stylepicker4ward_import') {
+		require TL_ROOT . '/system/modules/bootstrap-core/config/stylepicker.php';
+	}
 }
