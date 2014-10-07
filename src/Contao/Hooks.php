@@ -97,6 +97,7 @@ class Hooks
 		$active   = $config->get('icons.active');
 		$template = $config->get(sprintf('icons.sets.%s.template', $active));
 		$path     = $config->get(sprintf('icons.sets.%s.path', $active));
+        $css      = $config->get(sprintf('icons.sets.%s.stylesheet', $active));
 
 		if($active) {
 			if($path && file_exists(TL_ROOT . '/' . $path)) {
@@ -105,6 +106,12 @@ class Hooks
 					->setIconSetName($active)
 					->setIcons($icons)
 					->setTemplate($template);
+
+                if(TL_MODE == 'BE') {
+                    foreach((array)$css as $file) {
+                        $GLOBALS['TL_CSS'][] = $file;
+                    }
+                }
 			}
 		}
 	}
