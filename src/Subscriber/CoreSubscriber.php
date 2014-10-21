@@ -2,7 +2,6 @@
 
 namespace Netzmacht\Bootstrap\Core\Subscriber;
 
-use Contao\LayoutModel;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
