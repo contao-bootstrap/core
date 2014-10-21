@@ -1,5 +1,11 @@
 <?php
 
+// Models
+$GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel';
+
+// Modules
+$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';
+
 // Hooks
 $GLOBALS['TL_HOOKS']['initializeSystem'][]      = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'initializeSystem');
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][]     = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'replaceInsertTags');
