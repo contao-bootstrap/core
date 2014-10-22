@@ -12,79 +12,79 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Hooks
 {
 
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	protected $eventDispatcher;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
-	/**
-	 * @var Environment
-	 */
-	protected $environment;
-
-
-	/**
-	 * Construct
-	 */
-	function __construct()
-	{
-		$this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
-		$this->environment     = $GLOBALS['container']['bootstrap.environment'];
-	}
+    /**
+     * @var Environment
+     */
+    protected $environment;
 
 
-	/**
-	 * @param $tag
-	 * @param bool $cache
-	 * @return string
-	 */
-	public function replaceInsertTags($tag, $cache = true)
-	{
-		$params = explode('::', $tag);
-		$tag    = array_shift($params);
-		$event  = new ReplaceInsertTagsEvent($tag, $params, $cache);
-
-		$this->eventDispatcher->dispatch($event::NAME, $event);
-
-		return $event->getHtml() ? : false;
-	}
+    /**
+     * Construct
+     */
+    function __construct()
+    {
+        $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+        $this->environment     = $GLOBALS['container']['bootstrap.environment'];
+    }
 
 
-	/**
-	 * Initialize bootstrap at initialize system hook
-	 */
-	public function initializeSystem()
-	{
-		$this->initializeEnvironment();
-		$this->selectIconSet();
-	}
+    /**
+     * @param $tag
+     * @param bool $cache
+     * @return string
+     */
+    public function replaceInsertTags($tag, $cache = true)
+    {
+        $params = explode('::', $tag);
+        $tag    = array_shift($params);
+        $event  = new ReplaceInsertTagsEvent($tag, $params, $cache);
+
+        $this->eventDispatcher->dispatch($event::NAME, $event);
+
+        return $event->getHtml() ? : false;
+    }
 
 
-	/**
-	 * Initialize bootstrap environment
-	 */
-	protected function initializeEnvironment()
-	{
-		$event = new InitializeEnvironmentEvent($this->environment);
-		$this->eventDispatcher->dispatch($event::NAME, $event);
-	}
+    /**
+     * Initialize bootstrap at initialize system hook
+     */
+    public function initializeSystem()
+    {
+        $this->initializeEnvironment();
+        $this->selectIconSet();
+    }
 
 
-	/**
-	 * Initialize Layout
-	 *
-	 * @param \PageModel   $page
-	 * @param \LayoutModel $layout
-	 */
-	public function initializeLayout(\PageModel $page, \LayoutModel $layout)
-	{
-		$environment = $this->environment;
-		$environment->setLayout($layout);
-		$environment->setEnabled($layout->layoutType == 'bootstrap');
+    /**
+     * Initialize bootstrap environment
+     */
+    protected function initializeEnvironment()
+    {
+        $event = new InitializeEnvironmentEvent($this->environment);
+        $this->eventDispatcher->dispatch($event::NAME, $event);
+    }
 
-		$event = new InitializeLayoutEvent($environment, $layout, $page);
-		$this->eventDispatcher->dispatch($event::NAME, $event);
-	}
+
+    /**
+     * Initialize Layout
+     *
+     * @param \PageModel   $page
+     * @param \LayoutModel $layout
+     */
+    public function initializeLayout(\PageModel $page, \LayoutModel $layout)
+    {
+        $environment = $this->environment;
+        $environment->setLayout($layout);
+        $environment->setEnabled($layout->layoutType == 'bootstrap');
+
+        $event = new InitializeLayoutEvent($environment, $layout, $page);
+        $this->eventDispatcher->dispatch($event::NAME, $event);
+    }
 
     /**
      * Add icon stylesheet to the backend template.
@@ -111,15 +111,15 @@ class Hooks
         }
     }
 
-	/**
-	 * select an icon set
-	 */
-	protected function selectIconSet()
-	{
-		$config   = Bootstrap::getConfig();
-		$iconSet  = Bootstrap::getIconSet();
-		$active   = $config->get('icons.active');
-		$template = $config->get(sprintf('icons.sets.%s.template', $active));
+    /**
+     * select an icon set
+     */
+    protected function selectIconSet()
+    {
+        $config   = Bootstrap::getConfig();
+        $iconSet  = Bootstrap::getIconSet();
+        $active   = $config->get('icons.active');
+        $template = $config->get(sprintf('icons.sets.%s.template', $active));
         $path     = $config->get(sprintf('icons.sets.%s.path', $active));
 
         if( $active && $path && file_exists(TL_ROOT . '/' . $path)) {
@@ -129,5 +129,5 @@ class Hooks
                 ->setIcons($icons)
                 ->setTemplate($template);
         }
-	}
-} 
+    }
+}
