@@ -32,7 +32,7 @@ class Config
 	 */
 	public function get($key, $default=null)
 	{
-		$chunks = explode('.', $key);
+		$chunks = $this->path($key);
 		$value  = $this->config;
 
 		while (($chunk = array_shift($chunks)) !== null) {
@@ -54,7 +54,7 @@ class Config
 	 */
 	public function set($key, $value)
 	{
-		$chunks = explode('.', $key);
+		$chunks = $this->path($key);
 		$name	= array_pop($chunks);
 		$config = &$this->config;
 
@@ -78,7 +78,7 @@ class Config
 	 */
 	public function remove($key)
 	{
-		$chunks = explode('.', $key);
+		$chunks = $this->path($key);
 		$name	= array_pop($chunks);
 		$config = &$this->config;
 
@@ -102,7 +102,7 @@ class Config
 	 */
 	public function has($key)
 	{
-		$chunks = explode('.', $key);
+		$chunks = $this->path($key);
 		$value  = $this->config;
 
 		while (($chunk = array_shift($chunks)) !== null) {
@@ -157,5 +157,18 @@ class Config
 
 		$this->merge($config);
 	}
+
+    /**
+     * @param $path
+     * @return array
+     */
+    private function path($path)
+    {
+        if (is_string($path)) {
+            return explode('.', $path);
+        }
+
+        return (array) $path;
+    }
 
 } 
