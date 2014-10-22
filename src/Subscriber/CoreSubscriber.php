@@ -132,7 +132,5 @@ class CoreSubscriber implements EventSubscriberInterface
         $factory = $GLOBALS['container']['bootstrap.config-type-factory'];
         $builder = new ConfigBuilder($config, $factory, $collection);
         $builder->build();
-
-        var_dump($config->get('icons.sets'));
     }
 }
