@@ -76,6 +76,14 @@ class IconSetConfigType implements ConfigType
     }
 
     /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return 'icons.sets';
+    }
+
+    /**
      * @param BootstrapConfigModel $model
      * @return array
      */

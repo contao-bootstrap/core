@@ -16,3 +16,10 @@ $container['bootstrap.config-type-factory'] = $container->share(function(\Pimple
 
     return new Config\ConfigTypeFactory($config->get('config.types'));
 });
+
+$container['bootstrap.config-type-manager'] = $container->share(function(\Pimple $c) {
+    $config  = $c['bootstrap.environment']->getConfig();
+    $factory = $c['bootstrap.config-type-factory'];
+
+    return new Config\TypeManager($config, $factory->createAll());
+});

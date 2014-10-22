@@ -40,4 +40,8 @@ interface ConfigType
      */
     public function isMultiple();
 
+    /**
+     * @return string
+     */
+    public function getPath();
 } 

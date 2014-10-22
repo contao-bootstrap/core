@@ -45,6 +45,20 @@ class ConfigTypeFactory
     }
 
     /**
+     * @return ConfigType[]
+     */
+    public function createAll()
+    {
+        $types = array();
+
+        foreach ($this->types as $name => $type) {
+            $types[$name] = $this->create($name);
+        }
+
+        return $types;
+    }
+
+    /**
      * @return array
      */
     public function getNames()

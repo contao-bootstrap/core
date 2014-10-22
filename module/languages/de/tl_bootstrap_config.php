@@ -5,9 +5,23 @@ $GLOBALS['TL_LANG']['tl_bootstrap_config']['type_legend'] = 'Typ';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['config_legend'] = 'Konfiguration';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['published_legend'] = 'Veröffentlichung';
 
+// buttons
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['new'][0] = 'Konfiguration anlegen';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['new'][1] = 'Neue Konfiguration anlegen';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['edit'][0] = 'Konfiguration bearbeiten';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['edit'][1] = 'Konfiguration "ID %s" bearbeiten';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['show'][0] = 'Konfiguration anzeigen';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['show'][1] = 'Konfiguration "ID %s" anzeigen';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['delete'][0] = 'Konfiguration löschen';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['delete'][1] = 'Konfiguration "ID %s" löschen';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['toggle'][0] = 'Konfiguration anwenden/deaktivieren';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['toggle'][1] = 'Konfiguration "ID %s" anwenden/deaktivieren';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['override'][0] = 'Konfiguration überschreiben';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['override'][1] = 'Konfiguration überschreiben';
+
 // common field
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['type'][0] = 'Konfigurations-Typ';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['type'][1] = 'Wählen sie den Konfigurationstyp aus';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['type'][0] = 'Typ';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['type'][1] = 'Wählen sie den Konfigurations-Typ aus';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['name'][0] = 'Name';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['name'][1] = 'Geben Sie einen eindeutigen Namen für den Konfigurations-Typen ein.';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['published'][0] = 'Konfiguration anwenden';

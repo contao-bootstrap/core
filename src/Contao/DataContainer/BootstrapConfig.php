@@ -12,7 +12,10 @@
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
 
+use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Config\ConfigTypeFactory;
+use Netzmacht\Bootstrap\Core\Config\TypeManager;
+use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BootstrapConfig extends \Backend
@@ -28,20 +31,66 @@ class BootstrapConfig extends \Backend
     private $configTypeFactory;
 
     /**
+     * @var TypeManager
+     */
+    private $typeManager;
+
+    /**
      * Construct
      */
     function __construct()
     {
+        parent::__construct();
+
         $this->eventDispatcher   = $GLOBALS['container']['event-dispatcher'];
         $this->configTypeFactory = $GLOBALS['container']['bootstrap.config-type-factory'];
+        $this->typeManager       = $GLOBALS['container']['bootstrap.config-type-manager'];;
+
+        $this->loadLanguageFile('bootstrap_config_types');
+        $this->loadLanguageFile('default');
     }
 
     /**
      *
      */
-    public function getTypes()
+    public function addNameToPalette()
     {
-        return $this->configTypeFactory->getNames();
+        if (\Input::get('act') == 'edit') {
+            $model = BootstrapConfigModel::findByPk(\Input::get('id'));
+
+            if ($model && $model->type) {
+                $type = $this->typeManager->getType($model->type);
+
+                if ($type->isMultiple()) {
+                    $GLOBALS['TL_DCA']['tl_bootstrap_config']['metapalettes']['default']['type'][] = 'name';
+                }
+            }
+        }
+    }
+
+    /**
+     * @param \DataContainer $dataContainer
+     * @return array
+     */
+    public function getTypes(\DataContainer $dataContainer)
+    {
+        $options = array();
+
+        if (!$dataContainer->activeRecord) {
+            $types = $this->typeManager->getNames();
+        }
+        elseif ($dataContainer->activeRecord->override) {
+            $types = $this->typeManager->getExistingTypes();
+        }
+        else {
+            $types = $this->typeManager->getUnusedTypes();
+        }
+
+        foreach($types as $name => $type) {
+            $options[$name] = $name;
+        }
+
+        return $options;
     }
 
     /**
@@ -50,7 +99,6 @@ class BootstrapConfig extends \Backend
      */
     public function formatGroup($value)
     {
-        \Controller::loadLanguageFile('bootstrap_config_types');
 
         if (isset($GLOBALS['TL_LANG']['bootstrap_config_types'][$value])) {
             return $GLOBALS['TL_LANG']['bootstrap_config_types'][$value];
@@ -65,7 +113,7 @@ class BootstrapConfig extends \Backend
      */
     public function saveGlobalScope($value, \DataContainer $dc)
     {
-        $type   = $this->configTypeFactory->create($value);
+        $type   = $this->typeManager->getType($value);
         $global = $type->hasGlobalScope();
 
         if ($global != $dc->activeRecord->global) {
@@ -75,7 +123,41 @@ class BootstrapConfig extends \Backend
                 ->execute($dc->id);;
         }
 
+        if ($dc->activeRecord->override && \Input::get('override')) {
+            if (!$type->isMultiple() || $dc->activeRecord->name) {
+                $key = $type->getPath();
+
+                if ($type->isMultiple()) {
+                    $key .= $dc->activeRecord->name;
+                }
+
+                $model = BootstrapConfigModel::findByPk($dc->id);
+                $model->mergeRow($dc->activeRecord->row());
+
+                $type->extractConfig($key, Bootstrap::getConfig(), $model);
+                $model->save();
+
+                $this->redirect($this->addToUrl('override='));
+            }
+        }
+
         return $value;
+    }
+
+    /**
+     * @param $table
+     * @param $configId
+     * @param $row
+     * @param \DataContainer $dc
+     */
+    public function addOverrideInformation($table, $configId, $row, \DataContainer $dc)
+    {
+        if ($table == 'tl_bootstrap_config' && \Input::get('override')) {
+            \Database::getInstance()
+                ->prepare('UPDATE tl_bootstrap_config %s WHERE id=?')
+                ->set(array('override' => true))
+                ->execute($configId);
+        }
     }
 
     /**
@@ -136,8 +218,8 @@ class BootstrapConfig extends \Backend
         $this->createInitialVersion('tl_bootstrap_config', $configId);
 
         // Trigger the save_callback
-        if (is_array($GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'])) {
-            foreach ($GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'] as $callback) {
+        if (isset($GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'])) {
+            foreach ((array)$GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'] as $callback) {
                 $this->import($callback[0]);
                 $published = $this->$callback[0]->$callback[1]($published, $this);
             }
