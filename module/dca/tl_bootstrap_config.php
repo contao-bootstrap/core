@@ -25,6 +25,10 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         'label' => array(
             'fields' => array('name', 'type'),
             'format' => '%s <span class="tl_gray">[%s]</span>',
+            'group_callback' => array(
+                'Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig',
+                'formatGroup'
+            ),
         ),
         'operations' => array(
             'edit' => array
@@ -32,6 +36,18 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
                 'label'               => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['edit'],
                 'href'                => 'act=edit',
                 'icon'                => 'edit.gif'
+            ),
+            'delete' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['delete'],
+                'href'                => 'act=delete',
+                'icon'                => 'delete.gif'
+            ),
+            'show' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['show'],
+                'href'                => 'act=show',
+                'icon'                => 'show.gif'
             ),
         ),
 
@@ -94,6 +110,9 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'label'            => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['type'],
             'inputType'        => 'select',
             'options_callback' => array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'getTypes'),
+            'save_callback' => array(
+                array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'saveGlobalScope'),
+            ),
             'eval'             => array(
                 'tl_class' => 'w50',
             ),
@@ -118,6 +137,28 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'sql'                     => "char(1) NOT NULL default ''"
         ),
 
+        'global' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['global'],
+            'inputType' => 'checkbox',
+            'eval'      => array(
+                'tl_class' => 'clr w50',
+                'submitOnChange' => true,
+            ),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
+        'published' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['published'],
+            'inputType' => 'checkbox',
+            'eval'      => array(
+                'tl_class' => 'clr w50',
+                'submitOnChange' => true,
+            ),
+            'sql'                     => "char(1) NOT NULL default ''"
+        ),
+
         'icons_path' => array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path'],
@@ -134,27 +175,18 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
 
         'icons_template' => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_template'],
             'inputType' => 'text',
             'eval' => array(
-                'tl_class' => 'w50',
+                'tl_class'  => 'w50',
+                'allowHtml' => true,
             ),
-            'sql'                     => "varchar(64) NOT NULL default ''"
-        ),
-
-        'icons_default' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_default'],
-            'inputType' => 'checkbox',
-            'eval' => array(
-                'tl_class' => 'm12 w50',
-            ),
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "varchar(255) NOT NULL default ''"
         ),
 
         'icons_source' => array
         (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['remove'],
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_source'],
             'inputType' => 'select',
             'options'   => array('files', 'paths'),
             'eval'      => array(
@@ -162,17 +194,30 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
                 'includeBlankOption' => true,
                 'submitOnChange'     => true,
             ),
-            'sql'                     => "char(1) NOT NULL default ''"
+            'sql'                     => "char(5) NOT NULL default ''"
         ),
 
         'icons_paths' => array
         (
-
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_paths'],
+            'inputType' => 'textarea',
+            'eval'      => array(
+                'tl_class'           => 'clr long',
+            ),
+            'sql'                     => "text NULL"
         ),
 
         'icons_files' => array
         (
-
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_files'],
+            'inputType' => 'fileTree',
+            'eval'      => array(
+                'tl_class'           => 'clr',
+                'filesOnly'          => true,
+                'extensions'         => 'css',
+                'fieldType'          => 'checkbox',
+            ),
+            'sql'                     => "blob NULL"
         ),
     )
 

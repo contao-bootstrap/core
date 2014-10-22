@@ -1,6 +1,13 @@
 <?php
 
-return array(
+return array
+(
+    'config' => array(
+        'types' => array(
+            'icons_set' => 'Netzmacht\Bootstrap\Core\Config\IconSetConfigType'
+        ),
+    ),
+
 	'dropdown' => array(
 		'toggle'   => '<b class="caret"></b>',
 		'formless' => array('mod_quicklink'),

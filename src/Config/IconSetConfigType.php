@@ -11,7 +11,7 @@
 
 namespace Netzmacht\Bootstrap\Core\Config;
 
-use Netzmacht\Bootstrap\Contao\Model\BootstrapConfigModel;
+use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Config;
 
 class IconSetConfigType implements ConfigType
@@ -23,7 +23,7 @@ class IconSetConfigType implements ConfigType
      */
     public function buildConfig(Config $config, BootstrapConfigModel $model)
     {
-        $key = 'icons.sets.' . $model->icons_name;
+        $key = 'icons.sets.' . $model->name;
 
         if ($model->delete) {
             $config->remove($key);
@@ -60,18 +60,38 @@ class IconSetConfigType implements ConfigType
     }
 
     /**
+     * @return bool
+     */
+    public function hasGlobalScope()
+    {
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMultiple()
+    {
+        return true;
+    }
+
+    /**
      * @param BootstrapConfigModel $model
      * @return array
      */
     private function getStylesheets(BootstrapConfigModel $model)
     {
-        if ($model->icons_stylesheet_source == 'files') {
-            $fileIds = deserialize($model->icons_stylesheet_files);
-            $files   = \FilesModel::findMultipleByIds($fileIds);
+        if ($model->icons_source == 'files') {
+            $fileIds = deserialize($model->icons_files, true);
+            $files   = \FilesModel::findMultipleByUuids($fileIds);
+
+            if (!$files) {
+                return array();
+            }
 
             return $files->fetchEach('path');
         }
 
-        return explode("\n", $model->icons_stylesheet_paths);
+        return explode("\n", $model->icons_paths);
     }
 }

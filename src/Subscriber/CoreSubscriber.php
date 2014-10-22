@@ -5,10 +5,12 @@ namespace Netzmacht\Bootstrap\Core\Subscriber;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Config\ConfigBuilder;
+use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Event\GetConfigTypesEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
+use Netzmacht\Bootstrap\Core\Util\Contao;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -33,9 +35,8 @@ class CoreSubscriber implements EventSubscriberInterface
                 array('loadConfig', 1000),
                 array('importContaoSettings', 1000)
             ),
-            InitializeLayoutEvent::NAME   => 'loadConfigFromDatabase',
+            InitializeLayoutEvent::NAME   => 'loadThemeConfig',
             ReplaceInsertTagsEvent::NAME  => 'replaceIconInsertTag',
-            GetConfigTypesEvent::NAME     => 'getConfigTypes',
         );
     }
 
@@ -48,6 +49,12 @@ class CoreSubscriber implements EventSubscriberInterface
 
         $this->loadConfigFromModules($config);
         $this->loadConfigFromGlobals($config);
+
+        // prevent that database is loaded before user object
+        Contao::intializeObjectStack();
+
+        $collection = BootstrapConfigModel::findGlobalPublished();
+        $this->loadConfigFromCollection($config, $collection);
     }
 
     /**
@@ -66,19 +73,13 @@ class CoreSubscriber implements EventSubscriberInterface
      * @param InitializeLayoutEvent $event
      * @internal param Config $config
      */
-    public function loadConfigFromDatabase(InitializeLayoutEvent $event)
+    public function loadThemeConfig(InitializeLayoutEvent $event)
     {
-        $config  = $event->getEnvironment()->getConfig();
-        $themeId = $event->getLayoutModel()->theme;
+        $themeId    = $event->getLayoutModel()->pid;
+        $config     = $event->getEnvironment()->getConfig();
+        $collection = BootstrapConfigModel::findPublishedByTheme($themeId);
 
-        $eventDispatcher = $GLOBALS['container']['event-dispatcher'];
-        $event = new GetConfigTypesEvent();
-
-        /** @var EventDispatcherInterface $eventDispatcher */
-        $eventDispatcher->dispatch($event::NAME, $event);
-
-        $builder = new ConfigBuilder($config, $event->getTypes(), $themeId);
-        $builder->build();
+        $this->loadConfigFromCollection($config, $collection);
     }
 
     /**
@@ -92,13 +93,6 @@ class CoreSubscriber implements EventSubscriberInterface
             $event->setHtml($icon);
             $event->stopPropagation();
         }
-    }
-
-    public function getConfigTypes(GetConfigTypesEvent $event)
-    {
-        $event->addTypes(array(
-            'icons_set' => 'Netzmacht\Bootstrap\Core\Config\IconSetConfigType'
-        ));
     }
 
     /**
@@ -123,5 +117,22 @@ class CoreSubscriber implements EventSubscriberInterface
         if (isset($GLOBALS['BOOTSTRAP'])) {
             $config->merge($GLOBALS['BOOTSTRAP']);
         }
+    }
+
+    /**
+     * @param Config $config
+     * @param $collection
+     */
+    public function loadConfigFromCollection(Config $config, \Model\Collection $collection=null)
+    {
+        if (!$collection) {
+            return;
+        }
+
+        $factory = $GLOBALS['container']['bootstrap.config-type-factory'];
+        $builder = new ConfigBuilder($config, $factory, $collection);
+        $builder->build();
+
+        var_dump($config->get('icons.sets'));
     }
 }

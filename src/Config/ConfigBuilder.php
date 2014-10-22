@@ -12,16 +12,16 @@
 namespace Netzmacht\Bootstrap\Core\Config;
 
 
-use Netzmacht\Bootstrap\Contao\Model\BootstrapConfigModel;
+use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Config;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ConfigBuilder
 {
     /**
-     * @var array
+     * @var ConfigTypeFactory
      */
-    private $types;
+    private $typeFactory;
 
     /**
      * @var Config
@@ -29,19 +29,20 @@ class ConfigBuilder
     private $config;
 
     /**
-     * @var int
+     * @var \Model\Collection
      */
-    private $themeId;
+    private $collection;
 
     /**
      * @param Config $config
-     * @param array $types
+     * @param ConfigTypeFactory $typeFactory
+     * @param \Model\Collection $collection
      */
-    function __construct(Config $config, array $types, $themeId)
+    function __construct(Config $config, ConfigTypeFactory $typeFactory, \Model\Collection $collection)
     {
-        $this->config  = $config;
-        $this->types   = $types;
-        $this->themeId = $themeId;
+        $this->config      = $config;
+        $this->typeFactory = $typeFactory;
+        $this->collection  = $collection;
     }
 
     /**
@@ -49,39 +50,20 @@ class ConfigBuilder
      */
     public function build()
     {
-        $collection = BootstrapConfigModel::findPublishedByTheme($this->themeId);
+        while ($this->collection->next()) {
+            $model = $this->collection->current();
 
-        while ($collection->next()) {
             try {
-                $type = $this->createType($collection->type);
-                $type->buildConfig($this->config, $collection->current());
+                $type = $this->typeFactory->create($model->type);
+                $type->buildConfig($this->config, $model);
             }
             catch (\Exception $e) {
                 \Controller::log(
                     'Unknown bootstrap config type "%s" (ID %s) stored in database',
-                    $collection->type,
-                    $collection->id
+                    $model->type,
+                    $model->id
                 );
             }
         }
-    }
-
-    /**
-     * @param $type
-     * @return ConfigType
-     * @throws \RuntimeException
-     */
-    private function createType($type)
-    {
-        if (!isset($this->types[$type])) {
-            throw new \RuntimeException('Config type "%s" not found');
-        }
-
-        if (is_callable($this->types[$type])) {
-            return call_user_func($this->types[$type]);
-        }
-
-        $className = $this->types[$type];
-        return new $className;
     }
 } 

@@ -12,7 +12,8 @@
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
 
-use Netzmacht\Bootstrap\Core\Event\GetConfigTypesEvent;
+use Netzmacht\Bootstrap\Core\Bootstrap;
+use Netzmacht\Bootstrap\Core\Config\ConfigTypeFactory;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BootstrapConfig
@@ -23,11 +24,17 @@ class BootstrapConfig
     private $eventDispatcher;
 
     /**
+     * @var ConfigTypeFactory
+     */
+    private $configTypeFactory;
+
+    /**
      * Construct
      */
     function __construct()
     {
-        $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+        $this->eventDispatcher   = $GLOBALS['container']['event-dispatcher'];
+        $this->configTypeFactory = $GLOBALS['container']['bootstrap.config-type-factory'];
     }
 
     /**
@@ -35,12 +42,41 @@ class BootstrapConfig
      */
     public function getTypes()
     {
-        $event = new GetConfigTypesEvent();
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        return $this->configTypeFactory->getNames();
+    }
 
-        $types = $event->getTypes();
+    /**
+     * @param $value
+     * @return mixed
+     */
+    public function formatGroup($value)
+    {
+        \Controller::loadLanguageFile('bootstrap_config_types');
 
-        return array_keys($types);
+        if (isset($GLOBALS['TL_LANG']['bootstrap_config_types'][$value])) {
+            return $GLOBALS['TL_LANG']['bootstrap_config_types'][$value];
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param $value
+     * @param \DataContainer $dc
+     */
+    public function saveGlobalScope($value, \DataContainer $dc)
+    {
+        $type   = $this->configTypeFactory->create($value);
+        $global = $type->hasGlobalScope();
+
+        if ($global != $dc->activeRecord->global) {
+            \Database::getInstance()
+                ->prepare('UPDATE tl_bootstrap_config %s WHERE id=?')
+                ->set(array('global' => $global))
+                ->execute($dc->id);;
+        }
+
+        return $value;
     }
 
     /**

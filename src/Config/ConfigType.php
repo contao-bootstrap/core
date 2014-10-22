@@ -12,7 +12,7 @@
 namespace Netzmacht\Bootstrap\Core\Config;
 
 
-use Netzmacht\Bootstrap\Contao\Model\BootstrapConfigModel;
+use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Config;
 
 interface ConfigType
@@ -29,5 +29,15 @@ interface ConfigType
      * @param BootstrapConfigModel $model
      */
     public function extractConfig($key, Config $config, BootstrapConfigModel $model);
+
+    /**
+     * @return bool
+     */
+    public function hasGlobalScope();
+
+    /**
+     * @return bool
+     */
+    public function isMultiple();
 
 } 
