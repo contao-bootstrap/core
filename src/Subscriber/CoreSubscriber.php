@@ -4,12 +4,9 @@ namespace Netzmacht\Bootstrap\Core\Subscriber;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Config\TypeManager;
-use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
-use Netzmacht\Bootstrap\Core\Util\Contao;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -34,7 +31,6 @@ class CoreSubscriber implements EventSubscriberInterface
                 array('loadConfig', 1000),
                 array('importContaoSettings', 1000)
             ),
-            InitializeLayoutEvent::NAME   => 'loadThemeConfig',
             ReplaceInsertTagsEvent::NAME  => 'replaceIconInsertTag',
         );
     }
@@ -48,12 +44,6 @@ class CoreSubscriber implements EventSubscriberInterface
 
         $this->loadConfigFromModules($config);
         $this->loadConfigFromGlobals($config);
-
-        // prevent that database is loaded before user object
-        Contao::intializeObjectStack();
-
-        $collection = BootstrapConfigModel::findGlobalPublished();
-        $this->getTypeManager()->buildConfig($collection);
     }
 
     /**
@@ -66,18 +56,6 @@ class CoreSubscriber implements EventSubscriberInterface
         if($GLOBALS['TL_CONFIG']['bootstrapIconSet']) {
             $config->set('icons.active', $GLOBALS['TL_CONFIG']['bootstrapIconSet']);
         }
-    }
-
-    /**
-     * @param InitializeLayoutEvent $event
-     * @internal param Config $config
-     */
-    public function loadThemeConfig(InitializeLayoutEvent $event)
-    {
-        $themeId    = $event->getLayoutModel()->pid;
-        $collection = BootstrapConfigModel::findPublishedByTheme($themeId);
-
-        $this->getTypeManager()->buildConfig($collection);
     }
 
     /**
@@ -115,13 +93,5 @@ class CoreSubscriber implements EventSubscriberInterface
         if (isset($GLOBALS['BOOTSTRAP'])) {
             $config->merge($GLOBALS['BOOTSTRAP']);
         }
-    }
-
-    /**
-     * @return TypeManager
-     */
-    private function getTypeManager()
-    {
-        return $GLOBALS['container']['bootstrap.config-type-manager'];
     }
 }
