@@ -1,5 +1,11 @@
 <?php
 
+// Models
+$GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel';
+
+// Modules
+$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';
+
 // Hooks
 $GLOBALS['TL_HOOKS']['initializeSystem'][]      = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'initializeSystem');
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][]     = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'replaceInsertTags');
@@ -9,6 +15,7 @@ $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array('Netzmacht\Bootstrap\Cor
 $GLOBALS['TL_HOOKS']['parseTemplate'][]  = array('Netzmacht\Bootstrap\Core\Contao\Hooks', 'addIconStylesheet');
 // Event subscribers
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\CoreSubscriber';
+$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\ConfigSubscriber';
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'Netzmacht\Bootstrap\Core\Subscriber\AssetsCollector';
 
 if(TL_MODE == 'BE') {

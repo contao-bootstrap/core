@@ -3,8 +3,11 @@
 namespace Netzmacht\Bootstrap\Core\Subscriber;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
+use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
+use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
@@ -14,68 +17,81 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class CoreSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Returns an array of event names this subscriber wants to listen to.
+     *
+     * @return array The event names to listen to
+     *
+     * @api
+     */
+    public static function getSubscribedEvents()
+    {
+        return array(
+            InitializeEnvironmentEvent::NAME => array(
+                array('loadConfig', 1000),
+                array('importContaoSettings', 1000)
+            ),
+            ReplaceInsertTagsEvent::NAME  => 'replaceIconInsertTag',
+        );
+    }
 
-	/**
-	 * Returns an array of event names this subscriber wants to listen to.
-	 *
-	 * @return array The event names to listen to
-	 *
-	 * @api
-	 */
-	public static function getSubscribedEvents()
-	{
-		return array(
-			InitializeEnvironmentEvent::NAME => array(array('loadConfig', 1000), array('importContaoSettings', 1000)),
-			ReplaceInsertTagsEvent::NAME     => 'replaceIconInsertTag',
-		);
-	}
+    /**
+     * @param InitializeEnvironmentEvent $event
+     */
+    public function loadConfig(InitializeEnvironmentEvent $event)
+    {
+        $config = $event->getEnvironment()->getConfig();
 
+        $this->loadConfigFromModules($config);
+        $this->loadConfigFromGlobals($config);
+    }
 
-	/**
-	 * @param InitializeEnvironmentEvent $event
-	 */
-	public function loadConfig(InitializeEnvironmentEvent $event)
-	{
-		$config = $event->getEnvironment()->getConfig();
+    /**
+     * @param InitializeEnvironmentEvent $event
+     */
+    public function importContaoSettings(InitializeEnvironmentEvent $event)
+    {
+        $config = $event->getEnvironment()->getConfig();
 
-		// load config from module files
-		$files = glob(TL_ROOT . '/system/modules/*/config/contao-bootstrap.php');
+        if($GLOBALS['TL_CONFIG']['bootstrapIconSet']) {
+            $config->set('icons.active', $GLOBALS['TL_CONFIG']['bootstrapIconSet']);
+        }
+    }
 
-		foreach($files as $file) {
-			$config->import($file);
-		}
+    /**
+     * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent $event
+     */
+    public function replaceIconInsertTag(ReplaceInsertTagsEvent $event)
+    {
+        if($event->getTag() == 'icon' || $event->getTag() == 'i') {
+            $icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
 
-		// support deprecated config
-		if(isset($GLOBALS['BOOTSTRAP'])) {
-			$config->merge($GLOBALS['BOOTSTRAP']);
-		}
-	}
+            $event->setHtml($icon);
+            $event->stopPropagation();
+        }
+    }
 
+    /**
+     * @param $config
+     */
+    private function loadConfigFromModules(Config $config)
+    {
+        // load config from module files
+        $files = glob(TL_ROOT . '/system/modules/*/config/contao-bootstrap.php');
 
-	/**
-	 * @param InitializeEnvironmentEvent $event
-	 */
-	public function importContaoSettings(InitializeEnvironmentEvent $event)
-	{
-		$config = $event->getEnvironment()->getConfig();
+        foreach ($files as $file) {
+            $config->import($file);
+        }
+    }
 
-		if($GLOBALS['TL_CONFIG']['bootstrapIconSet']) {
-			$config->set('icons.active', $GLOBALS['TL_CONFIG']['bootstrapIconSet']);
-		}
-	}
-
-
-	/**
-	 * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent $event
-	 */
-	public function replaceIconInsertTag(ReplaceInsertTagsEvent $event)
-	{
-		if($event->getTag() == 'icon' || $event->getTag() == 'i') {
-			$icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
-
-			$event->setHtml($icon);
-			$event->stopPropagation();
-		}
-	}
-
+    /**
+     * @param $config
+     */
+    private function loadConfigFromGlobals(Config $config)
+    {
+        // support deprecated config
+        if (isset($GLOBALS['BOOTSTRAP'])) {
+            $config->merge($GLOBALS['BOOTSTRAP']);
+        }
+    }
 }
