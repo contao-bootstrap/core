@@ -6,126 +6,116 @@ use Symfony\Component\EventDispatcher\Event;
 
 class ReplaceInsertTagsEvent extends Event
 {
-	const NAME = 'bootstrap.replace-insert-tags';
+    const NAME = 'bootstrap.replace-insert-tags';
 
-	/**
-	 * @var string
-	 */
-	protected $html;
+    /**
+     * @var string
+     */
+    protected $html;
 
-	/**
-	 * @var string
-	 */
-	protected $tag;
+    /**
+     * @var string
+     */
+    protected $tag;
 
-	/**
-	 * @var bool
-	 */
-	protected $cached;
+    /**
+     * @var bool
+     */
+    protected $cached;
 
-	/**
-	 * @var array
-	 */
-	protected $params = array();
+    /**
+     * @var array
+     */
+    protected $params = array();
 
+    /**
+     * @param $tag
+     * @param array $params
+     * @param bool $cached
+     */
+    public function __construct($tag, array $params = array(), $cached = true)
+    {
+        $this->tag    = $tag;
+        $this->params = $params;
+        $this->cached = $cached;
+    }
 
-	/**
-	 * @param $tag
-	 * @param array $params
-	 * @param bool $cached
-	 */
-	function __construct($tag, array $params=array(), $cached=true)
-	{
-		$this->tag    = $tag;
-		$this->params = $params;
-		$this->cached = $cached;
-	}
+    /**
+     * @param string $html
+     * @return $this
+     */
+    public function setHtml($html)
+    {
+        $this->html = $html;
 
+        return $this;
+    }
 
-	/**
-	 * @param string $html
-	 * @return $this
-	 */
-	public function setHtml($html)
-	{
-		$this->html = $html;
+    /**
+     * @return string
+     */
+    public function getHtml()
+    {
+        return $this->html;
+    }
 
-		return $this;
-	}
+    /**
+     * @param array $params
+     * @return $this
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
 
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getHtml()
-	{
-		return $this->html;
-	}
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
 
+    /**
+     * @param $index
+     * @return string|null
+     */
+    public function getParam($index)
+    {
+        if (isset($this->params[$index])) {
+            return $this->params[$index];
+        }
 
-	/**
-	 * @param array $params
-	 * @return $this
-	 */
-	public function setParams($params)
-	{
-		$this->params = $params;
+        return null;
+    }
 
-		return $this;
-	}
+    /**
+     * @param $index
+     * @param $value
+     * @return $this
+     */
+    public function setParam($index, $value)
+    {
+        $this->params[$index] = $value;
 
+        return $this;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getParams()
-	{
-		return $this->params;
-	}
+    /**
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
 
-
-	/**
-	 * @param $index
-	 * @return string|null
-	 */
-	public function getParam($index)
-	{
-		if(isset($this->params[$index])) {
-			return $this->params[$index];
-		}
-
-		return null;
-	}
-
-
-	/**
-	 * @param $index
-	 * @param $value
-	 * @return $this
-	 */
-	public function setParam($index, $value)
-	{
-		$this->params[$index] = $value;
-
-		return $this;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getTag()
-	{
-		return $this->tag;
-	}
-
-
-	/**
-	 * @return bool
-	 */
-	public function isCached()
-	{
-		return $this->cached;
-	}
-
-} 
+    /**
+     * @return bool
+     */
+    public function isCached()
+    {
+        return $this->cached;
+    }
+}

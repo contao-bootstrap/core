@@ -29,7 +29,7 @@ class TypeManager
      * @param Config $config
      * @param Type[] $types
      */
-    function __construct(Config $config, $types)
+    public function __construct(Config $config, $types)
     {
         $this->config = $config;
         $this->types  = $types;
@@ -60,7 +60,7 @@ class TypeManager
     }
 
     /**
-     * @param bool $keysOnly
+     * @param  bool         $keysOnly
      * @return Type[]|array
      */
     public function getUnusedTypes($keysOnly = false)
@@ -86,14 +86,14 @@ class TypeManager
     }
 
     /**
-     * @param bool $keysOnly
+     * @param  bool         $keysOnly
      * @return Type[]|array
      */
     public function getExistingTypes($keysOnly = false)
     {
         $types = array_filter(
             $this->types,
-            function(Type $type) {
+            function (Type $type) {
                 return $this->config->has($type->getPath());
             }
         );
@@ -106,7 +106,7 @@ class TypeManager
     }
 
     /**
-     * @param string $typeName of a multiple type
+     * @param  string $typeName of a multiple type
      * @return array
      */
     public function getExistingNames($typeName)
@@ -120,14 +120,14 @@ class TypeManager
     }
 
     /**
-     * @param bool $keysOnly
+     * @param  bool         $keysOnly
      * @return Type[]|array
      */
-    public function getTypesWithGlobalScope($keysOnly=false)
+    public function getTypesWithGlobalScope($keysOnly = false)
     {
         $types = array_filter(
             $this->types,
-            function(Type $type) {
+            function (Type $type) {
                 return $type->hasGlobalScope();
             }
         );
@@ -167,12 +167,13 @@ class TypeManager
             try {
                 $type = $this->getType($model->type);
                 $type->buildConfig($this->config, $model);
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 \Controller::log(
-                    sprintf('Unknown bootstrap config type "%s" (ID %s) stored in database',
+                    sprintf(
+                        'Unknown bootstrap config type "%s" (ID %s) stored in database',
                         $model->type,
-                        $model->id),
+                        $model->id
+                    ),
                     __METHOD__,
                     'TL_ERROR'
                 );

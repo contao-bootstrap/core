@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Bootstrap\Core\Util;
 
-
 class Contao
 {
     /**
@@ -35,10 +34,10 @@ class Contao
     {
         if (TL_MODE == 'BE') {
             return \BackendUser::getInstance();
-        } else if(TL_MODE == 'FE') {
+        } elseif (TL_MODE == 'FE') {
             return \FrontendUser::getInstance();
         }
 
         return null;
     }
-} 
+}

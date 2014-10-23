@@ -1,6 +1,7 @@
 <?php
 
 namespace Netzmacht\Bootstrap\Core;
+
 use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
 
 /**
@@ -9,154 +10,145 @@ use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
  */
 class Config
 {
+    /**
+     * @var array
+     */
+    protected $config = array();
 
-	/**
-	 * @var array
-	 */
-	protected $config = array();
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config = array())
+    {
+        $this->config = $config;
+    }
 
+    /**
+     * @param $key
+     * @param $default
+     * @return mixed
+     */
+    public function get($key, $default = null)
+    {
+        $chunks = $this->path($key);
+        $value  = $this->config;
 
-	/**
-	 * @param array $config
-	 */
-	function __construct(array $config=array())
-	{
-		$this->config = $config;
-	}
+        while (($chunk = array_shift($chunks)) !== null) {
+            if (!array_key_exists($chunk, $value)) {
+                return $default;
+            }
 
+            $value = $value[$chunk];
+        }
 
-	/**
-	 * @param $key
-	 * @param $default
-	 * @return mixed
-	 */
-	public function get($key, $default=null)
-	{
-		$chunks = $this->path($key);
-		$value  = $this->config;
+        return $value;
+    }
 
-		while (($chunk = array_shift($chunks)) !== null) {
-			if (!array_key_exists($chunk, $value)) {
-				return $default;
-			}
+    /**
+     * @param $key
+     * @param $value
+     * @return $this
+     */
+    public function set($key, $value)
+    {
+        $chunks = $this->path($key);
+        $name    = array_pop($chunks);
+        $config = &$this->config;
 
-			$value = $value[$chunk];
-		}
+        foreach ($chunks as $chunk) {
+            if (!array_key_exists($chunk, $config)) {
+                $config[$chunk] = array();
+            }
 
-		return $value;
-	}
+            $config = &$config[$chunk];
+        }
 
+        $config[$name] = $value;
 
-	/**
-	 * @param $key
-	 * @param $value
-	 * @return $this
-	 */
-	public function set($key, $value)
-	{
-		$chunks = $this->path($key);
-		$name	= array_pop($chunks);
-		$config = &$this->config;
+        return $this;
+    }
 
-		foreach($chunks as $chunk) {
-			if (!array_key_exists($chunk, $config)) {
-				$config[$chunk] = array();
-			}
+    /**
+     * @param $key
+     * @return $this
+     */
+    public function remove($key)
+    {
+        $chunks = $this->path($key);
+        $name    = array_pop($chunks);
+        $config = &$this->config;
 
-			$config = &$config[$chunk];
-		}
+        foreach ($chunks as $chunk) {
+            if (!array_key_exists($chunk, $config)) {
+                return $this;
+            }
 
-		$config[$name] = $value;
+            $config = &$config[$chunk];
+        }
 
-		return $this;
-	}
+        unset($config[$name]);
 
+        return $this;
+    }
 
-	/**
-	 * @param $key
-	 * @return $this
-	 */
-	public function remove($key)
-	{
-		$chunks = $this->path($key);
-		$name	= array_pop($chunks);
-		$config = &$this->config;
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        $chunks = $this->path($key);
+        $value  = $this->config;
 
-		foreach($chunks as $chunk) {
-			if (!array_key_exists($chunk, $config)) {
-				return $this;
-			}
+        while (($chunk = array_shift($chunks)) !== null) {
+            if (!array_key_exists($chunk, $value)) {
+                return false;
+            }
 
-			$config = &$config[$chunk];
-		}
+            $value = $value[$chunk];
+        }
 
-		unset($config[$name]);
+        return true;
+    }
 
-		return $this;
-	}
+    /**
+     * @param array $data
+     * @param null $path
+     * @return $this
+     */
+    public function merge(array $data, $path = null)
+    {
+        if ($path) {
+            $config = (array) $this->get($path);
+            $config = ArrayUtil::merge($config, $data);
 
+            $this->set($path, $config);
+        } else {
+            $this->config = ArrayUtil::merge($this->config, $data);
+        }
 
-	/**
-	 * @param $key
-	 * @return bool
-	 */
-	public function has($key)
-	{
-		$chunks = $this->path($key);
-		$value  = $this->config;
+        return $this;
+    }
 
-		while (($chunk = array_shift($chunks)) !== null) {
-			if (!array_key_exists($chunk, $value)) {
-				return false;
-			}
+    /**
+     * @param $file
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     */
+    public function import($file)
+    {
+        if (!file_exists($file)) {
+            throw new \InvalidArgumentException(sprintf('File "%s" not found', $file));
+        }
 
-			$value = $value[$chunk];
-		}
+        $config = include $file;
 
-		return true;
-	}
+        if (!is_array($config)) {
+            throw new \RuntimeException('Loaded config is not an array');
+        }
 
-
-	/**
-	 * @param array $data
-	 * @param null $path
-	 * @return $this
-	 */
-	public function merge(array $data, $path=null)
-	{
-		if($path) {
-			$config = (array) $this->get($path);
-			$config = ArrayUtil::merge($config, $data);
-
-			$this->set($path, $config);
-		}
-		else {
-			$this->config = ArrayUtil::merge($this->config, $data);
-		}
-
-		return $this;
-	}
-
-
-	/**
-	 * @param $file
-	 * @throws \RuntimeException
-	 * @throws \InvalidArgumentException
-	 */
-	public function import($file)
-	{
-		if(!file_exists($file)) {
-			throw new \InvalidArgumentException(sprintf('File "%s" not found', $file));
-		}
-
-		$config = include $file;
-
-		if(!is_array($config)) {
-			throw new \RuntimeException('Loaded config is not an array');
-		}
-
-		$this->merge($config);
-	}
+        $this->merge($config);
+    }
 
     /**
      * @param $path
@@ -170,5 +162,4 @@ class Config
 
         return (array) $path;
     }
-
-} 
+}

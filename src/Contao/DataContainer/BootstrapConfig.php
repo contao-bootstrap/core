@@ -11,9 +11,7 @@
 
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
-
 use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Config\TypeFactory;
 use Netzmacht\Bootstrap\Core\Config\TypeManager;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -33,12 +31,12 @@ class BootstrapConfig extends \Backend
     /**
      * Construct
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
-        $this->eventDispatcher   = $GLOBALS['container']['event-dispatcher'];
-        $this->typeManager       = $GLOBALS['container']['bootstrap.config-type-manager'];;
+        $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
+        $this->typeManager     = $GLOBALS['container']['bootstrap.config-type-manager'];
 
         $this->loadLanguageFile('bootstrap_config_types');
     }
@@ -66,7 +64,7 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param \DataContainer $dataContainer
+     * @param  \DataContainer $dataContainer
      * @return array
      */
     public function getTypes(\DataContainer $dataContainer)
@@ -75,15 +73,13 @@ class BootstrapConfig extends \Backend
 
         if (!$dataContainer->activeRecord) {
             $types = $this->typeManager->getNames();
-        }
-        elseif ($dataContainer->activeRecord->override) {
+        } elseif ($dataContainer->activeRecord->override) {
             $types = $this->typeManager->getExistingTypes();
-        }
-        else {
+        } else {
             $types = $this->typeManager->getUnusedTypes();
         }
 
-        foreach($types as $name => $type) {
+        foreach (array_keys($types) as $name) {
             $options[$name] = $name;
         }
 
@@ -91,14 +87,14 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param \DataContainer $dataContainer
+     * @param  \DataContainer $dataContainer
      * @return array
      */
     public function getNames(\DataContainer $dataContainer)
     {
         $options = array();
 
-        if(!$dataContainer->activeRecord) {
+        if (!$dataContainer->activeRecord) {
             return $options;
         }
 
@@ -111,7 +107,7 @@ class BootstrapConfig extends \Backend
 
             $names = $this->typeManager->getExistingNames($dataContainer->activeRecord->type);
 
-            foreach($names as $type) {
+            foreach ($names as $type) {
                 $options[$type] = $type;
             }
         }
@@ -121,25 +117,25 @@ class BootstrapConfig extends \Backend
 
     /**
      * @param $value
-     * @param \DataContainer $dc
+     * @param \DataContainer $dataContainer
      */
-    public function importFromConfig($value, \DataContainer $dc)
+    public function importFromConfig($value, \DataContainer $dataContainer)
     {
-        $type   = $this->typeManager->getType($value);
+        $type = $this->typeManager->getType($value);
 
-        if ($dc->activeRecord->override && \Input::get('override')) {
-            if (!$dc->activeRecord->name) {
-                $dc->activeRecord->name = \Input::post('name');
+        if ($dataContainer->activeRecord->override && \Input::get('override')) {
+            if (!$dataContainer->activeRecord->name) {
+                $dataContainer->activeRecord->name = \Input::post('name');
             }
 
-            if (!$type->isMultiple() || $dc->activeRecord->name) {
+            if (!$type->isMultiple() || $dataContainer->activeRecord->name) {
                 $key = $type->getPath();
 
                 if ($type->isMultiple()) {
-                    $key .= '.' . $dc->activeRecord->name;
+                    $key .= '.' . $dataContainer->activeRecord->name;
                 }
 
-                $model = BootstrapConfigModel::findByPk($dc->id);
+                $model = BootstrapConfigModel::findByPk($dataContainer->id);
                 $model->type = $value;
 
                 $type->extractConfig($key, Bootstrap::getConfig(), $model);
@@ -156,10 +152,8 @@ class BootstrapConfig extends \Backend
     /**
      * @param $table
      * @param $configId
-     * @param $row
-     * @param \DataContainer $dc
      */
-    public function addOverrideInformation($table, $configId, $row, \DataContainer $dc)
+    public function addOverrideInformation($table, $configId)
     {
         if ($table == 'tl_bootstrap_config' && \Input::get('override')) {
             \Database::getInstance()
@@ -180,7 +174,6 @@ class BootstrapConfig extends \Backend
         }
 
         $label .= '<p class="tl_gray"> ' . ($row['description']) . '</p>';
-
 
         return $label;
     }
@@ -206,7 +199,7 @@ class BootstrapConfig extends \Backend
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
         $user = \BackendUser::getInstance();
-        
+
         if (strlen(\Input::get('tid'))) {
             $this->toggleVisibility(\Input::get('tid'), (\Input::get('state') == 0));
             $this->redirect($this->getReferer());
@@ -241,10 +234,15 @@ class BootstrapConfig extends \Backend
     public function toggleVisibility($configId, $published)
     {
         $user = \BackendUser::getInstance();
-        
+
         // Check permissions to publish
         if (!$user->isAdmin && !$user->hasAccess('tl_bootstrap_config::published', 'alexf')) {
-            $this->log('Not enough permissions to show/hide record ID "'.$configId.'"', 'tl_bootstrap_config toggleVisibility', TL_ERROR);
+            $this->log(
+                'Not enough permissions to show/hide record ID "'.$configId.'"',
+                'tl_bootstrap_config toggleVisibility',
+                TL_ERROR
+            );
+
             $this->redirect('contao/main.php?act=error');
         }
 
@@ -252,7 +250,9 @@ class BootstrapConfig extends \Backend
 
         // Trigger the save_callback
         if (isset($GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'])) {
-            foreach ((array)$GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'] as $callback) {
+            $callbacks = (array) $GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'];
+
+            foreach ($callbacks as $callback) {
                 $this->import($callback[0]);
                 $published = $this->$callback[0]->$callback[1]($published, $this);
             }
@@ -285,7 +285,7 @@ class BootstrapConfig extends \Backend
             throw new \InvalidArgumentException('File does not return a valid icon configuration');
         }
 
-        foreach ($categories as $name => $icons) {
+        foreach ($categories as $icons) {
             if (!is_array($icons)) {
                 throw new \InvalidArgumentException('File does not return a valid icon configuration');
             }
@@ -293,5 +293,4 @@ class BootstrapConfig extends \Backend
 
         return $file;
     }
-
-} 
+}

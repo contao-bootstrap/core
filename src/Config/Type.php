@@ -11,21 +11,20 @@
 
 namespace Netzmacht\Bootstrap\Core\Config;
 
-
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Config;
 
 interface Type
 {
     /**
-     * @param Config $config
+     * @param Config               $config
      * @param BootstrapConfigModel $model
      */
     public function buildConfig(Config $config, BootstrapConfigModel $model);
 
     /**
      * @param $key
-     * @param Config $config
+     * @param Config               $config
      * @param BootstrapConfigModel $model
      */
     public function extractConfig($key, Config $config, BootstrapConfigModel $model);
@@ -44,4 +43,4 @@ interface Type
      * @return string
      */
     public function getPath();
-} 
+}

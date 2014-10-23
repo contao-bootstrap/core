@@ -69,4 +69,4 @@ class ConfigSubscriber implements EventSubscriberInterface
     {
         return $GLOBALS['container']['bootstrap.config-type-manager'];
     }
-} 
+}

@@ -25,6 +25,9 @@
         "contao-community-alliance/event-dispatcher": "~1.0",
         "contao-community-alliance/dependency-container": "~1.4"
     },
+    "require-dev": {
+        "netzmacht/contao-build-tools": "1.0.x-dev"
+    },
     "conflict": {
         "netzmacht/contao-bootstrap": "*"
     },
@@ -45,5 +48,7 @@
                 "module": "system/modules/bootstrap-core"
             }
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

@@ -18,7 +18,7 @@ use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 class DropdownType implements Type
 {
     /**
-     * @param Config $config
+     * @param Config               $config
      * @param BootstrapConfigModel $model
      */
     public function buildConfig(Config $config, BootstrapConfigModel $model)
@@ -29,7 +29,7 @@ class DropdownType implements Type
 
     /**
      * @param $key
-     * @param Config $config
+     * @param Config               $config
      * @param BootstrapConfigModel $model
      */
     public function extractConfig($key, Config $config, BootstrapConfigModel $model)
@@ -61,4 +61,4 @@ class DropdownType implements Type
     {
         return 'dropdown';
     }
-} 
+}

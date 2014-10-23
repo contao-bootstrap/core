@@ -22,20 +22,18 @@ class Hooks
      */
     protected $environment;
 
-
     /**
      * Construct
      */
-    function __construct()
+    public function __construct()
     {
         $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
         $this->environment     = $GLOBALS['container']['bootstrap.environment'];
     }
 
-
     /**
      * @param $tag
-     * @param bool $cache
+     * @param  bool   $cache
      * @return string
      */
     public function replaceInsertTags($tag, $cache = true)
@@ -46,9 +44,8 @@ class Hooks
 
         $this->eventDispatcher->dispatch($event::NAME, $event);
 
-        return $event->getHtml() ? : false;
+        return $event->getHtml() ?: false;
     }
-
 
     /**
      * Initialize bootstrap at initialize system hook
@@ -59,7 +56,6 @@ class Hooks
         $this->selectIconSet();
     }
 
-
     /**
      * Initialize bootstrap environment
      */
@@ -68,7 +64,6 @@ class Hooks
         $event = new InitializeEnvironmentEvent($this->environment);
         $this->eventDispatcher->dispatch($event::NAME, $event);
     }
-
 
     /**
      * Initialize Layout
@@ -103,7 +98,7 @@ class Hooks
             $css = Bootstrap::getConfigVar(sprintf('icons.sets.%s.stylesheet', $active));
             $stylesheets = $template->stylesheets;
 
-            foreach ((array)$css as $file) {
+            foreach ((array) $css as $file) {
                 $stylesheets .= sprintf('<link rel="stylesheet" href="%s">', $file);
             }
 
@@ -122,7 +117,7 @@ class Hooks
         $template = $config->get(sprintf('icons.sets.%s.template', $active));
         $path     = $config->get(sprintf('icons.sets.%s.path', $active));
 
-        if( $active && $path && file_exists(TL_ROOT . '/' . $path)) {
+        if ($active && $path && file_exists(TL_ROOT . '/' . $path)) {
             $icons = include TL_ROOT . '/' . $path;
             $iconSet
                 ->setIconSetName($active)

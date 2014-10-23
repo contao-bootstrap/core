@@ -32,10 +32,11 @@ class BootstrapConfigModel extends \Model
      *
      * @param int   $themeId
      * @param array $options
+     * @param bool  $ignoreGlobal
      *
      * @return \Model\Collection|null
      */
-    public static function findPublishedByTheme($themeId, array $options=array(), $ignoreGlobal=true)
+    public static function findPublishedByTheme($themeId, array $options = array(), $ignoreGlobal = true)
     {
         if (!isset($options['order'])) {
             $options['order'] = 'sorting';
@@ -65,7 +66,7 @@ class BootstrapConfigModel extends \Model
      *
      * @return \Model\Collection|null
      */
-    public static function findGlobalPublished(array $options=array())
+    public static function findGlobalPublished(array $options = array())
     {
         if (!isset($options['order'])) {
             $options['order'] = 'sorting';
@@ -106,4 +107,4 @@ class BootstrapConfigModel extends \Model
 
         return $ins;
     }
-} 
+}

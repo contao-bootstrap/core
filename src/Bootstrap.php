@@ -9,95 +9,87 @@ namespace Netzmacht\Bootstrap\Core;
  */
 class Bootstrap
 {
-	/**
-	 * @var Environment
-	 */
-	private static $environment;
+    /**
+     * @var Environment
+     */
+    private static $environment;
 
-	/**
-	 * Returns true if Bootstrap is enabled
-	 *
-	 * @return bool
-	 */
-	public static function isEnabled()
-	{
-		return static::getEnvironment()->isEnabled();
-	}
+    /**
+     * Returns true if Bootstrap is enabled
+     *
+     * @return bool
+     */
+    public static function isEnabled()
+    {
+        return static::getEnvironment()->isEnabled();
+    }
 
+    /**
+     * @param $key
+     * @param null $default
+     * @return mixed
+     */
+    public static function getConfigVar($key, $default = null)
+    {
+        return static::getConfig()->get($key, $default);
+    }
 
-	/**
-	 * @param $key
-	 * @param null $default
-	 * @return mixed
-	 */
-	public static function getConfigVar($key, $default=null)
-	{
-		return static::getConfig()->get($key, $default);
-	}
+    /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public static function setConfigVar($key, $value)
+    {
+        static::getConfig()->set($key, $value);
+    }
 
+    /**
+     * Returns the bootstrap configuration
+     *
+     * @return Config
+     */
+    public static function getConfig()
+    {
+        return static::getEnvironment()->getConfig();
+    }
 
-	/**
-	 * @param string $key
-	 * @param mixed $value
-	 */
-	public static function setConfigVar($key, $value)
-	{
-		static::getConfig()->set($key, $value);
-	}
+    /**
+     * Generates an icon
+     *
+     * @param $icon
+     * @param null $class
+     * @return string
+     */
+    public static function generateIcon($icon, $class = null)
+    {
+        return static::getIconSet()->generateIcon($icon, $class);
+    }
 
+    /**
+     * @return \Netzmacht\Bootstrap\Core\IconSet
+     */
+    public static function getIconSet()
+    {
+        return static::getEnvironment()->getIconSet();
+    }
 
-	/**
-	 * Returns the bootstrap configuration
-	 *
-	 * @return Config
-	 */
-	public static function getConfig()
-	{
-		return static::getEnvironment()->getConfig();
-	}
+    /**
+     * @return \LayoutModel|null
+     */
+    public static function getPageLayout()
+    {
+        return static::getEnvironment()->getLayout();
+    }
 
+    /**
+     * @return \Netzmacht\Bootstrap\Core\Environment
+     */
+    public static function getEnvironment()
+    {
+        if (!self::$environment) {
+            self::$environment = $GLOBALS['container']['bootstrap.environment'];
+        }
 
-	/**
-	 * Generates an icon
-	 *
-	 * @param $icon
-	 * @param null $class
-	 * @return string
-	 */
-	public static function generateIcon($icon, $class=null)
-	{
-		return static::getIconSet()->generateIcon($icon, $class);
-	}
-
-
-	/**
-	 * @return \Netzmacht\Bootstrap\Core\IconSet
-	 */
-	public static function getIconSet()
-	{
-		return static::getEnvironment()->getIconSet();
-	}
-
-
-	/**
-	 * @return \LayoutModel|null
-	 */
-	public static function getPageLayout()
-	{
-		return static::getEnvironment()->getLayout();
-	}
-
-
-	/**
-	 * @return \Netzmacht\Bootstrap\Core\Environment
-	 */
-	public static function getEnvironment()
-	{
-		if(!self::$environment) {
-			self::$environment = $GLOBALS['container']['bootstrap.environment'];
-		}
-		
-		return self::$environment;
-	}
-
-} 
+        return self::$environment;
+    }
+}

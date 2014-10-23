@@ -13,286 +13,270 @@ use Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper\Helper;
  */
 class Wrapper
 {
+    /**
+     * @var int
+     */
+    const TRIGGER_CREATE = 'trigger-create';
 
-	/**
-	 * @var int
-	 */
-	const TRIGGER_CREATE = 'trigger-create';
+    /**
+     * @var int
+     */
+    const TRIGGER_DELETE = 'trigger-delete';
 
-	/**
-	 * @var int
-	 */
-	const TRIGGER_DELETE = 'trigger-delete';
+    /**
+     * order const ascending
+     */
+    const ORDER_ASC = 'asc';
 
-	/**
-	 * order const ascending
-	 */
-	const ORDER_ASC = 'asc';
+    /**
+     * order const descending
+     */
+    const ORDER_DESC = 'desc';
 
-	/**
-	 * order const descending
-	 */
-	const ORDER_DESC = 'desc';
+    /**
+     * @var Helper
+     */
+    protected $wrapper;
 
-	/**
-	 * @var Helper
-	 */
-	protected $wrapper;
+    /**
+     * Try to create wrapper elements, triggered by save_callback of type field
+     * @param $value
+     * @param $dataContainer
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function save($value, $dataContainer)
+    {
+        $start   = Helper::TYPE_START;
+        $stop    = Helper::TYPE_STOP;
+        $sep     = Helper::TYPE_SEPARATOR;
+        $record  = $dataContainer->activeRecord;
+        $sorting = $record->sorting;
 
+        // try to create wrapper helper. will throw an exception if an unknown type is selected
+        try {
+            $wrapper = Helper::create($record);
+            $this->wrapper = $wrapper;
+        } catch (\Exception $e) {
+            return $value;
+        }
 
-	/**
-	 * Try to create wrapper elements, triggered by save_callback of type field
-	 * @param $value
-	 * @param $dc
-	 *
-	 * @return mixed
-	 * @throws \Exception
-	 */
-	public function save($value, $dc)
-	{
-		$start   = Helper::TYPE_START;
-		$stop    = Helper::TYPE_STOP;
-		$sep     = Helper::TYPE_SEPARATOR;
-		$record  = $dc->activeRecord;
-		$sorting = $record->sorting;
+        $set = array();
 
-		// try to create wrapper helper. will throw an exception if an unknown type is selected
-		try {
-			$wrapper = Helper::create($record);
-			$this->wrapper = $wrapper;
-		}
-		catch(\Exception $e) {
-			return $value;
-		}
+        // check for existing parent element and try to create it if not existing
+        if (!$wrapper->isTypeOf($start)) {
 
-		$set = array();
+            if ($record->bootstrap_parentId == '') {
+                $parent = $wrapper->findPreviousElement($start);
 
+                if ($parent) {
+                    // set relation to parent element
+                    $set['bootstrap_parentId'] = $parent->id;
 
-		// check for existing parent element and try to create it if not existing
-		if(!$wrapper->isTypeOf($start)) {
+                    $end = $wrapper->findRelatedElement($record, $stop);
 
-			if($record->bootstrap_parentId == '') {
-				$parent = $wrapper->findPreviousElement($start);
+                    if ($end === null) {
+                        $set['sorting'] = $parent->sorting + 2;
+                    } elseif ($parent !== null && $parent->sorting > $end->sorting) {
+                        $set['sorting'] = $end->sorting - 2;
+                    }
 
-				if($parent) {
-					// set relation to parent element
-					$set['bootstrap_parentId'] = $parent->id;
+                    foreach ($set as $name => $v) {
+                        $record->$name = $v;
+                    }
 
-					$end = $wrapper->findRelatedElement($record, $stop);
+                    \Database::getInstance()
+                        ->prepare('UPDATE tl_content %s WHERE id=?')
+                        ->set($set)
+                        ->execute($record->id);
+                } elseif ($this->isTrigger($wrapper->getType(), $start)) {
+                    // create parent if possible
 
-					if($end === null) {
-						$set['sorting'] = $parent->sorting + 2;
-					}
-					elseif($parent !== null && $parent->sorting > $end->sorting) {
-						$set['sorting'] = $end->sorting - 2;
-					}
+                    $sorting = $sorting-2;
+                    $this->createElement($record, $sorting, $start);
+                } else {
+                    // no parent element exists, throw error
 
-					foreach($set as $name => $v) {
-						$record->$name = $v;
-					}
+                    throw new \Exception(sprintf(
+                        $GLOBALS['TL_LANG']['ERR']['wrapperStartNotExists'],
+                        $GLOBALS['TL_LANG']['CTE'][$value][0] ?: $value
+                    ));
+                }
+            }
+        }
 
-					\Database::getInstance()
-						->prepare('UPDATE tl_content %s WHERE id=?')
-						->set($set)
-						->execute($record->id);
-				}
+        // create separators if possible
+        if (!$wrapper->isTypeOf($sep)
+            && ($this->isTrigger($wrapper->getType(), $sep)
+                || $this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_CREATE))
+        ) {
+            $config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
 
-				// create parent if possible
-				elseif($this->isTrigger($wrapper->getType(), $start)) {
-					$sorting = $sorting-2;
-					$this->createElement($record, $sorting, $start);
-				}
+            $callback = $config['count-existing'];
+            $instance = \Controller::importStatic($callback[0]);
+            $existing = $instance->$callback[1]($record, $wrapper);
 
-				// no parent element exists, throw error
-				else {
-					throw new \Exception(sprintf(
-						$GLOBALS['TL_LANG']['ERR']['wrapperStartNotExists'],
-						$GLOBALS['TL_LANG']['CTE'][$value][0] ?: $value
-					));
-				}
-			}
-		}
+            $callback = $config['count-required'];
+            $instance = \Controller::importStatic($callback[0]);
+            $required = $instance->$callback[1]($record, $wrapper);
 
-		// create separators if possible
-		if(!$wrapper->isTypeOf($sep) &&
-			($this->isTrigger($wrapper->getType(), $sep) ||
-				$this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_CREATE))
-		) {
-			$config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
+            if ($existing < $required) {
+                if ($this->isTrigger($wrapper->getType(), $sep)) {
+                    $count = $required - $existing;
 
-			$callback = $config['count-existing'];
-			$instance = \Controller::importStatic($callback[0]);
-			$existing = $instance->$callback[1]($record, $wrapper);
+                    for ($i = 0; $i < $count; $i++) {
+                        $this->createElement($record, $sorting, $sep);
+                    }
 
-			$callback = $config['count-required'];
-			$instance = \Controller::importStatic($callback[0]);
-			$required = $instance->$callback[1]($record, $wrapper);
+                    $end = $wrapper->findRelatedElement($stop);
 
-			if($existing < $required) {
-				if($this->isTrigger($wrapper->getType(), $sep)) {
-					$count = $required - $existing;
+                    if ($end && $end->sorting <= $sorting) {
+                        $sorting = $sorting + 2;
+                        $end->sorting = $sorting;
+                        $end->save();
+                    }
+                }
+            } elseif ($required < $existing) {
+                if ($this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_DELETE)) {
+                    $count    = $existing - $required;
+                    $parentId = $wrapper->isTypeOf($start)
+                        ? $record->id
+                        : $record->bootstrap_parentId;
 
-					for($i = 0; $i < $count; $i++) {
-						$this->createElement($record, $sorting, $sep);
-					}
+                    \Database::getInstance()
+                        ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=? ORDER BY sorting DESC')
+                        ->limit($count)
+                        ->execute($parentId, $wrapper->getTypeName($sep));
+                }
+            }
+        }
 
-					$end = $wrapper->findRelatedElement($stop);
+        // cereate end element
+        if ($wrapper->isTypeOf($start) && $this->isTrigger($wrapper->getType(), $stop)) {
+            $end = $wrapper->countRelatedElements($stop);
 
-					if($end && $end->sorting <= $sorting) {
-						$sorting = $sorting + 2;
-						$end->sorting = $sorting;
-						$end->save();
-					}
-				}
-			}
-			elseif($required < $existing) {
-				if($this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_DELETE)) {
-					$count    = $existing - $required;
-					$parentId = $wrapper->isTypeOf($start)
-						? $record->id
-						: $record->bootstrap_parentId;
+            if (!$end) {
+                $this->createElement($record, $sorting, $stop);
+            }
+        }
 
-					\Database::getInstance()
-						->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=? ORDER BY sorting DESC')
-						->limit($count)
-						->execute($parentId, $wrapper->getTypeName($sep));
-				}
-			}
-		}
+        return $value;
+    }
 
-		// cereate end element
-		if($wrapper->isTypeOf($start) && $this->isTrigger($wrapper->getType(), $stop)) {
-			$end = $wrapper->countRelatedElements($stop);
+    /**
+     * handle content element deletion, called by ondelete_callback
+     * @param $dataContainer
+     */
+    public function delete($dataContainer)
+    {
+        $model = \ContentModel::findByPk($dataContainer->id);
 
-			if(!$end) {
-				$this->createElement($record, $sorting, $stop);
-			}
-		}
+        try {
+            $wrapper = Helper::create($model);
+            $this->wrapper = $wrapper;
+        } catch (\Exception $e) {
+            return;
+        }
 
-		return $value;
-	}
+        if ($wrapper->isTypeOf(Helper::TYPE_START)) {
+            $deleteTypes = array();
 
+            if ($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR, static::TRIGGER_DELETE)) {
+                $deleteTypes[] = $wrapper->getTypeName(Helper::TYPE_SEPARATOR);
+            }
 
-	/**
-	 * handle content element deletion, called by ondelete_callback
-	 * @param $dc
-	 */
-	public function delete($dc)
-	{
-		$model = \ContentModel::findByPk($dc->id);
+            if ($this->isTrigger($wrapper->getType(), Helper::TYPE_STOP, static::TRIGGER_DELETE)) {
+                $deleteTypes[] = $wrapper->getTypeName(Helper::TYPE_STOP);
+            }
 
-		try {
-			$wrapper = Helper::create($model);
-			$this->wrapper = $wrapper;
-		}
-		catch(\Exception $e) {
-			return;
-		}
+            if (!empty($deleteTypes)) {
+                \Database::getInstance()
+                    ->prepare(sprintf(
+                        'DELETE FROM tl_content WHERE bootstrap_parentId=? AND type IN(\'%s\')',
+                        implode('\',\'', $deleteTypes)
+                    ))
+                    ->execute($model->id);
+            }
+        } elseif ($wrapper->isTypeOf(Helper::TYPE_STOP)) {
+            if ($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR, static::TRIGGER_DELETE)) {
+                \Database::getInstance()
+                    ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=?')
+                    ->execute(
+                        $model->bootstrap_parentId,
+                        $wrapper->getTypeName(Helper::TYPE_SEPARATOR)
+                    );
+            }
 
-		if($wrapper->isTypeOf(Helper::TYPE_START)) {
-			$deleteTypes = array();
+            if ($this->isTrigger($wrapper->getType(), Helper::TYPE_START, static::TRIGGER_DELETE)) {
+                $query = sprintf('DELETE FROM %s WHERE id=?', $model->getTable());
 
-			if($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR, static::TRIGGER_DELETE)) {
-				$deleteTypes[] = $wrapper->getTypeName(Helper::TYPE_SEPARATOR);
-			}
+                \Database::getInstance()
+                    ->prepare($query)
+                    ->execute($model->bootstrap_parentId);
+            }
+        } else {
+            // todo: handle seperator delete actions
+        }
+    }
 
-			if($this->isTrigger($wrapper->getType(), Helper::TYPE_STOP, static::TRIGGER_DELETE)) {
-				$deleteTypes[] = $wrapper->getTypeName(Helper::TYPE_STOP);
-			}
+    /**
+     * Create a new wrapper element
+     *
+     * @param $parent
+     * @param int                 $sorting
+     * @param string              $type
+     *
+     * @return \ContentModel
+     */
+    protected function createElement($parent, &$sorting, $type = Helper::TYPE_SEPARATOR)
+    {
+        $model = new \ContentModel();
 
-			if(!empty($deleteTypes)) {
-				\Database::getInstance()
-					->prepare(sprintf(
-						'DELETE FROM tl_content WHERE bootstrap_parentId=? AND type IN(\'%s\')',
-						implode('\',\'', $deleteTypes)
-					))
-					->execute($model->id);
-			}
-		}
-		elseif($wrapper->isTypeOf(Helper::TYPE_STOP)) {
-			if($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR, static::TRIGGER_DELETE)) {
-				\Database::getInstance()
-					->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=?')
-					->execute(
-						$model->bootstrap_parentId,
-						$wrapper->getTypeName(Helper::TYPE_SEPARATOR)
-					);
-			}
+        if ($type == Helper::TYPE_START) {
+            $sorting = $sorting - 2;
+        } else {
+            $sorting = $sorting + 2;
+            $model->bootstrap_parentId = $parent->id;
+        }
 
-			if($this->isTrigger($wrapper->getType(), Helper::TYPE_START, static::TRIGGER_DELETE)) {
-				$query = sprintf('DELETE FROM %s WHERE id=?', $model->getTable());
+        $model->tstamp  = time();
+        $model->pid     = $parent->pid;
+        $model->ptable  = $parent->ptable;
+        $model->type    = $this->wrapper->getTypeName($type);
+        $model->sorting = $sorting;
 
-				\Database::getInstance()
-					->prepare($query)
-					->execute($model->bootstrap_parentId);
-			}
-		}
-		else {
-			// todo: handle seperator delete actions
-		}
-	}
+        $model->save();
 
+        return $model;
+    }
 
-	/**
-	 * Create a new wrapper element
-	 *
-	 * @param $parent
-	 * @param int                 $sorting
-	 * @param string              $type
-	 *
-	 * @return \ContentModel
-	 */
-	protected function createElement($parent, &$sorting, $type=Helper::TYPE_SEPARATOR)
-	{
-		$model = new \ContentModel();
+    /**
+     * check if action can be triggered
+     *
+     * @param string $trigger
+     * @param string $target
+     * @param int    $action
+     *
+     * @return bool
+     */
+    protected function isTrigger($trigger, $target, $action = Wrapper::TRIGGER_CREATE)
+    {
+        $config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
 
-		if($type == Helper::TYPE_START) {
-			$sorting = $sorting - 2;
-		}
-		else {
-			$sorting = $sorting + 2;
-			$model->bootstrap_parentId = $parent->id;
-		}
+        if (array_key_exists($action, $config[$trigger]) && $config[$trigger][$action]) {
+            $key = $action == static::TRIGGER_DELETE ? 'auto-delete' : 'auto-create';
 
-		$model->tstamp  = time();
-		$model->pid     = $parent->pid;
-		$model->ptable  = $parent->ptable;
-		$model->type    = $this->wrapper->getTypeName($type);
-		$model->sorting = $sorting;
+            // check if count callback is defined
+            if ($target == Helper::TYPE_SEPARATOR && $action == static::TRIGGER_CREATE) {
+                if (!isset($config[$target]['count-existing']) || !isset($config[$target]['count-required'])) {
+                    return false;
+                }
+            }
 
-		$model->save();
+            return(array_key_exists($key, $config[$target]) && $config[$target][$key]);
+        }
 
-		return $model;
-	}
-
-
-	/**
-	 * check if action can be triggered
-	 *
-	 * @param string $trigger
-	 * @param string $target
-	 * @param int    $action
-	 *
-	 * @return bool
-	 */
-	protected function isTrigger($trigger, $target, $action = Wrapper::TRIGGER_CREATE)
-	{
-		$config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
-
-		if(array_key_exists($action, $config[$trigger]) && $config[$trigger][$action]) {
-			$key = $action == static::TRIGGER_DELETE ? 'auto-delete' : 'auto-create';
-
-			// check if count callback is defined
-			if($target == Helper::TYPE_SEPARATOR && $action == static::TRIGGER_CREATE) {
-				if(!isset($config[$target]['count-existing']) || !isset($config[$target]['count-required'])) {
-					return false;
-				}
-			}
-
-			return(array_key_exists($key, $config[$target]) && $config[$target][$key]);
-		}
-
-		return false;
-	}
-
+        return false;
+    }
 }

@@ -18,8 +18,8 @@ use Netzmacht\Bootstrap\Core\Config;
 class IconSetType implements Type
 {
     /**
-     * @param Config $config
-     * @param BootstrapConfigModel $model
+     * @param  Config               $config
+     * @param  BootstrapConfigModel $model
      * @return mixed
      */
     public function buildConfig(Config $config, BootstrapConfigModel $model)
@@ -28,6 +28,7 @@ class IconSetType implements Type
 
         if ($model->delete) {
             $config->remove($key);
+
             return;
         }
 
@@ -42,7 +43,7 @@ class IconSetType implements Type
 
     /**
      * @param $key
-     * @param Config $config
+     * @param Config               $config
      * @param BootstrapConfigModel $model
      */
     public function extractConfig($key, Config $config, BootstrapConfigModel $model)
@@ -85,7 +86,7 @@ class IconSetType implements Type
     }
 
     /**
-     * @param BootstrapConfigModel $model
+     * @param  BootstrapConfigModel $model
      * @return array
      */
     private function getStylesheets(BootstrapConfigModel $model)

@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Bootstrap\Core\Config;
 
-
 class TypeFactory
 {
     /**
@@ -22,7 +21,7 @@ class TypeFactory
     /**
      * @param array $types
      */
-    function __construct(array $types)
+    public function __construct(array $types)
     {
         $this->types = $types;
     }
@@ -41,7 +40,7 @@ class TypeFactory
 
         $className = $this->types[$name];
 
-        return new $className;
+        return new $className();
     }
 
     /**
@@ -51,7 +50,7 @@ class TypeFactory
     {
         $types = array();
 
-        foreach ($this->types as $name => $type) {
+        foreach (array_keys($this->types) as $name) {
             $types[$name] = $this->create($name);
         }
 
@@ -75,4 +74,4 @@ class TypeFactory
             throw new \InvalidArgumentException(sprintf('Type "%s" is not set.', $type));
         }
     }
-} 
+}
