@@ -1,5 +1,7 @@
 <?php
 
+\Controller::loadLanguageFile('default');
+
 $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
 (
     'config'                => array
@@ -35,11 +37,11 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'panelLayout'             => 'sort,search,filter,limit',
         ),
         'label'      => array(
-            'fields'         => array('name', 'type'),
-            'format'         => '%s <span class="tl_gray">[%s]</span>',
-            'group_callback' => array(
+            'fields'         => array('type'),
+            'format'         => '%s',
+            'label_callback' => array(
                 'Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig',
-                'formatGroup'
+                'generateLabel'
             ),
         ),
         'global_operations' => array(
@@ -47,7 +49,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             (
                 'label' => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['override'],
                 'href'  => sprintf('act=create&amp;mode=2&amp;pid=%s&override=1', \Input::get('id')),
-                'icon'  => 'edit.gif'
+                'class'  => 'header_theme_import'
             ),
         ),
         'operations' => array(
@@ -89,9 +91,10 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
     'metapalettes'          => array
     (
         'default'                  => array(
-            'type'      => array('type'),
-            'config'    => array(),
-            'published' => array('published'),
+            'type'        => array('type'),
+            'description' => array(':hide','description'),
+            'config'      => array(),
+            'published'   => array('published'),
         ),
 
         'icons_set extends default' => array
@@ -100,7 +103,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         ),
         'dropdown extends default' => array
         (
-            '+config' => array('dropdown_toggle'),
+            '+config' => array('dropdown_toggle', 'dropdown_formless'),
         )
     ),
     'metasubselectpalettes' => array
@@ -140,7 +143,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'options_callback' => array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'getTypes'),
             'reference'        => &$GLOBALS['TL_LANG']['bootstrap_config_types'],
             'save_callback'    => array(
-                array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'saveGlobalScope'),
+                array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'importFromConfig'),
             ),
             'eval'             => array(
                 'tl_class'           => 'w50',
@@ -154,11 +157,23 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['name'],
             'inputType' => 'text',
-            'sql'       => "varchar(64) NOT NULL default ''",
+            'options_callback' => array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'getNames'),
             'eval'      => array(
-                'tl_class'  => 'w50',
-                'mandatory' => true,
-            )
+                'tl_class'           => 'w50',
+                'mandatory'          => true,
+                'includeBlankOption' => true,
+                'submitOnChange'     => true,
+            ),
+            'sql'       => "varchar(64) NOT NULL default ''",
+        ),
+        'description'           => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['description'],
+            'inputType' => 'text',
+            'eval'      => array(
+                'tl_class'  => 'clr long',
+            ),
+            'sql'       => "varchar(255) NOT NULL default ''",
         ),
         'remove'         => array
         (
@@ -195,12 +210,12 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'label'         => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path'],
             'inputType'     => 'text',
             'eval'          => array(
-                'tl_class'  => 'w50',
+                'tl_class'  => 'long',
                 'mandatory' => true,
             ),
             'sql'           => "varchar(64) NOT NULL default ''",
             'save_callback' => array(
-                array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'guardFileExists')
+                array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'guardValidIconFile')
             )
         ),
         'icons_template' => array
@@ -208,7 +223,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_template'],
             'inputType' => 'text',
             'eval'      => array(
-                'tl_class'  => 'w50',
+                'tl_class'  => 'long',
                 'allowHtml' => true,
             ),
             'sql'       => "varchar(255) NOT NULL default ''"
@@ -256,6 +271,31 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             ),
             'sql'       => "varchar(255) NOT NULL default ''"
         ),
-    )
 
+        'dropdown_formless' => array
+        (
+            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless'],
+            'inputType' => 'multiColumnWizard',
+            'eval'      => array(
+                'tl_class'  => 'clr',
+                'allowHtml' => true,
+                'columnFields' => array(
+                    'template' => array(
+                        'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless_template'],
+                        'inputType' => 'select',
+                        'options_callback' => array(
+                            'Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig',
+                            'getDropdownTemplates',
+                        ),
+                        'eval'      => array(
+                            'style' => 'width: 350px;',
+                            'includeBlankOption' => true,
+                        ),
+                    )
+                ),
+                'flatArray' => true,
+            ),
+            'sql'       => "mediumblob NULL"
+        ),
+    )
 );

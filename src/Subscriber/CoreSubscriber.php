@@ -4,9 +4,8 @@ namespace Netzmacht\Bootstrap\Core\Subscriber;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Config\ConfigBuilder;
+use Netzmacht\Bootstrap\Core\Config\TypeManager;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
-use Netzmacht\Bootstrap\Core\Event\GetConfigTypesEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
@@ -54,7 +53,7 @@ class CoreSubscriber implements EventSubscriberInterface
         Contao::intializeObjectStack();
 
         $collection = BootstrapConfigModel::findGlobalPublished();
-        $this->loadConfigFromCollection($config, $collection);
+        $this->getTypeManager()->buildConfig($collection);
     }
 
     /**
@@ -76,10 +75,9 @@ class CoreSubscriber implements EventSubscriberInterface
     public function loadThemeConfig(InitializeLayoutEvent $event)
     {
         $themeId    = $event->getLayoutModel()->pid;
-        $config     = $event->getEnvironment()->getConfig();
         $collection = BootstrapConfigModel::findPublishedByTheme($themeId);
 
-        $this->loadConfigFromCollection($config, $collection);
+        $this->getTypeManager()->buildConfig($collection);
     }
 
     /**
@@ -120,17 +118,10 @@ class CoreSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param Config $config
-     * @param $collection
+     * @return TypeManager
      */
-    public function loadConfigFromCollection(Config $config, \Model\Collection $collection=null)
+    private function getTypeManager()
     {
-        if (!$collection) {
-            return;
-        }
-
-        $factory = $GLOBALS['container']['bootstrap.config-type-factory'];
-        $builder = new ConfigBuilder($config, $factory, $collection);
-        $builder->build();
+        return $GLOBALS['container']['bootstrap.config-type-manager'];
     }
 }

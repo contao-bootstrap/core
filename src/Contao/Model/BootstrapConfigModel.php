@@ -11,12 +11,14 @@
 
 namespace Netzmacht\Bootstrap\Core\Contao\Model;
 
+use Netzmacht\Bootstrap\Core\Config\TypeManager;
+
 /**
  * Class BootstrapConfigModel
  * @package Netzmacht\Bootstrap\Contao\Model
  * @property int    id
  * @property string type
- * @property bool   delete
+ * @property bool   override
  */
 class BootstrapConfigModel extends \Model
 {
@@ -39,11 +41,21 @@ class BootstrapConfigModel extends \Model
             $options['order'] = 'sorting';
         }
 
-        return static::findBy(
-            array('published=?', 'pid=?', 'global=?'),
-            array(true, $themeId, $ignoreGlobal),
-            $options
-        );
+        $column = array('published=?', 'pid=?');
+        $value  = array(true, $themeId);
+
+        if ($ignoreGlobal) {
+            $manager = static::getTypeManager();
+            $types   = $manager->getTypesWithGlobalScope(true);
+
+            if ($types) {
+                $ins      = self::createPlaceholders($types);
+                $column[] = sprintf('type NOT IN(%s)', $ins);
+                $value    = array_merge($value, $types);
+            }
+        }
+
+        return static::findBy($column, $value, $options);
     }
 
     /**
@@ -59,10 +71,39 @@ class BootstrapConfigModel extends \Model
             $options['order'] = 'sorting';
         }
 
+        $manager = static::getTypeManager();
+        $types   = $manager->getTypesWithGlobalScope(true);
+
+        // no global types exists
+        if (!$types) {
+            return null;
+        }
+
+        $ins = self::createPlaceholders($types);
+
         return static::findBy(
-            array('published=?', 'global=?'),
-            array(true, true),
+            array('published=?', sprintf('type IN(%s)', $ins)),
+            array_merge(array(true), $types),
             $options
         );
+    }
+
+    /**
+     * @return TypeManager
+     */
+    private static function getTypeManager()
+    {
+        return $GLOBALS['container']['bootstrap.config-type-manager'];
+    }
+
+    /**
+     * @param $types
+     * @return string
+     */
+    public static function createPlaceholders($types)
+    {
+        $ins = str_repeat('? , ', count($types) - 1) . '?';
+
+        return $ins;
     }
 } 

@@ -4,8 +4,8 @@ return array
 (
     'config'   => array(
         'types' => array(
-            'icons_set' => 'Netzmacht\Bootstrap\Core\Config\IconSetConfigType',
-            'dropdown'  => 'Netzmacht\Bootstrap\Core\Config\DropdownConfigType'
+            'icons_set' => 'Netzmacht\Bootstrap\Core\Config\Type\IconSetType',
+            'dropdown'  => 'Netzmacht\Bootstrap\Core\Config\Type\DropdownType'
         ),
     ),
     'dropdown' => array(

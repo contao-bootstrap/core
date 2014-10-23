@@ -13,7 +13,7 @@ namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Config\ConfigTypeFactory;
+use Netzmacht\Bootstrap\Core\Config\TypeFactory;
 use Netzmacht\Bootstrap\Core\Config\TypeManager;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,11 +24,6 @@ class BootstrapConfig extends \Backend
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
-
-    /**
-     * @var ConfigTypeFactory
-     */
-    private $configTypeFactory;
 
     /**
      * @var TypeManager
@@ -43,11 +38,9 @@ class BootstrapConfig extends \Backend
         parent::__construct();
 
         $this->eventDispatcher   = $GLOBALS['container']['event-dispatcher'];
-        $this->configTypeFactory = $GLOBALS['container']['bootstrap.config-type-factory'];
         $this->typeManager       = $GLOBALS['container']['bootstrap.config-type-manager'];;
 
         $this->loadLanguageFile('bootstrap_config_types');
-        $this->loadLanguageFile('default');
     }
 
     /**
@@ -63,6 +56,10 @@ class BootstrapConfig extends \Backend
 
                 if ($type->isMultiple()) {
                     $GLOBALS['TL_DCA']['tl_bootstrap_config']['metapalettes']['default']['type'][] = 'name';
+                }
+
+                if ($model->override) {
+                    $GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['name']['inputType'] = 'select';
                 }
             }
         }
@@ -94,50 +91,62 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param $value
-     * @return mixed
+     * @param \DataContainer $dataContainer
+     * @return array
      */
-    public function formatGroup($value)
+    public function getNames(\DataContainer $dataContainer)
     {
+        $options = array();
 
-        if (isset($GLOBALS['TL_LANG']['bootstrap_config_types'][$value])) {
-            return $GLOBALS['TL_LANG']['bootstrap_config_types'][$value];
+        if(!$dataContainer->activeRecord) {
+            return $options;
         }
 
-        return $value;
+        if ($dataContainer->activeRecord->override) {
+            $type  = $this->typeManager->getType($dataContainer->activeRecord->type);
+
+            if (!$type->isMultiple()) {
+                $this->redirect('main.php?act=error');
+            }
+
+            $names = $this->typeManager->getExistingNames($dataContainer->activeRecord->type);
+
+            foreach($names as $type) {
+                $options[$type] = $type;
+            }
+        }
+
+        return $options;
     }
 
     /**
      * @param $value
      * @param \DataContainer $dc
      */
-    public function saveGlobalScope($value, \DataContainer $dc)
+    public function importFromConfig($value, \DataContainer $dc)
     {
         $type   = $this->typeManager->getType($value);
-        $global = $type->hasGlobalScope();
-
-        if ($global != $dc->activeRecord->global) {
-            \Database::getInstance()
-                ->prepare('UPDATE tl_bootstrap_config %s WHERE id=?')
-                ->set(array('global' => $global))
-                ->execute($dc->id);;
-        }
 
         if ($dc->activeRecord->override && \Input::get('override')) {
+            if (!$dc->activeRecord->name) {
+                $dc->activeRecord->name = \Input::post('name');
+            }
+
             if (!$type->isMultiple() || $dc->activeRecord->name) {
                 $key = $type->getPath();
 
                 if ($type->isMultiple()) {
-                    $key .= $dc->activeRecord->name;
+                    $key .= '.' . $dc->activeRecord->name;
                 }
 
                 $model = BootstrapConfigModel::findByPk($dc->id);
-                $model->mergeRow($dc->activeRecord->row());
+                $model->type = $value;
 
                 $type->extractConfig($key, Bootstrap::getConfig(), $model);
                 $model->save();
 
-                $this->redirect($this->addToUrl('override='));
+                // unset parameter was only introduced in Contao 3.3
+                $this->redirect($this->addToUrl('override=', true, array('override')));
             }
         }
 
@@ -158,6 +167,30 @@ class BootstrapConfig extends \Backend
                 ->set(array('override' => true))
                 ->execute($configId);
         }
+    }
+
+    public function generateLabel(array $row, $label)
+    {
+        if ($row['type']) {
+            $type = $this->typeManager->getType($row['type']);
+
+            if ($type->isMultiple()) {
+                $label .= ': ' . $row['name'];
+            }
+        }
+
+        $label .= '<p class="tl_gray"> ' . ($row['description']) . '</p>';
+
+
+        return $label;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDropdownTemplates()
+    {
+        return Bootstrap::getConfigVar('config.options.dropdown.formless', array());
     }
 
     /**
@@ -240,16 +273,22 @@ class BootstrapConfig extends \Backend
      * @param $file
      * @return mixed
      */
-    public function guardFileExists($file)
+    public function guardValidIconFile($file)
     {
         if (!file_exists(TL_ROOT . '/' . $file)) {
             throw new \InvalidArgumentException('File does not exists');
         }
 
-        $icons = include TL_ROOT . '/' . $file;
+        $categories = include TL_ROOT . '/' . $file;
 
-        if (!is_array($icons)) {
+        if (!is_array($categories)) {
             throw new \InvalidArgumentException('File does not return a valid icon configuration');
+        }
+
+        foreach ($categories as $name => $icons) {
+            if (!is_array($icons)) {
+                throw new \InvalidArgumentException('File does not return a valid icon configuration');
+            }
         }
 
         return $file;

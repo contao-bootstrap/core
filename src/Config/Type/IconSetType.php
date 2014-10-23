@@ -9,12 +9,13 @@
  *
  */
 
-namespace Netzmacht\Bootstrap\Core\Config;
+namespace Netzmacht\Bootstrap\Core\Config\Type;
 
+use Netzmacht\Bootstrap\Core\Config\Type;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Config;
 
-class IconSetConfigType implements ConfigType
+class IconSetType implements Type
 {
     /**
      * @param Config $config

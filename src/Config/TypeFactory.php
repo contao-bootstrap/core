@@ -12,7 +12,7 @@
 namespace Netzmacht\Bootstrap\Core\Config;
 
 
-class ConfigTypeFactory
+class TypeFactory
 {
     /**
      * @var array
@@ -29,7 +29,7 @@ class ConfigTypeFactory
 
     /**
      * @param $name
-     * @return ConfigType
+     * @return Type
      */
     public function create($name)
     {
@@ -45,7 +45,7 @@ class ConfigTypeFactory
     }
 
     /**
-     * @return ConfigType[]
+     * @return Type[]
      */
     public function createAll()
     {

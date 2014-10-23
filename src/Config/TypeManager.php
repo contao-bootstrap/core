@@ -16,7 +16,7 @@ use Netzmacht\Bootstrap\Core\Config;
 class TypeManager
 {
     /**
-     * @var ConfigType[]
+     * @var Type[]
      */
     private $types;
 
@@ -27,7 +27,7 @@ class TypeManager
 
     /**
      * @param Config $config
-     * @param ConfigType[] $types
+     * @param Type[] $types
      */
     function __construct(Config $config, $types)
     {
@@ -60,9 +60,10 @@ class TypeManager
     }
 
     /**
-     * @return array
+     * @param bool $keysOnly
+     * @return Type[]|array
      */
-    public function getUnusedTypes()
+    public function getUnusedTypes($keysOnly = false)
     {
         $types = array();
 
@@ -77,20 +78,28 @@ class TypeManager
             }
         }
 
+        if ($keysOnly) {
+            return array_keys($types);
+        }
+
         return $types;
     }
 
     /**
-     * @return array
+     * @param bool $keysOnly
+     * @return Type[]|array
      */
-    public function getExistingTypes()
+    public function getExistingTypes($keysOnly = false)
     {
-        $types = array();
-
-        foreach ($this->types as $name => $type) {
-            if ($this->config->has($type->getPath())) {
-                $types[$name] = $type;
+        $types = array_filter(
+            $this->types,
+            function(Type $type) {
+                return $this->config->has($type->getPath());
             }
+        );
+
+        if ($keysOnly) {
+            return array_keys($types);
         }
 
         return $types;
@@ -98,7 +107,7 @@ class TypeManager
 
     /**
      * @param string $typeName of a multiple type
-     * @return ConfigType[]
+     * @return array
      */
     public function getExistingNames($typeName)
     {
@@ -111,21 +120,28 @@ class TypeManager
     }
 
     /**
-     * @return ConfigType[]
+     * @param bool $keysOnly
+     * @return Type[]|array
      */
-    public function getTypesWithGlobalScope()
+    public function getTypesWithGlobalScope($keysOnly=false)
     {
-        return array_map(
-            function(ConfigType $type) {
+        $types = array_filter(
+            $this->types,
+            function(Type $type) {
                 return $type->hasGlobalScope();
-            },
-            $this->types
+            }
         );
+
+        if ($keysOnly) {
+            return array_keys($types);
+        }
+
+        return $types;
     }
 
     /**
      * @param $typeName
-     * @return ConfigType
+     * @return Type
      */
     public function getType($typeName)
     {
@@ -137,10 +153,38 @@ class TypeManager
     }
 
     /**
+     * @param \Model\Collection $collection
+     */
+    public function buildConfig(\Model\Collection $collection = null)
+    {
+        if (!$collection) {
+            return;
+        }
+
+        while ($collection->next()) {
+            $model = $collection->current();
+
+            try {
+                $type = $this->getType($model->type);
+                $type->buildConfig($this->config, $model);
+            }
+            catch (\Exception $e) {
+                \Controller::log(
+                    sprintf('Unknown bootstrap config type "%s" (ID %s) stored in database',
+                        $model->type,
+                        $model->id),
+                    __METHOD__,
+                    'TL_ERROR'
+                );
+            }
+        }
+    }
+
+    /**
      * @param $typeName
      * @param $type
      */
-    public function guardMultipleType($typeName, ConfigType $type)
+    private function guardMultipleType($typeName, Type $type)
     {
         if (!$type->isMultiple()) {
             new \RuntimeException(sprintf('Type "%s is not a multiple type.', $typeName));

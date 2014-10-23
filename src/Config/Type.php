@@ -12,52 +12,36 @@
 namespace Netzmacht\Bootstrap\Core\Config;
 
 
-use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
+use Netzmacht\Bootstrap\Core\Config;
 
-class DropdownConfigType implements ConfigType
+interface Type
 {
     /**
      * @param Config $config
      * @param BootstrapConfigModel $model
      */
-    public function buildConfig(Config $config, BootstrapConfigModel $model)
-    {
-        // TODO: Implement buildConfig() method.
-    }
+    public function buildConfig(Config $config, BootstrapConfigModel $model);
 
     /**
      * @param $key
      * @param Config $config
      * @param BootstrapConfigModel $model
      */
-    public function extractConfig($key, Config $config, BootstrapConfigModel $model)
-    {
-        $model->dropdown_toggle = $config->get($key . '.toggle');
-    }
+    public function extractConfig($key, Config $config, BootstrapConfigModel $model);
 
     /**
      * @return bool
      */
-    public function hasGlobalScope()
-    {
-        // TODO: Implement hasGlobalScope() method.
-    }
+    public function hasGlobalScope();
 
     /**
      * @return bool
      */
-    public function isMultiple()
-    {
-        return false;
-    }
+    public function isMultiple();
 
     /**
      * @return string
      */
-    public function getPath()
-    {
-        return 'dropdown';
-    }
-
+    public function getPath();
 } 
