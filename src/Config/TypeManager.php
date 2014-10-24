@@ -69,7 +69,10 @@ class TypeManager
 
         foreach ($this->types as $name => $type) {
             if ($type->isMultiple()) {
-                $types[$name] = $type;
+                if ($type->isNameEditable()) {
+                    $types[$name] = $type;
+                }
+
                 continue;
             }
 

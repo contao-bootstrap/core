@@ -86,6 +86,14 @@ class IconSetType implements Type
     }
 
     /**
+     * @return bool
+     */
+    public function isNameEditable()
+    {
+        return true;
+    }
+
+    /**
      * @param  BootstrapConfigModel $model
      * @return array
      */

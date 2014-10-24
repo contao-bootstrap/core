@@ -40,6 +40,11 @@ interface Type
     public function isMultiple();
 
     /**
+     * @return bool
+     */
+    public function isNameEditable();
+
+    /**
      * @return string
      */
     public function getPath();

@@ -61,4 +61,12 @@ class DropdownType implements Type
     {
         return 'dropdown';
     }
+
+    /**
+     * @return bool
+     */
+    public function isNameEditable()
+    {
+        return false;
+    }
 }
