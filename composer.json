@@ -46,13 +46,13 @@
         "contao": {
             "sources":{
                 "module": "system/modules/bootstrap-core"
+            },
+            "transifex": {
+                "project": "contao-bootstrap-core",
+                "prefix": "core-",
+                "languages_cto": "module/languages",
+                "languages_tx": ".tx"
             }
-        },
-        "transifex": {
-            "project": "contao-bootstrap-core",
-            "prefix": "core-",
-            "languages_cto": "module/languages",
-            "languages_tx": ".tx"
         }
     },
     "minimum-stability": "dev",
