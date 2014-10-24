@@ -44,6 +44,10 @@ class ConfigSubscriber implements EventSubscriberInterface
         // prevent that database is loaded before user object
         Contao::intializeObjectStack();
 
+        if (!\Database::getInstance()->tableExists('tl_bootstrap_config')) {
+            return;
+        }
+
         $collection = BootstrapConfigModel::findGlobalPublished();
         $this->getTypeManager()->buildConfig($collection);
     }
