@@ -14,6 +14,7 @@ namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Config\TypeManager;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
+use Netzmacht\Bootstrap\Core\Event\GetMultipleConfigNamesEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class BootstrapConfig extends \Backend
@@ -56,7 +57,7 @@ class BootstrapConfig extends \Backend
                     $GLOBALS['TL_DCA']['tl_bootstrap_config']['metapalettes']['default']['type'][] = 'name';
                 }
 
-                if ($model->override) {
+                if ($model->override || !$type->isNameEditable()) {
                     $GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['name']['inputType'] = 'select';
                 }
             }
@@ -95,6 +96,14 @@ class BootstrapConfig extends \Backend
         $options = array();
 
         if (!$dataContainer->activeRecord) {
+            return $options;
+        }
+
+        $event = new GetMultipleConfigNamesEvent($dataContainer->activeRecord);
+        $this->getEventDispatcher()->dispatch($event::NAME, $event);
+        $options = $event->getOptions();
+
+        if ($options) {
             return $options;
         }
 
@@ -137,6 +146,8 @@ class BootstrapConfig extends \Backend
 
                 $model = BootstrapConfigModel::findByPk($dataContainer->id);
                 $model->type = $value;
+                $model->name = $dataContainer->activeRecord->name;
+
 
                 $type->extractConfig($key, Bootstrap::getConfig(), $model);
                 $model->save();
@@ -292,5 +303,13 @@ class BootstrapConfig extends \Backend
         }
 
         return $file;
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    private function getEventDispatcher()
+    {
+        return $GLOBALS['container']['event-dispatcher'];
     }
 }
