@@ -141,7 +141,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'inputType'        => 'select',
             'filter'           => true,
             'options_callback' => array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'getTypes'),
-            'reference'        => &$GLOBALS['TL_LANG']['bootstrap_config_types'],
+            'reference'        => &$GLOBALS['TL_LANG']['bootstrap_config_type'],
             'save_callback'    => array(
                 array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'importFromConfig'),
             ),
