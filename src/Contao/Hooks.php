@@ -7,6 +7,7 @@ use Netzmacht\Bootstrap\Core\Environment;
 use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
 use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
 use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
+use Netzmacht\Bootstrap\Core\Util\AssetsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Hooks
@@ -84,25 +85,14 @@ class Hooks
     /**
      * Add icon stylesheet to the backend template.
      *
-     * @param \Template $template
      */
-    public function addIconStylesheet(\Template $template)
+    public function addIconStylesheet()
     {
-        if (TL_MODE != 'BE' || $template->getName() != 'be_main') {
-            return;
-        }
+        if (TL_MODE == 'BE') {
+            $active = Bootstrap::getConfigVar('icons.active');
+            $css    = Bootstrap::getConfigVar(sprintf('icons.sets.%s.stylesheet', $active));
 
-        $active = Bootstrap::getConfigVar('icons.active');
-
-        if ($active) {
-            $css = Bootstrap::getConfigVar(sprintf('icons.sets.%s.stylesheet', $active));
-            $stylesheets = $template->stylesheets;
-
-            foreach ((array) $css as $file) {
-                $stylesheets .= sprintf('<link rel="stylesheet" href="%s">', $file);
-            }
-
-            $template->stylesheets = $stylesheets;
+            AssetsManager::addStylesheets($css, 'bootstrap-icon-set');
         }
     }
 
@@ -124,5 +114,7 @@ class Hooks
                 ->setIcons($icons)
                 ->setTemplate($template);
         }
+
+        $this->addIconStylesheet();
     }
 }
