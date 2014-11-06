@@ -30,7 +30,9 @@ class BootstrapConfig extends \Backend
     private $typeManager;
 
     /**
-     * Construct
+     * Construct.
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct()
     {
@@ -43,7 +45,7 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function addNameToPalette()
     {
@@ -241,6 +243,8 @@ class BootstrapConfig extends \Backend
      * Toggle the visibility of an element
      * @param integer
      * @param boolean
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function toggleVisibility($configId, $published)
     {
@@ -307,6 +311,8 @@ class BootstrapConfig extends \Backend
 
     /**
      * @return EventDispatcherInterface
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function getEventDispatcher()
     {

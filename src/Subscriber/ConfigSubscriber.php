@@ -68,6 +68,8 @@ class ConfigSubscriber implements EventSubscriberInterface
 
     /**
      * @return TypeManager
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function getTypeManager()
     {

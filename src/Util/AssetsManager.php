@@ -16,6 +16,8 @@ class AssetsManager
     /**
      * @param $stylesheets
      * @param null $prefix
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function addStylesheets($stylesheets, $prefix = null)
     {
@@ -31,6 +33,8 @@ class AssetsManager
     /**
      * @param $javascripts
      * @param null $prefix
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function addJavascripts($javascripts, $prefix = null)
     {

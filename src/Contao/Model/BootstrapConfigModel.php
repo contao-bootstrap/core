@@ -91,6 +91,8 @@ class BootstrapConfigModel extends \Model
 
     /**
      * @return TypeManager
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private static function getTypeManager()
     {

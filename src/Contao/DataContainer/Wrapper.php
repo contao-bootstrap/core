@@ -45,6 +45,8 @@ class Wrapper
      *
      * @return mixed
      * @throws \Exception
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function save($value, $dataContainer)
     {
@@ -66,44 +68,7 @@ class Wrapper
 
         // check for existing parent element and try to create it if not existing
         if (!$wrapper->isTypeOf($start)) {
-
-            if ($record->bootstrap_parentId == '') {
-                $parent = $wrapper->findPreviousElement($start);
-
-                if ($parent) {
-                    // set relation to parent element
-                    $set['bootstrap_parentId'] = $parent->id;
-
-                    $end = $wrapper->findRelatedElement($record, $stop);
-
-                    if ($end === null) {
-                        $set['sorting'] = $parent->sorting + 2;
-                    } elseif ($parent !== null && $parent->sorting > $end->sorting) {
-                        $set['sorting'] = $end->sorting - 2;
-                    }
-
-                    foreach ($set as $name => $v) {
-                        $record->$name = $v;
-                    }
-
-                    \Database::getInstance()
-                        ->prepare('UPDATE tl_content %s WHERE id=?')
-                        ->set($set)
-                        ->execute($record->id);
-                } elseif ($this->isTrigger($wrapper->getType(), $start)) {
-                    // create parent if possible
-
-                    $sorting = $sorting-2;
-                    $this->createElement($record, $sorting, $start);
-                } else {
-                    // no parent element exists, throw error
-
-                    throw new \Exception(sprintf(
-                        $GLOBALS['TL_LANG']['ERR']['wrapperStartNotExists'],
-                        $GLOBALS['TL_LANG']['CTE'][$value][0] ?: $value
-                    ));
-                }
-            }
+            $sorting = $this->saveStartType($value, $record, $wrapper, $start, $set, $stop, $sorting);
         }
 
         // create separators if possible
@@ -111,45 +76,7 @@ class Wrapper
             && ($this->isTrigger($wrapper->getType(), $sep)
                 || $this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_CREATE))
         ) {
-            $config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
-
-            $callback = $config['count-existing'];
-            $instance = \Controller::importStatic($callback[0]);
-            $existing = $instance->$callback[1]($record, $wrapper);
-
-            $callback = $config['count-required'];
-            $instance = \Controller::importStatic($callback[0]);
-            $required = $instance->$callback[1]($record, $wrapper);
-
-            if ($existing < $required) {
-                if ($this->isTrigger($wrapper->getType(), $sep)) {
-                    $count = $required - $existing;
-
-                    for ($i = 0; $i < $count; $i++) {
-                        $this->createElement($record, $sorting, $sep);
-                    }
-
-                    $end = $wrapper->findRelatedElement($stop);
-
-                    if ($end && $end->sorting <= $sorting) {
-                        $sorting = $sorting + 2;
-                        $end->sorting = $sorting;
-                        $end->save();
-                    }
-                }
-            } elseif ($required < $existing) {
-                if ($this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_DELETE)) {
-                    $count    = $existing - $required;
-                    $parentId = $wrapper->isTypeOf($start)
-                        ? $record->id
-                        : $record->bootstrap_parentId;
-
-                    \Database::getInstance()
-                        ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=? ORDER BY sorting DESC')
-                        ->limit($count)
-                        ->execute($parentId, $wrapper->getTypeName($sep));
-                }
-            }
+            $sorting = $this->createSeparators($wrapper, $sep, $record, $stop, $sorting, $start);
         }
 
         // cereate end element
@@ -278,5 +205,125 @@ class Wrapper
         }
 
         return false;
+    }
+
+    /**
+     * @param $value
+     * @param $record
+     * @param $wrapper
+     * @param $start
+     * @param $set
+     * @param $stop
+     * @param $sorting
+     *
+     * @return array
+     * @throws \Exception
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
+     */
+    private function saveStartType($value, $record, $wrapper, $start, $set, $stop, $sorting)
+    {
+        if ($record->bootstrap_parentId == '') {
+            $parent = $wrapper->findPreviousElement($start);
+
+            if ($parent) {
+                // set relation to parent element
+                $set['bootstrap_parentId'] = $parent->id;
+
+                $end = $wrapper->findRelatedElement($record, $stop);
+
+                if ($end === null) {
+                    $set['sorting'] = $parent->sorting + 2;
+                } elseif ($parent !== null && $parent->sorting > $end->sorting) {
+                    $set['sorting'] = $end->sorting - 2;
+                }
+
+                foreach ($set as $name => $v) {
+                    $record->$name = $v;
+                }
+
+                \Database::getInstance()
+                    ->prepare('UPDATE tl_content %s WHERE id=?')
+                    ->set($set)
+                    ->execute($record->id);
+
+                return array($end, $sorting);
+            } elseif ($this->isTrigger($wrapper->getType(), $start)) {
+                // create parent if possible
+
+                $sorting = $sorting - 2;
+                $this->createElement($record, $sorting, $start);
+
+                return $sorting;
+            } else {
+                // no parent element exists, throw error
+
+                throw new \Exception(
+                    sprintf(
+                        $GLOBALS['TL_LANG']['ERR']['wrapperStartNotExists'],
+                        $GLOBALS['TL_LANG']['CTE'][$value][0] ?: $value
+                    )
+                );
+            }
+        }
+
+        return $sorting;
+    }
+
+    /**
+     * @param $wrapper
+     * @param $sep
+     * @param $record
+     * @param $stop
+     * @param $sorting
+     * @param $start
+     *
+     * @return array
+     */
+    private function createSeparators($wrapper, $sep, $record, $stop, $sorting, $start)
+    {
+        $config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
+
+        $callback = $config['count-existing'];
+        $instance = \Controller::importStatic($callback[0]);
+        $existing = $instance->$callback[1]($record, $wrapper);
+
+        $callback = $config['count-required'];
+        $instance = \Controller::importStatic($callback[0]);
+        $required = $instance->$callback[1]($record, $wrapper);
+
+        if ($existing < $required) {
+            if ($this->isTrigger($wrapper->getType(), $sep)) {
+                $count = $required - $existing;
+
+                for ($i = 0; $i < $count; $i++) {
+                    $this->createElement($record, $sorting, $sep);
+                }
+
+                $end = $wrapper->findRelatedElement($stop);
+
+                if ($end && $end->sorting <= $sorting) {
+                    $sorting      = $sorting + 2;
+                    $end->sorting = $sorting;
+                    $end->save();
+
+                    return array($sorting, $end);
+                }
+            }
+        } elseif ($required < $existing) {
+            if ($this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_DELETE)) {
+                $count    = $existing - $required;
+                $parentId = $wrapper->isTypeOf($start)
+                    ? $record->id
+                    : $record->bootstrap_parentId;
+
+                \Database::getInstance()
+                    ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=? ORDER BY sorting DESC')
+                    ->limit($count)
+                    ->execute($parentId, $wrapper->getTypeName($sep));
+            }
+        }
+
+        return $sorting;
     }
 }

@@ -66,7 +66,7 @@ class Bootstrap
     }
 
     /**
-     * @return \Netzmacht\Bootstrap\Core\IconSet
+     * @return IconSet
      */
     public static function getIconSet()
     {
@@ -82,7 +82,9 @@ class Bootstrap
     }
 
     /**
-     * @return \Netzmacht\Bootstrap\Core\Environment
+     * @return Environment
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public static function getEnvironment()
     {

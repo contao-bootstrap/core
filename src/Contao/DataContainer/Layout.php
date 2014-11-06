@@ -26,6 +26,8 @@ class Layout
      * modify palette if bootstrap is used
      *
      * @hook palettes_hook (MetaPalettes)
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function generatePalette()
     {
@@ -64,6 +66,8 @@ class Layout
      * @param string $table
      * @param string $name
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     protected function getMetaPaletteOfPalette($table, $name = 'default')
     {

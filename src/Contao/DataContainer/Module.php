@@ -10,6 +10,8 @@ class Module
      * @param \DataContainer $dataContainer
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getTemplates(\DataContainer $dataContainer)
     {
@@ -47,6 +49,8 @@ class Module
      * @param \DataContainer $dataContainer
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function pagePicker(\DataContainer $dataContainer)
     {

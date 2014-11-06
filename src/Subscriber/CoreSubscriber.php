@@ -45,6 +45,8 @@ class CoreSubscriber implements EventSubscriberInterface
 
     /**
      * @param InitializeEnvironmentEvent $event
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function importContaoSettings(InitializeEnvironmentEvent $event)
     {
@@ -83,6 +85,8 @@ class CoreSubscriber implements EventSubscriberInterface
 
     /**
      * @param $config
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     private function loadConfigFromGlobals(Config $config)
     {

@@ -25,6 +25,8 @@ class Hooks
 
     /**
      * Construct
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct()
     {
