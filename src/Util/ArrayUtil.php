@@ -11,12 +11,22 @@
 
 namespace Netzmacht\Bootstrap\Core\Util;
 
+/**
+ * Class ArrayUtil provides a safe array merge method.
+ *
+ * It does not creates duplicates as the php array_merge method does.
+ *
+ * @package Netzmacht\Bootstrap\Core\Util
+ */
 class ArrayUtil
 {
     /**
-     * @param $array1
-     * @param $array2
-     * @param bool $distinct
+     * Merge two arrays recursively.
+     *
+     * @param array $array1   First array.
+     * @param array $array2   Second array.
+     * @param bool  $distinct If false php_merge_recursive will be used.
+     *
      * @return array
      */
     public static function merge($array1, $array2, $distinct = true)
@@ -29,8 +39,11 @@ class ArrayUtil
     }
 
     /**
-     * @param $array1
-     * @param $array2
+     * Merge two arrays recursively.
+     *
+     * @param array $array1 First array.
+     * @param array $array2 Second array.
+     *
      * @return array
      */
     private static function mergeDistinct($array1, $array2)

@@ -11,10 +11,17 @@
 
 namespace Netzmacht\Bootstrap\Core\Util;
 
+/**
+ * Class Contao just provide a static method to initialize the Contao stack.
+ *
+ * @package Netzmacht\Bootstrap\Core\Util
+ */
 class Contao
 {
     /**
-     * Initialize object stack
+     * Initialize object stack.
+     *
+     * @return void
      */
     public static function intializeObjectStack()
     {
@@ -28,6 +35,8 @@ class Contao
     }
 
     /**
+     * Get the current Contao user.
+     *
      * @return \BackendUser|\FrontendUser|null
      */
     public static function getUser()

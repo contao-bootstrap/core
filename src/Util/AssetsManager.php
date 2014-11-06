@@ -11,11 +11,20 @@
 
 namespace Netzmacht\Bootstrap\Core\Util;
 
+/**
+ * Class AssetsManager provides a simple interface for adding assets to the Contao super globals.
+ *
+ * @package Netzmacht\Bootstrap\Core\Util
+ */
 class AssetsManager
 {
     /**
-     * @param $stylesheets
-     * @param null $prefix
+     * Add stylesheets to the global css array.
+     *
+     * @param array|string $stylesheets Stylesheet paths.
+     * @param string|null  $prefix      Optional add a prefix to the names.
+     *
+     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -26,13 +35,21 @@ class AssetsManager
                 $name = $prefix . '-' . $name;
             }
 
-            $GLOBALS['TL_CSS'][$name] = $file;
+            if (is_numeric($name)) {
+                $GLOBALS['TL_CSS'][] = $file;
+            } else {
+                $GLOBALS['TL_CSS'][$name] = $file;
+            }
         }
     }
 
     /**
-     * @param $javascripts
-     * @param null $prefix
+     * Add javascript to the global javascript array.
+     *
+     * @param array|string $javascripts Paths of javascript files.
+     * @param string|null  $prefix      Optional name prefix.
+     *
+     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -43,7 +60,11 @@ class AssetsManager
                 $name = $prefix . '-' . $name;
             }
 
-            $GLOBALS['TL_JAVASCRIPT'][$name] = $file;
+            if (is_numeric($name)) {
+                $GLOBALS['TL_JAVASCRIPT'][] = $file;
+            } else {
+                $GLOBALS['TL_JAVASCRIPT'][$name] = $file;
+            }
         }
     }
 }
