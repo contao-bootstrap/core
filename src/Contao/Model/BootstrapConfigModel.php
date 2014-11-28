@@ -14,8 +14,10 @@ namespace Netzmacht\Bootstrap\Core\Contao\Model;
 use Netzmacht\Bootstrap\Core\Config\TypeManager;
 
 /**
- * Class BootstrapConfigModel
+ * Class BootstrapConfigModel contains all informations of the bootstrap config.
+ *
  * @package Netzmacht\Bootstrap\Contao\Model
+ *
  * @property int    id
  * @property string type
  * @property bool   override
@@ -23,16 +25,18 @@ use Netzmacht\Bootstrap\Core\Config\TypeManager;
 class BootstrapConfigModel extends \Model
 {
     /**
+     * Table name.
+     *
      * @var string
      */
     protected static $strTable = 'tl_bootstrap_config';
 
     /**
-     * Find all published configurations which belongs to a theme
+     * Find all published configurations which belongs to a theme.
      *
-     * @param int   $themeId
-     * @param array $options
-     * @param bool  $ignoreGlobal
+     * @param int   $themeId      The theme id.
+     * @param array $options      Optional options.
+     * @param bool  $ignoreGlobal Ignore global configurations.
      *
      * @return \Model\Collection|null
      */
@@ -60,9 +64,9 @@ class BootstrapConfigModel extends \Model
     }
 
     /**
-     * Find all published configurations which belongs to the global scope
+     * Find all published configurations which belongs to the global scope.
      *
-     * @param array $options
+     * @param array $options Optional query options.
      *
      * @return \Model\Collection|null
      */
@@ -90,6 +94,8 @@ class BootstrapConfigModel extends \Model
     }
 
     /**
+     * Get the type manager.
+     *
      * @return TypeManager
      *
      * @SuppressWarnings(PHPMD.Superglobals)
@@ -100,12 +106,15 @@ class BootstrapConfigModel extends \Model
     }
 
     /**
-     * @param $types
+     * Create placeholders for specified types.
+     *
+     * @param array $types List of types.
+     *
      * @return string
      */
     public static function createPlaceholders($types)
     {
-        $ins = str_repeat('? , ', count($types) - 1) . '?';
+        $ins = str_repeat('? , ', (count($types) - 1)) . '?';
 
         return $ins;
     }

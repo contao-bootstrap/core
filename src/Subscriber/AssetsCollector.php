@@ -15,32 +15,35 @@ use Netzmacht\ThemePlusImporter\Event\CollectAssetsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class AssetsCollector collects assets which can be imported using the Theme+ importer
+ * Class AssetsCollector collects assets which can be imported using the Theme+ importer.
  *
  * @package Netzmacht\Bootstrap\Core\Subscriber
  */
 class AssetsCollector implements EventSubscriberInterface
 {
-
     /**
-     * @return array The event names to listen to
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
         return array(
             'theme-plus-importer.collect-assets' => array(
-                array('detectComponentsAssets'),
-                array('detectTwbsBootstrapAssets'),
+                array('collectComponentsAssets'),
+                array('collectTwbsBootstrapAssets'),
             ),
         );
     }
 
     /**
-     * @param CollectAssetsEvent $event
+     * Collect assets being installed in components.
+     *
+     * @param CollectAssetsEvent $event Collect assets event.
+     *
+     * @return void
      */
-    public function detectComponentsAssets(CollectAssetsEvent $event)
+    public function collectComponentsAssets(CollectAssetsEvent $event)
     {
-        $length  = strlen(TL_ROOT) + 1;
+        $length = (strlen(TL_ROOT) + 1);
 
         // scan components-bootstrap
         if (is_dir(TL_ROOT . '/assets/components/bootstrap')) {
@@ -68,13 +71,17 @@ class AssetsCollector implements EventSubscriberInterface
     }
 
     /**
-     * @param CollectAssetsEvent $event
+     * Collect assets from twbs/bootstrap.
+     *
+     * @param CollectAssetsEvent $event Collect assets event.
+     *
+     * @return void
      */
-    public function detectTwbsBootstrapAssets(CollectAssetsEvent $event)
+    public function collectTwbsBootstrapAssets(CollectAssetsEvent $event)
     {
         if (is_dir(TL_ROOT . '/composer/vendor/twbs/bootstrap')) {
             $pattern = TL_ROOT . '/composer/vendor/twbs/bootstrap/{dist/css/*.css,less/*.less}';
-            $length  = strlen(TL_ROOT) + 1;
+            $length  = (strlen(TL_ROOT) + 1);
 
             foreach (glob($pattern, GLOB_BRACE) as $file) {
                 $event->addStylesheet('twbs-bootstrap', substr($file, $length));

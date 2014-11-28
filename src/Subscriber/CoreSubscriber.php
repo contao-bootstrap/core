@@ -37,6 +37,8 @@ class CoreSubscriber implements EventSubscriberInterface
      * Load configuration.
      *
      * @param InitializeEnvironmentEvent $event Initialize environment event.
+     *
+     * @return void
      */
     public function loadConfig(InitializeEnvironmentEvent $event)
     {
@@ -50,6 +52,8 @@ class CoreSubscriber implements EventSubscriberInterface
      * Import Contao settings into config.
      *
      * @param InitializeEnvironmentEvent $event Initialisation event.
+     *
+     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -66,6 +70,8 @@ class CoreSubscriber implements EventSubscriberInterface
      * Replace insert tags.
      *
      * @param ReplaceInsertTagsEvent $event Replace insert tags event.
+     *
+     * @return void
      */
     public function replaceIconInsertTag(ReplaceInsertTagsEvent $event)
     {
@@ -81,10 +87,12 @@ class CoreSubscriber implements EventSubscriberInterface
      * Load config of each module.
      *
      * @param Config $config Bootstrap configuration.
+     *
+     * @return void
      */
     private function loadConfigFromModules(Config $config)
     {
-        foreach (\Config::getInstance()->getActiveModules() as $module ) {
+        foreach (\Config::getInstance()->getActiveModules() as $module) {
             $file = TL_ROOT . '/system/modules/' . $module . '/config/contao-bootstrap.php';
 
             if (file_exists($file)) {
@@ -97,6 +105,8 @@ class CoreSubscriber implements EventSubscriberInterface
      * Load deprecated global config.
      *
      * @param Config $config Bootstrap config.
+     *
+     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */

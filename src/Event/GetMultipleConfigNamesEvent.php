@@ -13,22 +13,33 @@ namespace Netzmacht\Bootstrap\Core\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class GetMultipleConfigNamesEvent is emitted when getting names of multiple config types.
+ *
+ * @package Netzmacht\Bootstrap\Core\Event
+ */
 class GetMultipleConfigNamesEvent extends Event
 {
     const NAME = 'bootstrap.config.get-multiple-config-names';
 
     /**
+     * Config model.
+     *
      * @var \Database\Result
      */
     private $model;
 
     /**
+     * Options.
+     *
      * @var array
      */
     private $options = array();
 
     /**
-     * @param $model
+     * Construct.
+     *
+     * @param \Database\Result $model Config model.
      */
     public function __construct($model)
     {
@@ -36,6 +47,8 @@ class GetMultipleConfigNamesEvent extends Event
     }
 
     /**
+     * Get model.
+     *
      * @return \Database\Result
      */
     public function getModel()
@@ -44,6 +57,8 @@ class GetMultipleConfigNamesEvent extends Event
     }
 
     /**
+     * Get options.
+     *
      * @return array
      */
     public function getOptions()
@@ -52,10 +67,16 @@ class GetMultipleConfigNamesEvent extends Event
     }
 
     /**
-     * @param array $options
+     * Set config name options.
+     *
+     * @param array $options Name options.
+     *
+     * @return $this
      */
     public function setOptions(array $options)
     {
         $this->options = $options;
+
+        return $this;
     }
 }

@@ -15,11 +15,15 @@ use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Config\Type;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 
+/**
+ * Class DropdownType is used for dropdown informations.
+ *
+ * @package Netzmacht\Bootstrap\Core\Config\Type
+ */
 class DropdownType implements Type
 {
     /**
-     * @param Config               $config
-     * @param BootstrapConfigModel $model
+     * {@inheritdoc}
      */
     public function buildConfig(Config $config, BootstrapConfigModel $model)
     {
@@ -28,9 +32,7 @@ class DropdownType implements Type
     }
 
     /**
-     * @param $key
-     * @param Config               $config
-     * @param BootstrapConfigModel $model
+     * {@inheritdoc}
      */
     public function extractConfig($key, Config $config, BootstrapConfigModel $model)
     {
@@ -39,7 +41,7 @@ class DropdownType implements Type
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasGlobalScope()
     {
@@ -47,7 +49,7 @@ class DropdownType implements Type
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isMultiple()
     {
@@ -55,7 +57,7 @@ class DropdownType implements Type
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getPath()
     {
@@ -63,7 +65,7 @@ class DropdownType implements Type
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isNameEditable()
     {

@@ -11,15 +11,24 @@
 
 namespace Netzmacht\Bootstrap\Core\Config;
 
+/**
+ * Class TypeFactory creates config types.
+ *
+ * @package Netzmacht\Bootstrap\Core\Config
+ */
 class TypeFactory
 {
     /**
+     * Type definitions.
+     *
      * @var array
      */
     private $types;
 
     /**
-     * @param array $types
+     * Construct.
+     *
+     * @param array $types Type definitions.
      */
     public function __construct(array $types)
     {
@@ -27,8 +36,13 @@ class TypeFactory
     }
 
     /**
-     * @param $name
+     * Create a type.
+     *
+     * @param string $name Type name.
+     *
      * @return Type
+     *
+     * @throws \InvalidArgumentException If type name does not exists.
      */
     public function create($name)
     {
@@ -44,6 +58,8 @@ class TypeFactory
     }
 
     /**
+     * Create all types.
+     *
      * @return Type[]
      */
     public function createAll()
@@ -58,6 +74,8 @@ class TypeFactory
     }
 
     /**
+     * Get all names.
+     *
      * @return array
      */
     public function getNames()
@@ -66,7 +84,13 @@ class TypeFactory
     }
 
     /**
-     * @param $type
+     * Guard that type exists.
+     *
+     * @param string $type Type name.
+     *
+     * @return void
+     *
+     * @throws \InvalidArgumentException If type name does not exists.
      */
     private function guardTypeExists($type)
     {

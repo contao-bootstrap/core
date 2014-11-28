@@ -2,12 +2,17 @@
 
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
+/**
+ * Class Module is used for tl_module.
+ *
+ * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ */
 class Module
 {
     /**
-     * get all templates. A templatePrefix can be defined using eval.templatePrefix
+     * Get all templates. A templatePrefix can be defined using eval.templatePrefix.
      *
-     * @param \DataContainer $dataContainer
+     * @param \DataContainer $dataContainer The data container driver.
      *
      * @return array
      *
@@ -46,7 +51,9 @@ class Module
     }
 
     /**
-     * @param \DataContainer $dataContainer
+     * Generate the page picker.
+     *
+     * @param \DataContainer $dataContainer The data container driver.
      *
      * @return string
      *
@@ -54,9 +61,9 @@ class Module
      */
     public function pagePicker(\DataContainer $dataContainer)
     {
-        $template = ' <a href="contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s" title="%s"'
-            . ' onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'%s\''
-            . ',\'url\':this.href,\'id\':\'%s\',\'tag\':\'ctrl_%s\',\'self\':this});return false">%s</a>';
+        $template  = ' <a href="contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s" title="%s"';
+        $template .= ' onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'%s\'';
+        $template .= ',\'url\':this.href,\'id\':\'%s\',\'tag\':\'ctrl_%s\',\'self\':this});return false">%s</a>';
 
         return sprintf(
             $template,

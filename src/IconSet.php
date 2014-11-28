@@ -2,25 +2,39 @@
 
 namespace Netzmacht\Bootstrap\Core;
 
+/**
+ * Class IconSet handles an icon set in the contao context.
+ *
+ * @package Netzmacht\Bootstrap\Core
+ */
 class IconSet
 {
     /**
+     * The icon set name.
+     *
      * @var string
      */
     protected $iconSetName;
 
     /**
+     * The icons in the set.
+     *
      * @var array
      */
     protected $icons = array();
 
     /**
+     * The icon template.
+     *
      * @var string
      */
     protected $template;
 
     /**
-     * @param mixed $iconSetName
+     * Set icon set name.
+     *
+     * @param string $iconSetName New icon set name.
+     *
      * @return $this
      */
     public function setIconSetName($iconSetName)
@@ -31,7 +45,9 @@ class IconSet
     }
 
     /**
-     * @return mixed
+     * Get icon set name.
+     *
+     * @return string
      */
     public function getIconSetName()
     {
@@ -39,7 +55,10 @@ class IconSet
     }
 
     /**
-     * @param mixed $icons
+     * Set the icons.
+     *
+     * @param array $icons The icons. being grouped under a category.
+     *
      * @return $this
      */
     public function setIcons($icons)
@@ -50,7 +69,9 @@ class IconSet
     }
 
     /**
-     * @return mixed
+     * Get all icons.
+     *
+     * @return array
      */
     public function getIcons()
     {
@@ -58,7 +79,10 @@ class IconSet
     }
 
     /**
-     * @param string $template
+     * Set icon template.
+     *
+     * @param string $template The icon template. Use a %s as icon placeholder.
+     *
      * @return $this
      */
     public function setTemplate($template)
@@ -69,6 +93,8 @@ class IconSet
     }
 
     /**
+     * Get the template.
+     *
      * @return string
      */
     public function getTemplate()
@@ -77,7 +103,10 @@ class IconSet
     }
 
     /**
-     * @param $icon
+     * Consider if icon exists.
+     *
+     * @param string $icon Icon name.
+     *
      * @return bool
      */
     public function hasIcon($icon)
@@ -92,8 +121,11 @@ class IconSet
     }
 
     /**
-     * @param $icon
-     * @param $class
+     * Generate an icon html representation.
+     *
+     * @param string $icon  Icon name.
+     * @param string $class Css class name.
+     *
      * @return string
      */
     public function generateIcon($icon, $class = null)

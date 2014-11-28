@@ -15,12 +15,15 @@ use Netzmacht\Bootstrap\Core\Config\Type;
 use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Config;
 
+/**
+ * Class IconSetType handles icon set configuration.
+ *
+ * @package Netzmacht\Bootstrap\Core\Config\Type
+ */
 class IconSetType implements Type
 {
     /**
-     * @param  Config               $config
-     * @param  BootstrapConfigModel $model
-     * @return mixed
+     * {@inheritdoc}
      */
     public function buildConfig(Config $config, BootstrapConfigModel $model)
     {
@@ -42,9 +45,7 @@ class IconSetType implements Type
     }
 
     /**
-     * @param $key
-     * @param Config               $config
-     * @param BootstrapConfigModel $model
+     * {@inheritdoc}
      */
     public function extractConfig($key, Config $config, BootstrapConfigModel $model)
     {
@@ -62,7 +63,7 @@ class IconSetType implements Type
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasGlobalScope()
     {
@@ -70,7 +71,7 @@ class IconSetType implements Type
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isMultiple()
     {
@@ -78,7 +79,7 @@ class IconSetType implements Type
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getPath()
     {
@@ -86,7 +87,7 @@ class IconSetType implements Type
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isNameEditable()
     {
@@ -94,7 +95,10 @@ class IconSetType implements Type
     }
 
     /**
-     * @param  BootstrapConfigModel $model
+     * Get stylesheets from the model.
+     *
+     * @param BootstrapConfigModel $model Config model.
+     *
      * @return array
      */
     private function getStylesheets(BootstrapConfigModel $model)

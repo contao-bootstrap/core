@@ -14,29 +14,42 @@ namespace Netzmacht\Bootstrap\Core\Event;
 use Netzmacht\Bootstrap\Core\Environment;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class InitializeLayoutEvent is emitted when page layout is initialized.
+ *
+ * @package Netzmacht\Bootstrap\Core\Event
+ */
 final class InitializeLayoutEvent extends Event
 {
     const NAME = 'bootstrap.initialize-layout';
 
     /**
+     * The environment.
+     *
      * @var Environment
      */
     private $environment;
 
     /**
+     * The layout model.
+     *
      * @var \LayoutModel
      */
     private $layoutModel;
 
     /**
+     * The page model.
+     *
      * @var \PageModel
      */
     private $pageModel;
 
     /**
-     * @param Environment $environment
-     * @param \LayoutModel $layoutModel
-     * @param \PageModel $pageModel
+     * Construct.
+     *
+     * @param Environment  $environment Bootstrap environment.
+     * @param \LayoutModel $layoutModel Layout model.
+     * @param \PageModel   $pageModel   Page model.
      */
     public function __construct(Environment $environment, \LayoutModel $layoutModel, \PageModel $pageModel)
     {
@@ -46,7 +59,9 @@ final class InitializeLayoutEvent extends Event
     }
 
     /**
-     * @return \Netzmacht\Bootstrap\Core\Environment
+     * Get bootstrap environment.
+     *
+     * @return Environment
      */
     public function getEnvironment()
     {
@@ -54,6 +69,8 @@ final class InitializeLayoutEvent extends Event
     }
 
     /**
+     * Get layout model.
+     *
      * @return \LayoutModel
      */
     public function getLayoutModel()
@@ -62,6 +79,8 @@ final class InitializeLayoutEvent extends Event
     }
 
     /**
+     * Get page model.
+     *
      * @return \PageModel
      */
     public function getPageModel()

@@ -17,21 +17,27 @@ use LayoutModel;
 use MetaPalettes;
 
 /**
- * Class Layout
+ * Class Layout is used in tl_layout.
+ *
  * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
  */
 class Layout
 {
     /**
-     * modify palette if bootstrap is used
+     * Modify palette if bootstrap is used.
      *
-     * @hook palettes_hook (MetaPalettes)
+     * Hook palettes_hook (MetaPalettes) is called.
+     *
+     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function generatePalette()
     {
+        // @codingStandardsIgnoreStart
         // TODO: How to handle editAll actions?
+        // @codingStandardsIgnoreEnd
+
         if (Input::get('table') != 'tl_layout' || Input::get('act') != 'edit') {
             return;
         }
@@ -61,10 +67,11 @@ class Layout
     }
 
     /**
-     * Creates an meta palette of a palettes
+     * Creates an meta palette of a palettes.
      *
-     * @param string $table
-     * @param string $name
+     * @param string $table Database table name.
+     * @param string $name  Palette name.
+     *
      * @return array
      *
      * @SuppressWarnings(PHPMD.Superglobals)

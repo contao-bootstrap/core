@@ -4,34 +4,51 @@ namespace Netzmacht\Bootstrap\Core\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class ReplaceInsertTagsEvent is emitted when a bootstrap icon set is parsed.
+ *
+ * It supports all insert tags which uses a tag::arg1::arg1... syntax.
+ *
+ * @package Netzmacht\Bootstrap\Core\Event
+ */
 class ReplaceInsertTagsEvent extends Event
 {
     const NAME = 'bootstrap.replace-insert-tags';
 
     /**
+     * The html representation.
+     *
      * @var string
      */
     protected $html;
 
     /**
+     * The tag name.
+     *
      * @var string
      */
     protected $tag;
 
     /**
+     * Support caching.
+     *
      * @var bool
      */
     protected $cached;
 
     /**
+     * Insert tag params.
+     *
      * @var array
      */
     protected $params = array();
 
     /**
-     * @param $tag
-     * @param array $params
-     * @param bool $cached
+     * Construct.
+     *
+     * @param string $tag    The tag name.
+     * @param array  $params Tag params.
+     * @param bool   $cached Insert tag caching.
      */
     public function __construct($tag, array $params = array(), $cached = true)
     {
@@ -41,7 +58,10 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
-     * @param string $html
+     * Set html result.
+     *
+     * @param string $html Generated html.
+     *
      * @return $this
      */
     public function setHtml($html)
@@ -52,6 +72,8 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
+     * Get generated html.
+     *
      * @return string
      */
     public function getHtml()
@@ -60,8 +82,13 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
-     * @param array $params
+     * Set all params.
+     *
+     * @param array $params Insert tag params.
+     *
      * @return $this
+     *
+     * @deprecated Use constructor for this. Params are in fact immutable.
      */
     public function setParams($params)
     {
@@ -71,6 +98,8 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
+     * Get all params.
+     *
      * @return array
      */
     public function getParams()
@@ -79,7 +108,10 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
-     * @param $index
+     * Get a params value.
+     *
+     * @param int $index Index of param.
+     *
      * @return string|null
      */
     public function getParam($index)
@@ -92,9 +124,14 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
-     * @param $index
-     * @param $value
+     * Set a param.
+     *
+     * @param int   $index Param index.
+     * @param mixed $value Param value.
+     *
      * @return $this
+     *
+     * @deprecated Use constructor for this. Params are in fact immutable.
      */
     public function setParam($index, $value)
     {
@@ -104,6 +141,8 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
+     * Get tag name.
+     *
      * @return string
      */
     public function getTag()
@@ -112,6 +151,8 @@ class ReplaceInsertTagsEvent extends Event
     }
 
     /**
+     * Get insert tag caching.
+     *
      * @return bool
      */
     public function isCached()

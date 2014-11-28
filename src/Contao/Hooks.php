@@ -10,21 +10,29 @@ use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Netzmacht\Bootstrap\Core\Util\AssetsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Class Hooks contains hooks being called from Contao.
+ *
+ * @package Netzmacht\Bootstrap\Core\Contao
+ */
 class Hooks
 {
-
     /**
+     * The event dispatcher.
+     *
      * @var EventDispatcherInterface
      */
     protected $eventDispatcher;
 
     /**
+     * The bootstrap environment.
+     *
      * @var Environment
      */
     protected $environment;
 
     /**
-     * Construct
+     * Construct.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -35,9 +43,12 @@ class Hooks
     }
 
     /**
-     * @param $tag
-     * @param  bool   $cache
-     * @return string
+     * Replace insert tags. Dispatches an event an get the result.
+     *
+     * @param string $tag   Insert tag.
+     * @param bool   $cache Insert tag cache.
+     *
+     * @return string|false
      */
     public function replaceInsertTags($tag, $cache = true)
     {
@@ -51,7 +62,9 @@ class Hooks
     }
 
     /**
-     * Initialize bootstrap at initialize system hook
+     * Initialize bootstrap at initialize system hook.
+     *
+     * @return void
      */
     public function initializeSystem()
     {
@@ -60,7 +73,9 @@ class Hooks
     }
 
     /**
-     * Initialize bootstrap environment
+     * Initialize bootstrap environment.
+     *
+     * @return void
      */
     protected function initializeEnvironment()
     {
@@ -69,10 +84,12 @@ class Hooks
     }
 
     /**
-     * Initialize Layout
+     * Initialize Layout.
      *
-     * @param \PageModel   $page
-     * @param \LayoutModel $layout
+     * @param \PageModel   $page   Current page.
+     * @param \LayoutModel $layout Page layout.
+     *
+     * @return void
      */
     public function initializeLayout(\PageModel $page, \LayoutModel $layout)
     {
@@ -87,6 +104,7 @@ class Hooks
     /**
      * Add icon stylesheet to the backend template.
      *
+     * @return void
      */
     public function addIconStylesheet()
     {
@@ -99,7 +117,9 @@ class Hooks
     }
 
     /**
-     * select an icon set
+     * Select an icon set.
+     *
+     * @return void
      */
     protected function selectIconSet()
     {

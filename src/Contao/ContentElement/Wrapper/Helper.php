@@ -4,45 +4,70 @@ namespace Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
 
+/**
+ * Class Helper for wrapper elements.
+ *
+ * @package Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper
+ */
 class Helper
 {
-    const TYPE_START     = 'start';
+    const TYPE_START = 'start';
 
-    const TYPE_STOP      = 'stop';
+    const TYPE_STOP = 'stop';
 
     const TYPE_SEPARATOR = 'separator';
 
     /**
+     * Model if the current wrapper element.
+     *
      * @var \Database\Result|\Model
      */
     protected $model;
 
+    /**
+     * Type of wrapper.
+     *
+     * @var string
+     */
     protected $type;
 
+    /**
+     * Group value.
+     *
+     * @var string
+     */
     protected $group;
 
     /**
+     * Database connection.
+     *
      * @var \Database
      */
     protected $database;
 
     /**
-     * @param \Model|\Database\Result $model
-     * @param string $type
-     * @param string $group
-     * @param \Database $database
+     * Construct.
+     *
+     * @param \Model|\Database\Result $model    The wrapper model.
+     * @param string                  $type     Type of the wrapper.
+     * @param string                  $group    Group element contains to.
+     * @param \Database               $database The database connection.
      */
     public function __construct($model, $type, $group, \Database $database)
     {
-        $this->model = $model;
-        $this->type  = $type;
-        $this->group = $group;
+        $this->model    = $model;
+        $this->type     = $type;
+        $this->group    = $group;
         $this->database = $database;
     }
 
     /**
-     * @param \Model|\Database\Result $model
-     * @throws \Exception
+     * Create the helper.
+     *
+     * @param \Model|\Database\Result $model Current wrapper element.
+     *
+     * @throws \Exception If element is not a configured wrapper.
+     *
      * @return static
      */
     public static function create($model)
@@ -60,7 +85,10 @@ class Helper
     }
 
     /**
-     * @param $type
+     * Consider if wrapper is a specific type.
+     *
+     * @param string $type Type name.
+     *
      * @return bool
      */
     public function isTypeOf($type)
@@ -69,6 +97,8 @@ class Helper
     }
 
     /**
+     * Get group value.
+     *
      * @return string
      */
     public function getGroup()
@@ -77,6 +107,8 @@ class Helper
     }
 
     /**
+     * Get type value.
+     *
      * @return string
      */
     public function getType()
@@ -85,7 +117,10 @@ class Helper
     }
 
     /**
-     * @param string $type
+     * Get full type name.
+     *
+     * @param string $type Type name.
+     *
      * @return string
      */
     public function getTypeName($type = null)
@@ -98,9 +133,10 @@ class Helper
     }
 
     /**
-     * Count related elements
+     * Count related elements.
      *
-     * @param null $type
+     * @param string|null $type Name of the type. If empty current type is used.
+     *
      * @return int
      */
     public function countRelatedElements($type = null)
@@ -134,9 +170,9 @@ class Helper
     }
 
     /**
-     * try to find previous element of same type or specified type
+     * Try to find previous element of same type or specified type.
      *
-     * @param null $type
+     * @param string|null $type Name of the type. If empty current type is used.
      *
      * @return \Model|null
      */
@@ -153,9 +189,9 @@ class Helper
     }
 
     /**
-     * Find related elements of a start element
+     * Find related elements of a start element.
      *
-     * @param null $type
+     * @param string|null $type Name of the type. If empty current type is used.
      *
      * @return \ContentModel|null
      */
@@ -165,7 +201,6 @@ class Helper
 
         // invalid call
         if ($model->bootstrap_parentId == '' && !$this->isTypeOf(static::TYPE_START)) {
-            // TODO: throw exception?
             return null;
         }
 

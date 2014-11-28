@@ -17,14 +17,23 @@ use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 use Netzmacht\Bootstrap\Core\Event\GetMultipleConfigNamesEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * Class BootstrapConfig is used for the bootstrap config.
+ *
+ * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ */
 class BootstrapConfig extends \Backend
 {
     /**
+     * The event dispatcher.
+     *
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
     /**
+     * The type manager.
+     *
      * @var TypeManager
      */
     private $typeManager;
@@ -45,6 +54,10 @@ class BootstrapConfig extends \Backend
     }
 
     /**
+     * Add the name field to the palette depending on the config type.
+     *
+     * @return void
+     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function addNameToPalette()
@@ -67,7 +80,10 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param  \DataContainer $dataContainer
+     * Get all types.
+     *
+     * @param \DataContainer $dataContainer Data container driver.
+     *
      * @return array
      */
     public function getTypes(\DataContainer $dataContainer)
@@ -90,7 +106,10 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param  \DataContainer $dataContainer
+     * Get config names.
+     *
+     * @param \DataContainer $dataContainer Data container driver.
+     *
      * @return array
      */
     public function getNames(\DataContainer $dataContainer)
@@ -110,7 +129,7 @@ class BootstrapConfig extends \Backend
         }
 
         if ($dataContainer->activeRecord->override) {
-            $type  = $this->typeManager->getType($dataContainer->activeRecord->type);
+            $type = $this->typeManager->getType($dataContainer->activeRecord->type);
 
             if (!$type->isMultiple()) {
                 $this->redirect('main.php?act=error');
@@ -127,8 +146,12 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param $value
-     * @param \DataContainer $dataContainer
+     * Import from config.
+     *
+     * @param mixed          $value         The value.
+     * @param \DataContainer $dataContainer Data container driver.
+     *
+     * @return mixed
      */
     public function importFromConfig($value, \DataContainer $dataContainer)
     {
@@ -147,9 +170,9 @@ class BootstrapConfig extends \Backend
                 }
 
                 $model = BootstrapConfigModel::findByPk($dataContainer->id);
+
                 $model->type = $value;
                 $model->name = $dataContainer->activeRecord->name;
-
 
                 $type->extractConfig($key, Bootstrap::getConfig(), $model);
                 $model->save();
@@ -163,8 +186,12 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param $table
-     * @param $configId
+     * Enable override option.
+     *
+     * @param string $table    Table name.
+     * @param int    $configId The config id.
+     *
+     * @return void
      */
     public function addOverrideInformation($table, $configId)
     {
@@ -176,6 +203,14 @@ class BootstrapConfig extends \Backend
         }
     }
 
+    /**
+     * Generate the label.
+     *
+     * @param array  $row   Current row.
+     * @param string $label The auto created label.
+     *
+     * @return string
+     */
     public function generateLabel(array $row, $label)
     {
         if ($row['type']) {
@@ -192,6 +227,8 @@ class BootstrapConfig extends \Backend
     }
 
     /**
+     * Get dropdown templates.
+     *
      * @return array
      */
     public function getDropdownTemplates()
@@ -200,13 +237,15 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * Ändert das Aussehen des Toggle-Buttons.
-     * @param $row
-     * @param $href
-     * @param $label
-     * @param $title
-     * @param $icon
-     * @param $attributes
+     * Change the toggle icon.
+     *
+     * @param array  $row        Current row.
+     * @param string $href       Pre generated href.
+     * @param string $label      Pre generated label.
+     * @param string $title      Pre generated title.
+     * @param string $icon       Pre generated icon.
+     * @param string $attributes Pre generated attributes.
+     *
      * @return string
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
@@ -240,9 +279,12 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * Toggle the visibility of an element
-     * @param integer
-     * @param boolean
+     * Toggle the visibility of an element.
+     *
+     * @param int  $configId  The config id.
+     * @param bool $published The published state.
+     *
+     * @return void
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -275,7 +317,7 @@ class BootstrapConfig extends \Backend
 
         // Update the database
         \Database::getInstance()
-            ->prepare("UPDATE tl_bootstrap_config %s WHERE id=?")
+            ->prepare('UPDATE tl_bootstrap_config %s WHERE id=?')
             ->set(array(
                     'tstamp'    => time(),
                     'published' => ($published ? '' : '1')
@@ -285,8 +327,13 @@ class BootstrapConfig extends \Backend
     }
 
     /**
-     * @param $file
-     * @return mixed
+     * Guard that icon file is valid.
+     *
+     * @param string $file File name.
+     *
+     * @throws \InvalidArgumentException If icon file is not valid.
+     *
+     * @return string
      */
     public function guardValidIconFile($file)
     {
@@ -310,6 +357,8 @@ class BootstrapConfig extends \Backend
     }
 
     /**
+     * Get the event dispatcher.
+     *
      * @return EventDispatcherInterface
      *
      * @SuppressWarnings(PHPMD.Superglobals)

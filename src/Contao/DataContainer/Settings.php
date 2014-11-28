@@ -4,10 +4,16 @@ namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
 
+/**
+ * Class Settings is used in tl_settings.
+ *
+ * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ */
 class Settings
 {
-
     /**
+     * Get all icon set names.
+     *
      * @return array
      */
     public function getIconSets()

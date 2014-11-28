@@ -19,14 +19,14 @@ use Netzmacht\Bootstrap\Core\Util\Contao;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class ConfigSubscriber handles config loading from the database
+ * Class ConfigSubscriber handles config loading from the database.
  *
  * @package Netzmacht\Bootstrap\Core\Subscriber
  */
 class ConfigSubscriber implements EventSubscriberInterface
 {
     /**
-     * @{inheritdoc}
+     * {@inheritdoc}
      */
     public static function getSubscribedEvents()
     {
@@ -37,7 +37,9 @@ class ConfigSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Load global configurations from database
+     * Load global configurations from database.
+     *
+     * @return void
      */
     public function loadGlobalConfig()
     {
@@ -53,9 +55,12 @@ class ConfigSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Load theme configuration from database
+     * Load theme configuration from database.
      *
-     * @param InitializeLayoutEvent $event
+     * @param InitializeLayoutEvent $event InitializeLayout event.
+     *
+     * @return void
+     *
      * @internal param Config $config
      */
     public function loadThemeConfig(InitializeLayoutEvent $event)
@@ -67,6 +72,8 @@ class ConfigSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * Get type manager.
+     *
      * @return TypeManager
      *
      * @SuppressWarnings(PHPMD.Superglobals)

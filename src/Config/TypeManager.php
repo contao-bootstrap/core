@@ -13,21 +13,32 @@ namespace Netzmacht\Bootstrap\Core\Config;
 
 use Netzmacht\Bootstrap\Core\Config;
 
+/**
+ * Class TypeManager is used to manage different config types.
+ *
+ * @package Netzmacht\Bootstrap\Core\Config
+ */
 class TypeManager
 {
     /**
+     * Config types.
+     *
      * @var Type[]
      */
     private $types;
 
     /**
+     * Bootstrap config.
+     *
      * @var Config
      */
     private $config;
 
     /**
-     * @param Config $config
-     * @param Type[] $types
+     * Construct.
+     *
+     * @param Config $config Bootstrap config.
+     * @param Type[] $types  Config types.
      */
     public function __construct(Config $config, $types)
     {
@@ -36,6 +47,8 @@ class TypeManager
     }
 
     /**
+     * Get Bootstrap config.
+     *
      * @return Config
      */
     public function getConfig()
@@ -44,7 +57,11 @@ class TypeManager
     }
 
     /**
-     * @param Config $config
+     * Set bootstrap config.
+     *
+     * @param Config $config Bootstrap config.
+     *
+     * @return void
      */
     public function setConfig(Config $config)
     {
@@ -52,6 +69,8 @@ class TypeManager
     }
 
     /**
+     * Get all type names.
+     *
      * @return array
      */
     public function getNames()
@@ -60,7 +79,10 @@ class TypeManager
     }
 
     /**
-     * @param  bool         $keysOnly
+     * Get unused types.
+     *
+     * @param bool $keysOnly Return keys only. Otherwise type objects are returned.
+     *
      * @return Type[]|array
      */
     public function getUnusedTypes($keysOnly = false)
@@ -89,7 +111,10 @@ class TypeManager
     }
 
     /**
-     * @param  bool         $keysOnly
+     * Get existing types.
+     *
+     * @param bool $keysOnly Return keys only. Otherwise type objects are returned.
+     *
      * @return Type[]|array
      */
     public function getExistingTypes($keysOnly = false)
@@ -109,7 +134,10 @@ class TypeManager
     }
 
     /**
-     * @param  string $typeName of a multiple type
+     * Get existing names of multiple config types..
+     *
+     * @param string $typeName Tye name of a multiple type.
+     *
      * @return array
      */
     public function getExistingNames($typeName)
@@ -123,7 +151,10 @@ class TypeManager
     }
 
     /**
-     * @param  bool         $keysOnly
+     * Get types containg all global type elements as well.
+     *
+     * @param bool $keysOnly Return keys only. Otherwise type objects are returned.
+     *
      * @return Type[]|array
      */
     public function getTypesWithGlobalScope($keysOnly = false)
@@ -143,8 +174,13 @@ class TypeManager
     }
 
     /**
-     * @param $typeName
+     * Get a specifiy type by name.
+     *
+     * @param string $typeName Type name.
+     *
      * @return Type
+     *
+     * @throws \InvalidArgumentException If type does not exists.
      */
     public function getType($typeName)
     {
@@ -156,7 +192,11 @@ class TypeManager
     }
 
     /**
-     * @param \Model\Collection $collection
+     * Build config from collection.
+     *
+     * @param \Model\Collection $collection Config collection.
+     *
+     * @return void
      */
     public function buildConfig(\Model\Collection $collection = null)
     {
@@ -185,8 +225,14 @@ class TypeManager
     }
 
     /**
-     * @param $typeName
-     * @param $type
+     * Guard that type is a multiple type.
+     *
+     * @param string $typeName Type name.
+     * @param Type   $type     Config type.
+     *
+     * @return void
+     *
+     * @throws \RuntimeException If type is not a multiple type.
      */
     private function guardMultipleType($typeName, Type $type)
     {

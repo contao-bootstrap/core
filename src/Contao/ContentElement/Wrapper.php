@@ -2,22 +2,31 @@
 
 namespace Netzmacht\Bootstrap\Core\Contao\ContentElement;
 
+/**
+ * Class Wrapper provides basic functions for wrapping content elements.
+ *
+ * @package Netzmacht\Bootstrap\Core\Contao\ContentElement
+ */
 abstract class Wrapper extends \Module
 {
     /**
+     * The wrapper helper.
+     *
      * @var Wrapper\Helper
      */
     protected $wrapper;
 
     /**
+     * The wrapper name.
+     *
      * @var string
      */
     protected static $wrapperName = 'tabs';
 
     /**
-     * load start element
+     * Construct.
      *
-     * @param $objElement
+     * @param \ContentModel $objElement Content element.
      */
     public function __construct($objElement)
     {
@@ -27,6 +36,8 @@ abstract class Wrapper extends \Module
     }
 
     /**
+     * Generate the wrapper.
+     *
      * @return string
      */
     public function generate()

@@ -14,16 +14,19 @@ namespace Netzmacht\Bootstrap\Core\Contao\Template;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 
 /**
- * Class TemplateModifier contains all template modifiers used by bootstrap config
+ * Class TemplateModifier contains all template modifiers used by bootstrap config.
+ *
  * @package Netzmacht\Bootstrap
  */
 class Modifier
 {
 
     /**
-     * execute all registered template modifiers
+     * Execute all registered template modifiers.
      *
-     * @param \Template $template
+     * @param \Template $template Current template.
+     *
+     * @return void
      */
     public function modify(\Template $template)
     {
@@ -51,9 +54,12 @@ class Modifier
     }
 
     /**
-     * @param $buffer
-     * @param $templateName
-     * @return mixed
+     * Parse current template.
+     *
+     * @param string $buffer       Parsed template.
+     * @param string $templateName Name of the template.
+     *
+     * @return string
      */
     public function parse($buffer, $templateName)
     {
@@ -83,8 +89,11 @@ class Modifier
     }
 
     /**
-     * @param $template
-     * @param $templates
+     * Consider if template is affected.
+     *
+     * @param string $template  Name of current template.
+     * @param array  $templates Defined templates of the modifier.
+     *
      * @return bool
      */
     protected function isTemplateAffected($template, $templates)
@@ -93,7 +102,7 @@ class Modifier
             if ($template == $config) {
                 return true;
             } elseif (substr($config, -1) == '*'
-                && 0 == strcasecmp(substr($config, 0, -1), substr($template, 0, strlen($config) -1))
+                && 0 == strcasecmp(substr($config, 0, -1), substr($template, 0, (strlen($config) - 1)))
             ) {
                 return true;
             }

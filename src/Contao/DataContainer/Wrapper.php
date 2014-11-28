@@ -1,50 +1,41 @@
 <?php
 
-
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper\Helper;
 
 /**
- * Class WrapperDataContainer
+ * Class WrapperDataContainer handles wrapper content elements in the backend configuration.
  *
  * @package Netzmacht\Bootstrap\DataContainer
  */
 class Wrapper
 {
-    /**
-     * @var int
-     */
     const TRIGGER_CREATE = 'trigger-create';
 
-    /**
-     * @var int
-     */
     const TRIGGER_DELETE = 'trigger-delete';
 
-    /**
-     * order const ascending
-     */
     const ORDER_ASC = 'asc';
 
-    /**
-     * order const descending
-     */
     const ORDER_DESC = 'desc';
 
     /**
+     * The wrapper helper.
+     *
      * @var Helper
      */
     protected $wrapper;
 
     /**
-     * Try to create wrapper elements, triggered by save_callback of type field
-     * @param $value
-     * @param $dataContainer
+     * Try to create wrapper elements, triggered by save_callback of type field.
+     *
+     * @param mixed          $value         Mixed value.
+     * @param \DataContainer $dataContainer Data container.
      *
      * @return mixed
-     * @throws \Exception
+     *
+     * @throws \Exception If something went wrong.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -58,7 +49,7 @@ class Wrapper
 
         // try to create wrapper helper. will throw an exception if an unknown type is selected
         try {
-            $wrapper = Helper::create($record);
+            $wrapper       = Helper::create($record);
             $this->wrapper = $wrapper;
         } catch (\Exception $e) {
             return $value;
@@ -68,7 +59,7 @@ class Wrapper
 
         // check for existing parent element and try to create it if not existing
         if (!$wrapper->isTypeOf($start)) {
-            $sorting = $this->saveStartType($value, $record, $wrapper, $start, $set, $stop, $sorting);
+            $sorting = $this->saveStartType($value, $record, $wrapper, $set, $sorting);
         }
 
         // create separators if possible
@@ -76,7 +67,7 @@ class Wrapper
             && ($this->isTrigger($wrapper->getType(), $sep)
                 || $this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_CREATE))
         ) {
-            $sorting = $this->createSeparators($wrapper, $sep, $record, $stop, $sorting, $start);
+            $sorting = $this->createSeparators($wrapper, $record, $sorting);
         }
 
         // cereate end element
@@ -92,15 +83,18 @@ class Wrapper
     }
 
     /**
-     * handle content element deletion, called by ondelete_callback
-     * @param $dataContainer
+     * Handle content element deletion, called by ondelete_callback.
+     *
+     * @param \DataContainer $dataContainer The data container driver.
+     *
+     * @return void
      */
     public function delete($dataContainer)
     {
         $model = \ContentModel::findByPk($dataContainer->id);
 
         try {
-            $wrapper = Helper::create($model);
+            $wrapper       = Helper::create($model);
             $this->wrapper = $wrapper;
         } catch (\Exception $e) {
             return;
@@ -142,17 +136,20 @@ class Wrapper
                     ->prepare($query)
                     ->execute($model->bootstrap_parentId);
             }
-        } else {
-            // todo: handle seperator delete actions
         }
+        // @codingStandardsIgnoreStart
+        //else {
+            // todo: handle seperator delete actions
+        //}
+        // @codingStandardsIgnoreEnd
     }
 
     /**
-     * Create a new wrapper element
+     * Create a new wrapper element.
      *
-     * @param $parent
-     * @param int                 $sorting
-     * @param string              $type
+     * @param \Model $parent  The parent element.
+     * @param int    $sorting The sorting index.
+     * @param string $type    The wrapper type.
      *
      * @return \ContentModel
      */
@@ -161,9 +158,9 @@ class Wrapper
         $model = new \ContentModel();
 
         if ($type == Helper::TYPE_START) {
-            $sorting = $sorting - 2;
+            $sorting = ($sorting - 2);
         } else {
-            $sorting = $sorting + 2;
+            $sorting                   = ($sorting + 2);
             $model->bootstrap_parentId = $parent->id;
         }
 
@@ -179,15 +176,15 @@ class Wrapper
     }
 
     /**
-     * check if action can be triggered
+     * Check if action can be triggered.
      *
-     * @param string $trigger
-     * @param string $target
-     * @param int    $action
+     * @param string $trigger Trigger name.
+     * @param string $target  Target.
+     * @param string $action  Trigger action.
      *
      * @return bool
      */
-    protected function isTrigger($trigger, $target, $action = Wrapper::TRIGGER_CREATE)
+    protected function isTrigger($trigger, $target, $action = self::TRIGGER_CREATE)
     {
         $config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
 
@@ -208,34 +205,35 @@ class Wrapper
     }
 
     /**
-     * @param $value
-     * @param $record
-     * @param $wrapper
-     * @param $start
-     * @param $set
-     * @param $stop
-     * @param $sorting
+     * Save start type.
+     *
+     * @param mixed            $value   Value to be saved.
+     * @param \Database\Result $record  Current database record.
+     * @param Helper           $wrapper Wrapper helper.
+     * @param array            $set     Current data set.
+     * @param int              $sorting Sorting index.
      *
      * @return array
-     * @throws \Exception
+     *
+     * @throws \Exception If no wrapper start element could be created.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    private function saveStartType($value, $record, $wrapper, $start, $set, $stop, $sorting)
+    private function saveStartType($value, $record, $wrapper, $set, $sorting)
     {
         if ($record->bootstrap_parentId == '') {
-            $parent = $wrapper->findPreviousElement($start);
+            $parent = $wrapper->findPreviousElement(Helper::TYPE_START);
 
             if ($parent) {
                 // set relation to parent element
                 $set['bootstrap_parentId'] = $parent->id;
 
-                $end = $wrapper->findRelatedElement($record, $stop);
+                $end = $wrapper->findRelatedElement($record, Helper::TYPE_STOP);
 
                 if ($end === null) {
-                    $set['sorting'] = $parent->sorting + 2;
+                    $set['sorting'] = ($parent->sorting + 2);
                 } elseif ($parent !== null && $parent->sorting > $end->sorting) {
-                    $set['sorting'] = $end->sorting - 2;
+                    $set['sorting'] = ($end->sorting - 2);
                 }
 
                 foreach ($set as $name => $v) {
@@ -248,11 +246,11 @@ class Wrapper
                     ->execute($record->id);
 
                 return array($end, $sorting);
-            } elseif ($this->isTrigger($wrapper->getType(), $start)) {
+            } elseif ($this->isTrigger($wrapper->getType(), Helper::TYPE_START)) {
                 // create parent if possible
 
-                $sorting = $sorting - 2;
-                $this->createElement($record, $sorting, $start);
+                $sorting = ($sorting - 2);
+                $this->createElement($record, $sorting, Helper::TYPE_START);
 
                 return $sorting;
             } else {
@@ -271,18 +269,17 @@ class Wrapper
     }
 
     /**
-     * @param $wrapper
-     * @param $sep
-     * @param $record
-     * @param $stop
-     * @param $sorting
-     * @param $start
+     * Create separator elements.
      *
-     * @return array
+     * @param Helper           $wrapper Wrapper helper.
+     * @param \Database\Result $record  Database result.
+     * @param int              $sorting Sorting index.
+     *
+     * @return array|int
      */
-    private function createSeparators($wrapper, $sep, $record, $stop, $sorting, $start)
+    private function createSeparators($wrapper, $record, $sorting)
     {
-        $config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), $sep));
+        $config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), Helper::TYPE_SEPARATOR));
 
         $callback = $config['count-existing'];
         $instance = \Controller::importStatic($callback[0]);
@@ -293,17 +290,17 @@ class Wrapper
         $required = $instance->$callback[1]($record, $wrapper);
 
         if ($existing < $required) {
-            if ($this->isTrigger($wrapper->getType(), $sep)) {
-                $count = $required - $existing;
+            if ($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR)) {
+                $count = ($required - $existing);
 
                 for ($i = 0; $i < $count; $i++) {
-                    $this->createElement($record, $sorting, $sep);
+                    $this->createElement($record, $sorting, Helper::TYPE_SEPARATOR);
                 }
 
-                $end = $wrapper->findRelatedElement($stop);
+                $end = $wrapper->findRelatedElement(Helper::TYPE_STOP);
 
                 if ($end && $end->sorting <= $sorting) {
-                    $sorting      = $sorting + 2;
+                    $sorting      = ($sorting + 2);
                     $end->sorting = $sorting;
                     $end->save();
 
@@ -311,16 +308,16 @@ class Wrapper
                 }
             }
         } elseif ($required < $existing) {
-            if ($this->isTrigger($wrapper->getType(), $sep, static::TRIGGER_DELETE)) {
-                $count    = $existing - $required;
-                $parentId = $wrapper->isTypeOf($start)
+            if ($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR, static::TRIGGER_DELETE)) {
+                $count    = ($existing - $required);
+                $parentId = $wrapper->isTypeOf(Helper::TYPE_START)
                     ? $record->id
                     : $record->bootstrap_parentId;
 
                 \Database::getInstance()
                     ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=? ORDER BY sorting DESC')
                     ->limit($count)
-                    ->execute($parentId, $wrapper->getTypeName($sep));
+                    ->execute($parentId, $wrapper->getTypeName(Helper::TYPE_SEPARATOR));
             }
         }
 

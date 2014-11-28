@@ -3,19 +3,21 @@
 namespace Netzmacht\Bootstrap\Core;
 
 /**
- * Class Bootstrap provides access to core bootstrap component module
+ * Class Bootstrap provides access to core bootstrap component module.
  *
  * @package Netzmacht\Bootstrap
  */
 class Bootstrap
 {
     /**
+     * Bootstrap environment.
+     *
      * @var Environment
      */
     private static $environment;
 
     /**
-     * Returns true if Bootstrap is enabled
+     * Returns true if Bootstrap is enabled.
      *
      * @return bool
      */
@@ -25,8 +27,11 @@ class Bootstrap
     }
 
     /**
-     * @param $key
-     * @param null $default
+     * Get config value.
+     *
+     * @param string $key     Name of config key.
+     * @param mixed  $default Default value being used if config key does not exists.
+     *
      * @return mixed
      */
     public static function getConfigVar($key, $default = null)
@@ -35,8 +40,12 @@ class Bootstrap
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
+     * Set a config var.
+     *
+     * @param string $key   Name of config key.
+     * @param mixed  $value Value of the config key.
+     *
+     * @return void
      */
     public static function setConfigVar($key, $value)
     {
@@ -44,7 +53,7 @@ class Bootstrap
     }
 
     /**
-     * Returns the bootstrap configuration
+     * Returns the bootstrap configuration.
      *
      * @return Config
      */
@@ -54,10 +63,11 @@ class Bootstrap
     }
 
     /**
-     * Generates an icon
+     * Generates an icon.
      *
-     * @param $icon
-     * @param null $class
+     * @param string      $icon  Icon name.
+     * @param string|null $class Additional icon class.
+     *
      * @return string
      */
     public static function generateIcon($icon, $class = null)
@@ -66,6 +76,8 @@ class Bootstrap
     }
 
     /**
+     * Get the icon set.
+     *
      * @return IconSet
      */
     public static function getIconSet()
@@ -74,6 +86,8 @@ class Bootstrap
     }
 
     /**
+     * Get the page layout.
+     *
      * @return \LayoutModel|null
      */
     public static function getPageLayout()
@@ -82,6 +96,8 @@ class Bootstrap
     }
 
     /**
+     * Get the environment.
+     *
      * @return Environment
      *
      * @SuppressWarnings(PHPMD.Superglobals)
