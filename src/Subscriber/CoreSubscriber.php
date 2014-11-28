@@ -9,7 +9,8 @@ use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class DefaultSubscriber
+ * Class DefaultSubscriber contains initializes the core.
+ *
  * @package Netzmacht\Bootstrap\Subscriber
  */
 class CoreSubscriber implements EventSubscriberInterface
@@ -33,7 +34,9 @@ class CoreSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param InitializeEnvironmentEvent $event
+     * Load configuration.
+     *
+     * @param InitializeEnvironmentEvent $event Initialize environment event.
      */
     public function loadConfig(InitializeEnvironmentEvent $event)
     {
@@ -44,7 +47,9 @@ class CoreSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param InitializeEnvironmentEvent $event
+     * Import Contao settings into config.
+     *
+     * @param InitializeEnvironmentEvent $event Initialisation event.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -58,7 +63,9 @@ class CoreSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent $event
+     * Replace insert tags.
+     *
+     * @param ReplaceInsertTagsEvent $event Replace insert tags event.
      */
     public function replaceIconInsertTag(ReplaceInsertTagsEvent $event)
     {
@@ -71,20 +78,25 @@ class CoreSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param $config
+     * Load config of each module.
+     *
+     * @param Config $config Bootstrap configuration.
      */
     private function loadConfigFromModules(Config $config)
     {
-        // load config from module files
-        $files = glob(TL_ROOT . '/system/modules/*/config/contao-bootstrap.php');
+        foreach (\Config::getInstance()->getActiveModules() as $module ) {
+            $file = TL_ROOT . '/system/modules/' . $module . '/config/contao-bootstrap.php';
 
-        foreach ($files as $file) {
-            $config->import($file);
+            if (file_exists($file)) {
+                $config->import($file);
+            }
         }
     }
 
     /**
-     * @param $config
+     * Load deprecated global config.
+     *
+     * @param Config $config Bootstrap config.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
