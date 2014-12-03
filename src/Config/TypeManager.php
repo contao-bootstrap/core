@@ -119,10 +119,11 @@ class TypeManager
      */
     public function getExistingTypes($keysOnly = false)
     {
-        $types = array_filter(
+        $config = $this->config;
+        $types  = array_filter(
             $this->types,
-            function (Type $type) {
-                return $this->config->has($type->getPath());
+            function (Type $type) use ($config) {
+                return $config->has($type->getPath());
             }
         );
 
