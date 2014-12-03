@@ -53,7 +53,7 @@ class ArrayUtil
         foreach ($array2 as $key => &$value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
                 $merged[$key] = static::mergeDistinct($merged[$key], $value);
-            } elseif(is_numeric($key)) {
+            } elseif (is_numeric($key)) {
                 $merged[] = $value;
             } else {
                 $merged[$key] = $value;
