@@ -8,5 +8,7 @@ php:
 install:
     - composer install --prefer-dist --dev
 
+sudo: false
+
 script:
     - ant -keep-going

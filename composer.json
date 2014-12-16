@@ -26,7 +26,7 @@
         "contao-community-alliance/dependency-container": "~1.4"
     },
     "require-dev": {
-        "netzmacht/contao-build-tools": "1.0.x-dev"
+        "netzmacht/contao-build-tools": "~1.0"
     },
     "conflict": {
         "netzmacht/contao-bootstrap": "*"
