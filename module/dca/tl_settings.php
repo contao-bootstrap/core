@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package   contao-bootstrap
+ * @author    David Molineus <david.molineus@netzmacht.de>
+ * @license   LGPL 3+
+ * @copyright 2013-2014 netzmacht creative David Molineus
+ */
+
 \MetaPalettes::appendTo('tl_settings', array(
 	'bootstrap' => array(':hide', 'bootstrapIconSet')
 ));

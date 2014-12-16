@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package   contao-bootstrap
+ * @author    David Molineus <david.molineus@netzmacht.de>
+ * @license   LGPL 3+
+ * @copyright 2013-2014 netzmacht creative David Molineus
+ */
+
 // Models
 $GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel';
 

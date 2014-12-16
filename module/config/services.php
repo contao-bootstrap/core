@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package   contao-bootstrap
+ * @author    David Molineus <david.molineus@netzmacht.de>
+ * @license   LGPL 3+
+ * @copyright 2013-2014 netzmacht creative David Molineus
+ */
+
 use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Environment;
 use Netzmacht\Bootstrap\Core\IconSet;

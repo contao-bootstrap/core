@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @package   contao-bootstrap
+ * @author    David Molineus <david.molineus@netzmacht.de>
+ * @license   LGPL 3+
+ * @copyright 2013-2014 netzmacht creative David Molineus
+ */
+
 // define default bootstrap palette
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_default_'] = array
 (
