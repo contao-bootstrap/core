@@ -35,3 +35,13 @@ if(TL_MODE == 'BE') {
 		require TL_ROOT . '/system/modules/bootstrap-core/config/stylepicker.php';
 	}
 }
+
+// Easy themes support for Contao Bootstrap config
+$GLOBALS['TL_EASY_THEMES_MODULES']['bootstrap_config'] = array
+(
+	'title'         => &$GLOBALS['TL_LANG']['bootstrapConfig'][1],
+	'label'         => &$GLOBALS['TL_LANG']['bootstrapConfig'][0],
+	'href_fragment' => 'table=tl_bootstrap_config',
+	'icon'          => 'system/modules/bootstrap-core/assets/img/bootstrap.png',
+	'appendRT'      => true
+);
