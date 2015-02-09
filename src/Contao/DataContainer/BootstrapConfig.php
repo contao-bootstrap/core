@@ -191,6 +191,8 @@ class BootstrapConfig extends \Backend
      * @param string $value The config type.
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function warnByGlobalConfig($value)
     {
@@ -202,14 +204,11 @@ class BootstrapConfig extends \Backend
             $type = $this->typeManager->getType($value);
 
             if ($type->hasGlobalScope()) {
-                \Message::addInfo(
-                    sprintf(
-                        $GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'],
-                        empty($GLOBALS['TL_LANG']['bootstrap_config_type'][$value])
-                            ? $value
-                            : $GLOBALS['TL_LANG']['bootstrap_config_type'][$value]
-                    )
-                );
+                $name = empty($GLOBALS['TL_LANG']['bootstrap_config_type'][$value])
+                    ? $value
+                    : $GLOBALS['TL_LANG']['bootstrap_config_type'][$value];
+
+                \Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'], $name));
             }
         } catch (\Exception $e) {
             // Do not throw, it's just a usability notice.
