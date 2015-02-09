@@ -33,7 +33,9 @@ class IconSetType implements Type
             return;
         }
 
+        $theme = $model->getRelated('pid');
         $value = array(
+            'label'      => $model->name . ($theme ? (' (' . $theme->name . ')') : ''),
             'stylesheet' => $this->getStylesheets($model),
             'template'   => $model->icons_template,
             'path'       => $model->icons_path,

@@ -128,7 +128,9 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         ),
         'pid'            => array
         (
-            'sql' => "int(10) unsigned NOT NULL default '0'"
+            'sql'        => "int(10) unsigned NOT NULL default '0'",
+            'foreignKey' => 'tl_theme.name',
+            'relation'   => array('type' => 'belongsTo', 'load' => 'eager')
         ),
         'tstamp'         => array
         (

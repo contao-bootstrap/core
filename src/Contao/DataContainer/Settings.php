@@ -25,10 +25,17 @@ class Settings
      */
     public function getIconSets()
     {
-        $sets = Bootstrap::getConfigVar('icons.sets', array());
-        $sets = array_keys($sets);
-        sort($sets);
+        $options = array();
+        $sets    = Bootstrap::getConfigVar('icons.sets', array());
 
-        return $sets;
+        foreach ($sets as $name => $config) {
+            if (isset($config['label'])) {
+                $options[$name] = $config['label'];
+            } else {
+                $options[$name] = $name;
+            }
+        }
+
+        return $options;
     }
 }
