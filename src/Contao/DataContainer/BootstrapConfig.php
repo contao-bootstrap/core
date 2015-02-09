@@ -184,6 +184,41 @@ class BootstrapConfig extends \Backend
     }
 
     /**
+     * Add warning if config type has a global scope.
+     *
+     * This method is triggered by the load_callback.
+     *
+     * @param string $value The config type.
+     *
+     * @return string
+     */
+    public function warnByGlobalConfig($value)
+    {
+        if (!$value) {
+            return $value;
+        }
+
+        try {
+            $type = $this->typeManager->getType($value);
+
+            if ($type->hasGlobalScope()) {
+                \Message::addInfo(
+                    sprintf(
+                        $GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'],
+                        empty($GLOBALS['TL_LANG']['bootstrap_config_type'][$value])
+                            ? $value
+                            : $GLOBALS['TL_LANG']['bootstrap_config_type'][$value]
+                    )
+                );
+            }
+        } catch (\Exception $e) {
+            // Do not throw, it's just a usability notice.
+        }
+
+        return $value;
+    }
+
+    /**
      * Enable override option.
      *
      * @param string $table    Table name.

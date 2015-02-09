@@ -53,3 +53,6 @@ $GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless'][0] = 'Formless d
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless'][1] = 'Some module uses a dropdown. You can activate a formless dropdown rendering.';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless_template'][0] = 'Template';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless_template'][1] = 'Please choose the templates being used for the formless dropdown.';
+
+// Warning
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'] = 'Config type "%s" has a global scope. If activated, it will affect other themes as well.';

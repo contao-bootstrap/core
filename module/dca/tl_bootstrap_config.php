@@ -152,6 +152,9 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'save_callback'    => array(
                 array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'importFromConfig'),
             ),
+            'load_callback'    => array(
+                array('Netzmacht\Bootstrap\Core\Contao\DataContainer\BootstrapConfig', 'warnByGlobalConfig'),
+            ),
             'eval'             => array(
                 'tl_class'           => 'w50',
                 'includeBlankOption' => true,
