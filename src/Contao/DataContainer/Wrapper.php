@@ -155,6 +155,8 @@ class Wrapper
      * Make bootstrap_parentId editable in editAll and if a parent id got broken (after duplicating).
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function enableFixParentPalette()
     {

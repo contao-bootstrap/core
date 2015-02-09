@@ -46,6 +46,8 @@ abstract class Wrapper extends \Module
      * Generate the wrapper.
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function generate()
     {
