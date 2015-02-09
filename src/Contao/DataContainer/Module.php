@@ -29,7 +29,6 @@ class Module
     {
         $config = array();
         $prefix = '';
-        $key    = null;
 
         // MCW compatibility
         if ($dataContainer instanceof \MultiColumnWizard) {
@@ -48,13 +47,7 @@ class Module
             $prefix = $config['templatePrefix'];
         }
 
-        if (array_key_exists('templateThemeId', $config)) {
-            $key = $config['templateThemeId'];
-        }
-
-        $key = $key == '' ? null : $dataContainer->activeRecord->$key;
-
-        return \Controller::getTemplateGroup($prefix, $key);
+        return \Controller::getTemplateGroup($prefix);
     }
 
     /**
