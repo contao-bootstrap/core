@@ -64,3 +64,16 @@ input[readonly] {
     margin-left: 15px;
     /*background-image: url('../img/icon.png');*/
 }
+
+.bootstrap-wrapper-incomplete {
+    display: block;
+    background: rgba(255,0,0,0.8);
+    color: #fff;
+    padding: 4px;
+    margin: 0 -6px -6px;
+}
+
+.bootstrap-wrapper-incomplete:hover {
+    color: #fff;
+    background: #ff0000;
+}

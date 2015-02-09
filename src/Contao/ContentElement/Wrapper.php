@@ -51,6 +51,14 @@ abstract class Wrapper extends \Module
     {
         // backend mode
         if (TL_MODE == 'BE') {
+            if (!$this->wrapper->isTypeOf(Wrapper\Helper::TYPE_START) && !$this->bootstrap_parentId) {
+                return sprintf(
+                    '<a href="%s" class="bootstrap-wrapper-incomplete">%s</a>',
+                    \Backend::addToUrl('act=edit&amp;bootstrap=parent&amp;id=' . $this->id),
+                    $GLOBALS['TL_LANG']['tl_content']['fixBootstrapParent']
+                );
+            }
+
             if ($this->wrapper->isTypeOf(Wrapper\Helper::TYPE_STOP)) {
                 return '';
             }

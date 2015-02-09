@@ -152,6 +152,77 @@ class Wrapper
     }
 
     /**
+     * Make bootstrap_parentId editable in editAll and if a parent id got broken (after duplicating).
+     *
+     * @return void
+     */
+    public function enableFixParentPalette()
+    {
+        if (\Input::get('bootstrap') === 'parent' && \Input::get('act') === 'edit') {
+            $row = \ContentModel::findByPk(\Input::get('id'));
+
+            if ($row) {
+                $GLOBALS['TL_DCA']['tl_content']['palettes'][$row->type] =
+                    $GLOBALS['TL_DCA']['tl_content']['palettes']['bootstrap_parent'];
+            }
+        } elseif (\Input::get('act') === 'editAll') {
+            $wrappers = Bootstrap::getConfigVar('wrappers');
+
+            foreach ($wrappers as $wrapper) {
+                foreach ($wrapper as $name => $type) {
+                    if ($name === 'start') {
+                        continue;
+                    }
+
+                    \MetaPalettes::appendFields('tl_content', $type['name'], 'type', array('bootstrap_parentId'));
+                }
+            }
+        }
+    }
+
+    /**
+     * Get parents for a specific item.
+     *
+     * @param \DataContainer $dataContainer The data container driver.
+     *
+     * @return array
+     */
+    public function getParents($dataContainer)
+    {
+        if ($dataContainer->id) {
+            $row = \ContentModel::findByPk($dataContainer->id);
+
+            if (!$row) {
+                return array();
+            }
+
+            $helper = Helper::create($row);
+            $start  = Bootstrap::getConfigVar('wrappers.' . $helper->getGroup() . '.start.name');
+
+            if ($start) {
+                $result = \ContentModel::findBy(
+                    array('pid=?', 'type=?', 'sorting<?'),
+                    array($row->pid, $start, $row->sorting),
+                    array('order' => 'sorting DESC')
+                );
+
+                if ($result) {
+                    $values = array();
+
+                    foreach ($result as $model) {
+                        $headline           = deserialize($model->headline, true);
+                        $values[$model->id] = $headline['value'] ?: $model->type . ' ID: ' . $model->id;
+                    }
+
+                    return $values;
+                }
+            }
+
+            return array();
+        }
+    }
+
+    /**
      * Create a new wrapper element.
      *
      * @param \Model $parent  The parent element.
