@@ -300,8 +300,9 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
                             'getDropdownTemplates',
                         ),
                         'eval'      => array(
-                            'style' => 'width: 350px;',
+                            'style'              => 'width: 350px;',
                             'includeBlankOption' => true,
+                            'chosen'             => true
                         ),
                     )
                 ),

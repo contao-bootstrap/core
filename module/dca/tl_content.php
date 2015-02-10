@@ -91,7 +91,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
                 'inputType' => 'select',
                 'options'   => \Netzmacht\Bootstrap\Core\Bootstrap::getConfigVar('form.data-attributes', array()),
                 'reference' => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_buttons_types'],
-                'eval'      => array('style' => 'width: 145px;', 'includeBlankOption' => true),
+                'eval'      => array('style' => 'width: 145px;', 'includeBlankOption' => true, 'chosen' => true),
             ),
             'value' => array
             (
