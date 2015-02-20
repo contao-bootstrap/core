@@ -59,9 +59,7 @@ class Hooks
      */
     public function replaceInsertTags($tag, $cache = true)
     {
-        $params = explode('::', $tag);
-        $tag    = array_shift($params);
-        $event  = new ReplaceInsertTagsEvent($tag, $params, $cache);
+        $event = new ReplaceInsertTagsEvent($tag, $cache);
 
         $this->eventDispatcher->dispatch($event::NAME, $event);
 

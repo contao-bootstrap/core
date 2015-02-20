@@ -51,15 +51,24 @@ class ReplaceInsertTagsEvent extends Event
     protected $params = array();
 
     /**
+     * The raw insert tag.
+     *
+     * @type string
+     */
+    private $raw;
+
+    /**
      * Construct.
      *
      * @param string $tag    The tag name.
-     * @param array  $params Tag params.
      * @param bool   $cached Insert tag caching.
      */
-    public function __construct($tag, array $params = array(), $cached = true)
+    public function __construct($tag, $cached = true)
     {
-        $this->tag    = $tag;
+        $params = explode('::', $tag);
+
+        $this->tag    = array_shift($params);
+        $this->raw    = $tag;
         $this->params = $params;
         $this->cached = $cached;
     }
@@ -155,6 +164,16 @@ class ReplaceInsertTagsEvent extends Event
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * Get raw.
+     *
+     * @return string
+     */
+    public function getRaw()
+    {
+        return $this->raw;
     }
 
     /**
