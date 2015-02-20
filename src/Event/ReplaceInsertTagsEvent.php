@@ -53,7 +53,7 @@ class ReplaceInsertTagsEvent extends Event
     /**
      * The raw insert tag.
      *
-     * @type string
+     * @var string
      */
     private $raw;
 
