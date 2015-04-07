@@ -310,10 +310,13 @@ class Wrapper
 
                 $end = $wrapper->findRelatedElement($record, Helper::TYPE_STOP);
 
-                if ($end === null) {
-                    $set['sorting'] = ($parent->sorting + 2);
-                } elseif ($parent !== null && $parent->sorting > $end->sorting) {
-                    $set['sorting'] = ($end->sorting - 2);
+                // only set initial sorting
+                if (!$record->sorting) {
+                    if ($end === null) {
+                        $set['sorting'] = ($parent->sorting + 2);
+                    } elseif ($parent !== null && $parent->sorting > $end->sorting) {
+                        $set['sorting'] = ($end->sorting - 2);
+                    }
                 }
 
                 foreach ($set as $name => $v) {

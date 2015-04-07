@@ -192,7 +192,7 @@ class Helper
         $column = array('pid=?', 'ptable=?', 'type=?', 'sorting<?');
         $values = array($this->model->pid, $this->model->ptable, $this->getTypeName($type), $this->model->sorting);
 
-        return \ContentModel::findOneBy($column, $values);
+        return \ContentModel::findOneBy($column, $values, array('order' => 'sorting DESC'));
     }
 
     /**
