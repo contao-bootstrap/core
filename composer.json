@@ -20,7 +20,7 @@
     },
     "require":{
         "php":">=5.3.4",
-        "contao/core":">=3.2,<3.5-dev",
+        "contao/core":">=3.2,<3.6-dev",
         "contao-community-alliance/composer-plugin": "~2.0",
         "contao-community-alliance/event-dispatcher": "~1.0",
         "contao-community-alliance/dependency-container": "~1.4"
