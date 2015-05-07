@@ -79,7 +79,7 @@ class Helper
      */
     public static function create($model)
     {
-        $wrappers = Bootstrap::getConfigVar('wrappers');
+        $wrappers = Bootstrap::getConfigVar('wrappers', array());
         foreach ($wrappers as $groupName => $group) {
             foreach ($group as $type => $config) {
                 if ($config['name'] == $model->type) {
