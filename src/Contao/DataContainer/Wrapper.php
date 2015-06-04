@@ -293,7 +293,7 @@ class Wrapper
      * @param array            $set     Current data set.
      * @param int              $sorting Sorting index.
      *
-     * @return array
+     * @return int
      *
      * @throws \Exception If no wrapper start element could be created.
      *
@@ -327,15 +327,11 @@ class Wrapper
                     ->prepare('UPDATE tl_content %s WHERE id=?')
                     ->set($set)
                     ->execute($record->id);
-
-                return array($end, $sorting);
             } elseif ($this->isTrigger($wrapper->getType(), Helper::TYPE_START)) {
                 // create parent if possible
 
                 $sorting = ($sorting - 2);
                 $this->createElement($record, $sorting, Helper::TYPE_START);
-
-                return $sorting;
             } else {
                 // no parent element exists, throw error
 
