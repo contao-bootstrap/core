@@ -309,15 +309,7 @@ class Wrapper
                 $set['bootstrap_parentId'] = $parent->id;
 
                 $end = $wrapper->findRelatedElement($record, Helper::TYPE_STOP);
-
-                // only set initial sorting
-                if (!$record->sorting) {
-                    if ($end === null) {
-                        $set['sorting'] = ($parent->sorting + 2);
-                    } elseif ($parent !== null && $parent->sorting > $end->sorting) {
-                        $set['sorting'] = ($end->sorting - 2);
-                    }
-                }
+                $set = $this->initializeSorting($record, $set, $end, $parent);
 
                 foreach ($set as $name => $v) {
                     $record->$name = $v;
@@ -401,5 +393,29 @@ class Wrapper
         }
 
         return $sorting;
+    }
+
+    /**
+     * Initialize the sorting value if required.
+     *
+     * @param \Database\Result      $record The current record.
+     * @param array                 $set    The current set.
+     * @param \Database\Result|null $end    The end element.
+     * @param \Database\Result|null $parent The parent element.
+     *
+     * @return array
+     */
+    private function initializeSorting($record, $set, $end, $parent)
+    {
+        // only set initial sorting
+        if (!$record->sorting) {
+            if ($end === null) {
+                $set['sorting'] = ($parent->sorting + 2);
+            } elseif ($parent !== null && $parent->sorting > $end->sorting) {
+                $set['sorting'] = ($end->sorting - 2);
+            }
+        }
+
+        return $set;
     }
 }
