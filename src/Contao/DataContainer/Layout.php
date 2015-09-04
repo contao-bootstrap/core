@@ -9,10 +9,10 @@
 
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
+use Bit3\Contao\MetaPalettes\MetaPalettes;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Input;
 use LayoutModel;
-use MetaPalettes;
 
 /**
  * Class Layout is used in tl_layout.

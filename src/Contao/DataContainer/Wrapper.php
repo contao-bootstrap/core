@@ -9,6 +9,7 @@
 
 namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
 
+use Bit3\Contao\MetaPalettes\MetaPalettes;
 use Netzmacht\Bootstrap\Core\Bootstrap;
 use Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper\Helper;
 
@@ -176,7 +177,7 @@ class Wrapper
                         continue;
                     }
 
-                    \MetaPalettes::appendFields('tl_content', $type['name'], 'type', array('bootstrap_parentId'));
+                    MetaPalettes::appendFields('tl_content', $type['name'], 'type', array('bootstrap_parentId'));
                 }
             }
         }
