@@ -13,6 +13,7 @@ namespace Netzmacht\Bootstrap\Core\Config;
 
 use Netzmacht\Bootstrap\Core\Config as DefaultConfig;
 use Netzmacht\Bootstrap\Core\Config;
+use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
 
 /**
  * ContextualConfig allows to use configurations from two different configs.
@@ -58,7 +59,13 @@ class ContextualConfig
     public function get($key, $default = null)
     {
         if ($this->local->has($key)) {
-            return $this->local->get($key, $default);
+            $value = $this->local->get($key, $default);
+
+            if (is_array($value) && $this->global->has($key)) {
+                $value = ArrayUtil::merge((array)$this->global->get($key), $value);
+            }
+
+            return $value;
         }
 
         return $this->global->get($key, $default);
