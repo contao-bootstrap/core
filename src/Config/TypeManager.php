@@ -9,7 +9,9 @@
 
 namespace Netzmacht\Bootstrap\Core\Config;
 
+use Model\Collection;
 use Netzmacht\Bootstrap\Core\Config;
+use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
 
 /**
  * Class TypeManager is used to manage different config types.
@@ -193,34 +195,30 @@ class TypeManager
     /**
      * Build config from collection.
      *
-     * @param \Model\Collection $collection Config collection.
+     * @param Collection $collection Config collection.
      *
      * @return void
      */
-    public function buildConfig(\Model\Collection $collection = null)
+    public function buildConfig(Collection $collection = null)
     {
-        if (!$collection) {
-            return;
-        }
+        $this->buildConfigTypes($this->config, $collection);
+    }
 
-        while ($collection->next()) {
-            $model = $collection->current();
+    /**
+     * Build the contextual config.
+     *
+     * @param Collection|null $collection Config collection.
+     *
+     * @return Config
+     */
+    public function buildContextualConfig(Collection $collection = null)
+    {
+        $local      = new Config();
+        $contextual = new ContextualConfig($this->config, $local);
 
-            try {
-                $type = $this->getType($model->type);
-                $type->buildConfig($this->config, $model);
-            } catch (\Exception $e) {
-                \Controller::log(
-                    sprintf(
-                        'Unknown bootstrap config type "%s" (ID %s) stored in database',
-                        $model->type,
-                        $model->id
-                    ),
-                    __METHOD__,
-                    'TL_ERROR'
-                );
-            }
-        }
+        $this->buildConfigTypes($local, $collection);
+
+        return $contextual;
     }
 
     /**
@@ -237,6 +235,39 @@ class TypeManager
     {
         if (!$type->isMultiple()) {
             new \RuntimeException(sprintf('Type "%s is not a multiple type.', $typeName));
+        }
+    }
+
+    /**
+     * Build a given config by the model collection.
+     *
+     * @param Config     $config     The config being built.
+     * @param Collection $collection The config collection.
+     *
+     * @return void
+     */
+    protected function buildConfigTypes(Config $config, Collection $collection = null)
+    {
+        if (!$collection) {
+            return;
+        }
+
+        /** @var BootstrapConfigModel $model */
+        foreach ($collection as $model) {
+            try {
+                $type = $this->getType($model->type);
+                $type->buildConfig($config, $model);
+            } catch (\Exception $e) {
+                \Controller::log(
+                    sprintf(
+                        'Unknown bootstrap config type "%s" (ID %s) stored in database',
+                        $model->type,
+                        $model->id
+                    ),
+                    __METHOD__,
+                    'TL_ERROR'
+                );
+            }
         }
     }
 }
