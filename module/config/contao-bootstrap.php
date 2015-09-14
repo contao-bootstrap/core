@@ -16,7 +16,7 @@ return array
         ),
     ),
     'dropdown' => array(
-        'toggle'   => '<span class="caret"></spa>',
+        'toggle'   => '<span class="caret"></span>',
         'formless' => array('mod_quicklink'),
     ),
     'icons'    => array(
