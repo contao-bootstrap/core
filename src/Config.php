@@ -16,7 +16,7 @@ use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
  *
  * @package Netzmacht\Bootstrap
  */
-class Config implements Config\Config
+class Config
 {
     /**
      * Config values.
