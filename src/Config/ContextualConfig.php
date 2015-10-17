@@ -11,7 +11,6 @@
 
 namespace Netzmacht\Bootstrap\Core\Config;
 
-use Netzmacht\Bootstrap\Core\Config as DefaultConfig;
 use Netzmacht\Bootstrap\Core\Config;
 use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
 
@@ -50,7 +49,7 @@ class ContextualConfig
     public function __construct(Config $global, Config $local = null)
     {
         $this->global = $global;
-        $this->local  = $local ?: new DefaultConfig();
+        $this->local  = $local ?: new Config();
     }
 
     /**
@@ -62,7 +61,7 @@ class ContextualConfig
             $value = $this->local->get($key, $default);
 
             if (is_array($value) && $this->global->has($key)) {
-                $value = ArrayUtil::merge((array)$this->global->get($key), $value);
+                $value = ArrayUtil::merge((array) $this->global->get($key), $value);
             }
 
             return $value;
