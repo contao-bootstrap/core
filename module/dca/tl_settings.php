@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-\Bit3\Contao\MetaPalettes\MetaPalettes::appendTo('tl_settings', array(
+Bit3\Contao\MetaPalettes\MetaPalettes::appendTo('tl_settings', array(
     'bootstrap' => array(':hide', 'bootstrapIconSet')
 ));
 

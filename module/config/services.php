@@ -21,7 +21,7 @@ $container['bootstrap.environment'] = $container->share(function(\Pimple $c) {
 $container['bootstrap.config-type-factory'] = $container->share(function(\Pimple $c) {
     $config = $c['bootstrap.environment']->getConfig();
 
-    return new Config\TypeFactory($config->get('config.types'));
+    return new Config\TypeFactory($config->get('config.types', array()));
 });
 
 $container['bootstrap.config-type-manager'] = $container->share(function(\Pimple $c) {
