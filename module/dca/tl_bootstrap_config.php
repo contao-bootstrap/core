@@ -130,7 +130,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         (
             'sql'        => "int(10) unsigned NOT NULL default '0'",
             'foreignKey' => 'tl_theme.name',
-            'relation'   => array('type' => 'belongsTo', 'load' => 'eager')
+            'relation'   => array('type' => 'belongsTo', 'load' => 'lazy')
         ),
         'tstamp'         => array
         (
