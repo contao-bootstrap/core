@@ -189,10 +189,10 @@ class Helper
             $type = $this->getType();
         }
 
-        $column = array('pid=?', 'ptable=?', 'type=?', 'sorting<?');
+        $column = array(\ContentModel::getTable() . '.pid=?', \ContentModel::getTable() . '.ptable=?', \ContentModel::getTable() . '.type=?', \ContentModel::getTable() . '.sorting<?');
         $values = array($this->model->pid, $this->model->ptable, $this->getTypeName($type), $this->model->sorting);
 
-        return \ContentModel::findOneBy($column, $values, array('order' => 'sorting DESC'));
+        return \ContentModel::findOneBy($column, $values, array('order' => \ContentModel::getTable() . '.sorting DESC'));
     }
 
     /**
