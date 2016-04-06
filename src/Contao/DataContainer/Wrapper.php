@@ -204,9 +204,9 @@ class Wrapper
 
             if ($start) {
                 $result = \ContentModel::findBy(
-                    array('pid=?', 'type=?', 'sorting<?'),
+                    array(\ContentModel::getTable() . '.pid=?', \ContentModel::getTable() . '.type=?', \ContentModel::getTable() . '.sorting<?'),
                     array($row->pid, $start, $row->sorting),
-                    array('order' => 'sorting DESC')
+                    array('order' => \ContentModel::getTable() . '.sorting DESC')
                 );
 
                 if ($result) {
