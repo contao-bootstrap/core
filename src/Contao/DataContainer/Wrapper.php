@@ -203,10 +203,11 @@ class Wrapper
             $start  = Bootstrap::getConfigVar('wrappers.' . $helper->getGroup() . '.start.name');
 
             if ($start) {
+                $table  = \ContentModel::getTable();
                 $result = \ContentModel::findBy(
-                    array(\ContentModel::getTable() . '.pid=?', \ContentModel::getTable() . '.type=?', \ContentModel::getTable() . '.sorting<?'),
+                    array($table . '.pid=?', $table . '.type=?', $table . '.sorting<?'),
                     array($row->pid, $start, $row->sorting),
-                    array('order' => \ContentModel::getTable() . '.sorting DESC')
+                    array('order' => $table. '.sorting DESC')
                 );
 
                 if ($result) {
