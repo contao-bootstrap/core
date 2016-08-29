@@ -3,6 +3,7 @@
 /**
  * @package   contao-bootstrap
  * @author    David Molineus <david.molineus@netzmacht.de>
+ * @author    Sébastien JEAN <sebastien.jean54@gmail.com>
  * @license   LGPL 3+
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
@@ -189,10 +190,11 @@ class Helper
             $type = $this->getType();
         }
 
-        $column = array('pid=?', 'ptable=?', 'type=?', 'sorting<?');
+        $table  = \ContentModel::getTable();
+        $column = array($table . '.pid=?', $table . '.ptable=?', $table . '.type=?', $table . '.sorting<?');
         $values = array($this->model->pid, $this->model->ptable, $this->getTypeName($type), $this->model->sorting);
 
-        return \ContentModel::findOneBy($column, $values, array('order' => 'sorting DESC'));
+        return \ContentModel::findOneBy($column, $values, array('order' => $table . '.sorting DESC'));
     }
 
     /**

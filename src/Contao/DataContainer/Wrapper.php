@@ -3,6 +3,7 @@
 /**
  * @package   contao-bootstrap
  * @author    David Molineus <david.molineus@netzmacht.de>
+ * @author    Sébastien JEAN <sebastien.jean54@gmail.com>
  * @license   LGPL 3+
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
@@ -203,10 +204,11 @@ class Wrapper
             $start  = Bootstrap::getConfigVar('wrappers.' . $helper->getGroup() . '.start.name');
 
             if ($start) {
+                $table  = \ContentModel::getTable();
                 $result = \ContentModel::findBy(
-                    array('pid=?', 'type=?', 'sorting<?'),
+                    array($table . '.pid=?', $table . '.type=?', $table . '.sorting<?'),
                     array($row->pid, $start, $row->sorting),
-                    array('order' => 'sorting DESC')
+                    array('order' => $table. '.sorting DESC')
                 );
 
                 if ($result) {
