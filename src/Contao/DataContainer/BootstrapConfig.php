@@ -63,7 +63,7 @@ class BootstrapConfig extends \Backend
         if (\Input::get('act') == 'edit') {
             $model = BootstrapConfigModel::findByPk(\Input::get('id'));
 
-            if ($model && $model->type) {
+            if ($model && $model->type && $this->typeManager->hasType($model->type)) {
                 $type = $this->typeManager->getType($model->type);
 
                 if ($type->isMultiple()) {
@@ -126,7 +126,7 @@ class BootstrapConfig extends \Backend
             return $options;
         }
 
-        if ($dataContainer->activeRecord->override) {
+        if ($dataContainer->activeRecord->override && $this->typeManager->hasType($dataContainer->activeRecord->type)) {
             $type = $this->typeManager->getType($dataContainer->activeRecord->type);
 
             if (!$type->isMultiple()) {
@@ -153,6 +153,10 @@ class BootstrapConfig extends \Backend
      */
     public function importFromConfig($value, \DataContainer $dataContainer)
     {
+        if (!$this->typeManager->hasType($value)) {
+            return $value;
+        }
+
         $type = $this->typeManager->getType($value);
 
         if ($dataContainer->activeRecord->override && \Input::get('override')) {
@@ -245,7 +249,7 @@ class BootstrapConfig extends \Backend
      */
     public function generateLabel(array $row, $label)
     {
-        if ($row['type']) {
+        if ($row['type'] && $this->typeManager->hasType($row['type'])) {
             $type = $this->typeManager->getType($row['type']);
 
             if ($type->isMultiple()) {

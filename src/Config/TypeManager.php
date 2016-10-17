@@ -175,7 +175,7 @@ class TypeManager
     }
 
     /**
-     * Get a specifiy type by name.
+     * Get a specific type by name.
      *
      * @param string $typeName Type name.
      *
@@ -185,11 +185,23 @@ class TypeManager
      */
     public function getType($typeName)
     {
-        if (!isset($this->types[$typeName])) {
+        if (!$this->hasType($typeName)) {
             throw new \InvalidArgumentException(sprintf('Type "%s" does not exists', $typeName));
         }
 
         return $this->types[$typeName];
+    }
+
+    /**
+     * Check if a type exists.
+     *
+     * @param string $typeName Type name.
+     *
+     * @return bool
+     */
+    public function hasType($typeName)
+    {
+        return isset($this->types[$typeName]);
     }
 
     /**
@@ -209,7 +221,7 @@ class TypeManager
      *
      * @param Collection|null $collection Config collection.
      *
-     * @return Config
+     * @return ContextualConfig
      */
     public function buildContextualConfig(Collection $collection = null)
     {
