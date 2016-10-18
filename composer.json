@@ -20,11 +20,7 @@
     },
     "require":{
         "php":">=5.3.4",
-        "contao/core":">=3.2,<3.6-dev",
-        "contao-community-alliance/composer-plugin": "~2.0",
-        "contao-community-alliance/event-dispatcher": "~1.0",
-        "contao-community-alliance/dependency-container": "~1.4",
-        "contao-community-alliance/meta-palettes": "~1.9"
+        "contao/core-bundle":"^4.2"
     },
     "require-dev": {
         "netzmacht/contao-build-tools": "~1.1"
@@ -43,16 +39,14 @@
     "extra":{
         "branch-alias": {
             "dev-master": "1.1.x-dev",
-            "dev-develop": "1.2.x-dev"
+            "dev-develop": "1.2.x-dev",
+            "dev-contao4": "2.0.x-dev"
         },
         "contao": {
-            "sources":{
-                "module": "system/modules/bootstrap-core"
-            },
             "transifex": {
                 "project": "contao-bootstrap",
                 "prefix": "core-",
-                "languages_cto": "module/languages",
+                "languages_cto": "src/Resources/contao/languages",
                 "languages_tx": ".tx"
             }
         }
