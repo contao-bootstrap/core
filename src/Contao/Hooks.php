@@ -45,8 +45,10 @@ class Hooks
      */
     public function __construct()
     {
-        $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
-        $this->environment     = $GLOBALS['container']['bootstrap.environment'];
+        $container = \Controller::getContainer();
+
+        $this->eventDispatcher = $container->get('event_dispatcher');
+        $this->environment     = $container->get('contao_bootstrap.core.environment');
     }
 
     /**

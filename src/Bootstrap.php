@@ -17,13 +17,6 @@ namespace Netzmacht\Bootstrap\Core;
 class Bootstrap
 {
     /**
-     * Bootstrap environment.
-     *
-     * @var Environment
-     */
-    private static $environment;
-
-    /**
      * Returns true if Bootstrap is enabled.
      *
      * @return bool
@@ -111,10 +104,6 @@ class Bootstrap
      */
     public static function getEnvironment()
     {
-        if (!self::$environment) {
-            self::$environment = $GLOBALS['container']['bootstrap.environment'];
-        }
-
-        return self::$environment;
+        return \Controller::getContainer()->get('contao_bootstrap.core.environment');
     }
 }
