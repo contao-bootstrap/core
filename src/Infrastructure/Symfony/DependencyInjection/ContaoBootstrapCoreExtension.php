@@ -8,7 +8,7 @@
  *
  */
 
-namespace Netzmacht\Bootstrap\Core\DependencyInjection;
+namespace Netzmacht\Bootstrap\Core\Infrastructure\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

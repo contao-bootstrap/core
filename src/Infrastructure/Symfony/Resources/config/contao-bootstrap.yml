@@ -1,0 +1,21 @@
+config:
+  types:
+    icon_set: 'Netzmacht\Bootstrap\Core\Config\Type\IconSetType'
+    dropdown: 'Netzmacht\Bootstrap\Core\Config\Type\DropdownType'
+
+dropdown:
+  toggle: '<span class="caret"></span>'
+  formless:
+    - 'mod_quicklink'
+
+icons:
+  sets:
+    glyphicons:
+      path: 'system/modules/bootstrap-core/config/glyphicons.php'
+      stylesheet: 'system/modules/bootstrap-core/assets/css/glyphicons.css'
+      template: '<span class="glyphicon glyphicon-%s"></span>'
+
+layout:
+  metapalette:
+    '+title':
+      - layoutType

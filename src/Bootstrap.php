@@ -104,6 +104,6 @@ class Bootstrap
      */
     public static function getEnvironment()
     {
-        return \Controller::getContainer()->get('contao_bootstrap.core.environment');
+        return \Controller::getContainer()->get('contao_bootstrap.environment');
     }
 }

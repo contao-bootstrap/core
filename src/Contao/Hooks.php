@@ -48,7 +48,7 @@ class Hooks
         $container = \Controller::getContainer();
 
         $this->eventDispatcher = $container->get('event_dispatcher');
-        $this->environment     = $container->get('contao_bootstrap.core.environment');
+        $this->environment     = $container->get('contao_bootstrap.environment');
     }
 
     /**
