@@ -10,10 +10,15 @@
 
 namespace Netzmacht\Bootstrap\Core;
 
+use Netzmacht\Bootstrap\Core\DependencyInjection\ConfigPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 
 class ContaoBootstrapCoreBundle extends Bundle
 {
-
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new ConfigPass());
+    }
 }
