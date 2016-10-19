@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core;
+namespace ContaoBootstrap\Core;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Environment contain all things being provided in the bootstrap environment.
  *
- * @package Netzmacht\Bootstrap\Core
+ * @package ContaoBootstrap\Core
  */
 class Environment
 {

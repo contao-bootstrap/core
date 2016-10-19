@@ -7,19 +7,19 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Subscriber;
+namespace ContaoBootstrap\Core\Subscriber;
 
-use Netzmacht\Bootstrap\Core\Config\TypeManager;
-use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
-use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
-use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
-use Netzmacht\Bootstrap\Core\Util\Contao;
+use ContaoBootstrap\Core\Config\TypeManager;
+use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
+use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
+use ContaoBootstrap\Core\Util\Contao;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ConfigSubscriber handles config loading from the database.
  *
- * @package Netzmacht\Bootstrap\Core\Subscriber
+ * @package ContaoBootstrap\Core\Subscriber
  */
 class ConfigSubscriber implements EventSubscriberInterface
 {

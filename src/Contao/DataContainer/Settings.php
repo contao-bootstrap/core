@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\Contao\DataContainer;
 
-use Netzmacht\Bootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Bootstrap;
 
 /**
  * Class Settings is used in tl_settings.
  *
- * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\Contao\DataContainer
  */
 class Settings
 {

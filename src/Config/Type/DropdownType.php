@@ -7,16 +7,16 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Config\Type;
+namespace ContaoBootstrap\Core\Config\Type;
 
-use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Config\Type;
-use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Config\Type;
+use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
 
 /**
  * Class DropdownType is used for dropdown informations.
  *
- * @package Netzmacht\Bootstrap\Core\Config\Type
+ * @package ContaoBootstrap\Core\Config\Type
  */
 class DropdownType implements Type
 {

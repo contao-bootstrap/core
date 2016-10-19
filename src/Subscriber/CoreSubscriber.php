@@ -7,18 +7,18 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Subscriber;
+namespace ContaoBootstrap\Core\Subscriber;
 
-use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
-use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
+use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
+use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class DefaultSubscriber contains initializes the core.
  *
- * @package Netzmacht\Bootstrap\Subscriber
+ * @package ContaoBootstrap\Subscriber
  */
 class CoreSubscriber implements EventSubscriberInterface
 {

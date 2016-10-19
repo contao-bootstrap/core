@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Util;
+namespace ContaoBootstrap\Core\Util;
 
 /**
  * Class AssetsManager provides a simple interface for adding assets to the Contao super globals.
  *
- * @package Netzmacht\Bootstrap\Core\Util
+ * @package ContaoBootstrap\Core\Util
  */
 class AssetsManager
 {

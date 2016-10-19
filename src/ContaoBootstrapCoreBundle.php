@@ -8,9 +8,9 @@
  *
  */
 
-namespace Netzmacht\Bootstrap\Core;
+namespace ContaoBootstrap\Core;
 
-use Netzmacht\Bootstrap\Core\DependencyInjection\ConfigPass;
+use ContaoBootstrap\Core\DependencyInjection\ConfigPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

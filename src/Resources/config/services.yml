@@ -1,20 +1,20 @@
 services:
   contao_bootstrap.core.core_subscriber:
-    class: Netzmacht\Bootstrap\Core\Subscriber\CoreSubscriber
+    class: ContaoBootstrap\Core\Subscriber\CoreSubscriber
     arguments:
       - "@contao_bootstrap.environment"
     tags:
       - { name: kernel.event_subscriber }
 
   contao_bootstrap.environment:
-    class: Netzmacht\Bootstrap\Core\Environment
+    class: ContaoBootstrap\Core\Environment
     arguments:
       - "@contao_bootstrap.config"
       - "@contao_bootstrap.icon_set"
       - "@event_dispatcher"
 
   contao_bootstrap.config:
-    class: Netzmacht\Bootstrap\Core\Config
+    class: ContaoBootstrap\Core\Config
 
   contao_bootstrap.icon_set:
-    class: Netzmacht\Bootstrap\Core\IconSet
+    class: ContaoBootstrap\Core\IconSet

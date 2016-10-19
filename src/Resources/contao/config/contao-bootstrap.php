@@ -11,8 +11,8 @@ return array
 (
     'config'   => array(
         'types' => array(
-            'icons_set' => 'Netzmacht\Bootstrap\Core\Config\Type\IconSetType',
-            'dropdown'  => 'Netzmacht\Bootstrap\Core\Config\Type\DropdownType'
+            'icons_set' => 'ContaoBootstrap\Core\Config\Type\IconSetType',
+            'dropdown'  => 'ContaoBootstrap\Core\Config\Type\DropdownType'
         ),
     ),
     'dropdown' => array(

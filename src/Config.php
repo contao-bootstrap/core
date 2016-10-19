@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core;
+namespace ContaoBootstrap\Core;
 
-use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
+use ContaoBootstrap\Core\Util\ArrayUtil;
 
 /**
  * Class Config.
  *
- * @package Netzmacht\Bootstrap
+ * @package ContaoBootstrap
  */
 class Config
 {

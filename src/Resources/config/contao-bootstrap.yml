@@ -1,7 +1,7 @@
 config:
   types:
-    icon_set: 'Netzmacht\Bootstrap\Core\Config\Type\IconSetType'
-    dropdown: 'Netzmacht\Bootstrap\Core\Config\Type\DropdownType'
+    icon_set: 'ContaoBootstrap\Core\Config\Type\IconSetType'
+    dropdown: 'ContaoBootstrap\Core\Config\Type\DropdownType'
 
 dropdown:
   toggle: '<span class="caret"></span>'

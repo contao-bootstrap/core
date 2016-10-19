@@ -7,15 +7,15 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Event;
+namespace ContaoBootstrap\Core\Event;
 
-use Netzmacht\Bootstrap\Core\Environment;
+use ContaoBootstrap\Core\Environment;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class InitializeEnvironmentEvent is emitted then bootstrap environment is initialized.
  *
- * @package Netzmacht\Bootstrap\Core\Event
+ * @package ContaoBootstrap\Core\Event
  */
 final class InitializeEnvironmentEvent extends Event
 {

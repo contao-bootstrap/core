@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\Model;
+namespace ContaoBootstrap\Core\Contao\Model;
 
-use Netzmacht\Bootstrap\Core\Config\TypeManager;
+use ContaoBootstrap\Core\Config\TypeManager;
 
 /**
  * Class BootstrapConfigModel contains all informations of the bootstrap config.
  *
- * @package Netzmacht\Bootstrap\Contao\Model
+ * @package ContaoBootstrap\Contao\Model
  *
  * @property int    id
  * @property string type

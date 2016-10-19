@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 /**
  * Class Module is used for tl_module.
  *
- * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\Contao\DataContainer
  */
 class Module
 {

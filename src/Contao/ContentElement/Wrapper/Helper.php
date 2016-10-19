@@ -8,14 +8,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper;
+namespace ContaoBootstrap\Core\Contao\ContentElement\Wrapper;
 
-use Netzmacht\Bootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Bootstrap;
 
 /**
  * Class Helper for wrapper elements.
  *
- * @package Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper
+ * @package ContaoBootstrap\Core\Contao\ContentElement\Wrapper
  */
 class Helper
 {

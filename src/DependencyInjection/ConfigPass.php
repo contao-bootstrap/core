@@ -8,9 +8,9 @@
  *
  */
 
-namespace Netzmacht\Bootstrap\Core\DependencyInjection;
+namespace ContaoBootstrap\Core\DependencyInjection;
 
-use Netzmacht\Bootstrap\Core\Config;
+use ContaoBootstrap\Core\Config;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Yaml\Yaml;
@@ -18,7 +18,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Class ConfigPass collects alls contao-bootstrap.yml config files from the bundles-
  *
- * @package Netzmacht\Bootstrap\Core\DependencyInjection
+ * @package ContaoBootstrap\Core\DependencyInjection
  */
 class ConfigPass implements CompilerPassInterface
 {

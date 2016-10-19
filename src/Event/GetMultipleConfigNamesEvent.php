@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Event;
+namespace ContaoBootstrap\Core\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class GetMultipleConfigNamesEvent is emitted when getting names of multiple config types.
  *
- * @package Netzmacht\Bootstrap\Core\Event
+ * @package ContaoBootstrap\Core\Event
  */
 class GetMultipleConfigNamesEvent extends Event
 {

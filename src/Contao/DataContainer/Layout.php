@@ -7,17 +7,17 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
-use Netzmacht\Bootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Bootstrap;
 use Input;
 use LayoutModel;
 
 /**
  * Class Layout is used in tl_layout.
  *
- * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\Contao\DataContainer
  */
 class Layout
 {

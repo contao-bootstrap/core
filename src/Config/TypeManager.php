@@ -7,16 +7,16 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Config;
+namespace ContaoBootstrap\Core\Config;
 
 use Model\Collection;
-use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
 
 /**
  * Class TypeManager is used to manage different config types.
  *
- * @package Netzmacht\Bootstrap\Core\Config
+ * @package ContaoBootstrap\Core\Config
  */
 class TypeManager
 {

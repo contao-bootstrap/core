@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core;
+namespace ContaoBootstrap\Core;
 
 /**
  * Class Bootstrap provides access to core bootstrap component module.
  *
- * @package Netzmacht\Bootstrap
+ * @package ContaoBootstrap
  */
 class Bootstrap
 {

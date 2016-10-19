@@ -7,9 +7,9 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Environment;
-use Netzmacht\Bootstrap\Core\IconSet;
+use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Environment;
+use ContaoBootstrap\Core\IconSet;
 
 /** @var \Pimple $container */
 $container = $GLOBALS['container'];

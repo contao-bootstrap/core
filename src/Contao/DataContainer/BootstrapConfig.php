@@ -7,18 +7,18 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\Contao\DataContainer;
 
-use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Config\TypeManager;
-use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
-use Netzmacht\Bootstrap\Core\Event\GetMultipleConfigNamesEvent;
+use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Config\TypeManager;
+use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Event\GetMultipleConfigNamesEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class BootstrapConfig is used for the bootstrap config.
  *
- * @package Netzmacht\Bootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\Contao\DataContainer
  */
 class BootstrapConfig extends \Backend
 {

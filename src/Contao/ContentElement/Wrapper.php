@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\ContentElement;
+namespace ContaoBootstrap\Core\Contao\ContentElement;
 
 /**
  * Class Wrapper provides basic functions for wrapping content elements.
  *
- * @package Netzmacht\Bootstrap\Core\Contao\ContentElement
+ * @package ContaoBootstrap\Core\Contao\ContentElement
  */
 abstract class Wrapper extends \Module
 {

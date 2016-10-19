@@ -8,16 +8,16 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
-use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Contao\ContentElement\Wrapper\Helper;
+use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Contao\ContentElement\Wrapper\Helper;
 
 /**
  * Class WrapperDataContainer handles wrapper content elements in the backend configuration.
  *
- * @package Netzmacht\Bootstrap\DataContainer
+ * @package ContaoBootstrap\DataContainer
  */
 class Wrapper
 {

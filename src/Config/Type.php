@@ -7,15 +7,15 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Config;
+namespace ContaoBootstrap\Core\Config;
 
-use Netzmacht\Bootstrap\Core\Contao\Model\BootstrapConfigModel;
-use Netzmacht\Bootstrap\Core\Config;
+use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config;
 
 /**
  * Interface Type describe a config type.
  *
- * @package Netzmacht\Bootstrap\Core\Config
+ * @package ContaoBootstrap\Core\Config
  */
 interface Type
 {

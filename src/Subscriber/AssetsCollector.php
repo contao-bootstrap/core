@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Subscriber;
+namespace ContaoBootstrap\Core\Subscriber;
 
 use Netzmacht\ThemePlusImporter\Event\CollectAssetsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Class AssetsCollector collects assets which can be imported using the Theme+ importer.
  *
- * @package Netzmacht\Bootstrap\Core\Subscriber
+ * @package ContaoBootstrap\Core\Subscriber
  */
 class AssetsCollector implements EventSubscriberInterface
 {

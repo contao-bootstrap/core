@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao\Template;
+namespace ContaoBootstrap\Core\Contao\Template;
 
-use Netzmacht\Bootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Bootstrap;
 
 /**
  * Class TemplateModifier contains all template modifiers used by bootstrap config.
  *
- * @package Netzmacht\Bootstrap
+ * @package ContaoBootstrap
  */
 class Modifier
 {

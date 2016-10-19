@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Util;
+namespace ContaoBootstrap\Core\Util;
 
 /**
  * Class Contao just provide a static method to initialize the Contao stack.
  *
- * @package Netzmacht\Bootstrap\Core\Util
+ * @package ContaoBootstrap\Core\Util
  */
 class Contao
 {

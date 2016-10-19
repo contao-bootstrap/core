@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core;
+namespace ContaoBootstrap\Core;
 
 /**
  * Class IconSet handles an icon set in the contao context.
  *
- * @package Netzmacht\Bootstrap\Core
+ * @package ContaoBootstrap\Core
  */
 class IconSet
 {

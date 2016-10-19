@@ -7,14 +7,14 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Util;
+namespace ContaoBootstrap\Core\Util;
 
 /**
  * Class ArrayUtil provides a safe array merge method.
  *
  * It does not creates duplicates as the php array_merge method does.
  *
- * @package Netzmacht\Bootstrap\Core\Util
+ * @package ContaoBootstrap\Core\Util
  */
 class ArrayUtil
 {

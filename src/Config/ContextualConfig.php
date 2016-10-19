@@ -9,10 +9,10 @@
  *
  */
 
-namespace Netzmacht\Bootstrap\Core\Config;
+namespace ContaoBootstrap\Core\Config;
 
-use Netzmacht\Bootstrap\Core\Config;
-use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
+use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Util\ArrayUtil;
 
 /**
  * ContextualConfig allows to use configurations from two different configs.
@@ -22,7 +22,7 @@ use Netzmacht\Bootstrap\Core\Util\ArrayUtil;
  *
  * Write access is only delegated to the local config.
  *
- * @package Netzmacht\Bootstrap\Core\Config
+ * @package ContaoBootstrap\Core\Config
  */
 class ContextualConfig
 {

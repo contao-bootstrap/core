@@ -7,12 +7,12 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Config;
+namespace ContaoBootstrap\Core\Config;
 
 /**
  * Class TypeFactory creates config types.
  *
- * @package Netzmacht\Bootstrap\Core\Config
+ * @package ContaoBootstrap\Core\Config
  */
 class TypeFactory
 {

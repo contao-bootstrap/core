@@ -7,20 +7,20 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace Netzmacht\Bootstrap\Core\Contao;
+namespace ContaoBootstrap\Core\Contao;
 
-use Netzmacht\Bootstrap\Core\Bootstrap;
-use Netzmacht\Bootstrap\Core\Environment;
-use Netzmacht\Bootstrap\Core\Event\InitializeEnvironmentEvent;
-use Netzmacht\Bootstrap\Core\Event\InitializeLayoutEvent;
-use Netzmacht\Bootstrap\Core\Event\ReplaceInsertTagsEvent;
-use Netzmacht\Bootstrap\Core\Util\AssetsManager;
+use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Environment;
+use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
+use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
+use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;
+use ContaoBootstrap\Core\Util\AssetsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Hooks contains hooks being called from Contao.
  *
- * @package Netzmacht\Bootstrap\Core\Contao
+ * @package ContaoBootstrap\Core\Contao
  */
 class Hooks
 {
