@@ -9,6 +9,8 @@
 
 namespace ContaoBootstrap\Core\Config;
 
+use ContaoBootstrap\Core\Config;
+
 /**
  * Class TypeFactory creates config types.
  *
@@ -17,20 +19,20 @@ namespace ContaoBootstrap\Core\Config;
 class TypeFactory
 {
     /**
-     * Type definitions.
+     * Bootstrap config.
      *
-     * @var array
+     * @var Config
      */
-    private $types;
+    private $config;
 
     /**
      * Construct.
      *
-     * @param array $types Type definitions.
+     * @param Config $config Bootstrap config.
      */
-    public function __construct(array $types)
+    public function __construct(Config $config)
     {
-        $this->types = $types;
+        $this->config = $config;
     }
 
     /**
@@ -46,11 +48,13 @@ class TypeFactory
     {
         $this->guardTypeExists($name);
 
-        if (is_callable($this->types[$name])) {
-            return call_user_func($this->types[$name]);
+        $type = $this->config->get('config.types.' . $name);
+
+        if (is_callable($type)) {
+            return call_user_func($type);
         }
 
-        $className = $this->types[$name];
+        $className = $type;
 
         return new $className();
     }
@@ -64,7 +68,7 @@ class TypeFactory
     {
         $types = array();
 
-        foreach (array_keys($this->types) as $name) {
+        foreach ($this->getNames() as $name) {
             $types[$name] = $this->create($name);
         }
 
@@ -78,7 +82,7 @@ class TypeFactory
      */
     public function getNames()
     {
-        return array_keys($this->types);
+        return array_keys($this->config->get('config.types', []));
     }
 
     /**
@@ -92,7 +96,7 @@ class TypeFactory
      */
     private function guardTypeExists($type)
     {
-        if (!isset($this->types[$type])) {
+        if (!$this->config->has('config.types.' . $type)) {
             throw new \InvalidArgumentException(sprintf('Type "%s" is not set.', $type));
         }
     }

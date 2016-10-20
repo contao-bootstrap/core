@@ -78,6 +78,7 @@ class ConfigSubscriber implements EventSubscriberInterface
      */
     private function getTypeManager()
     {
-        return $GLOBALS['container']['bootstrap.config-type-manager'];
+        // TODO: Use Dependency injection.
+        return \Controller::getContainer()->get('contao_bootstrap.config.type_manager');
     }
 }

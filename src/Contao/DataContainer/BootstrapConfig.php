@@ -52,11 +52,12 @@ class BootstrapConfig extends \Backend
     {
         parent::__construct();
 
-        $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
-        $this->typeManager     = $GLOBALS['container']['bootstrap.config-type-manager'];
-
         // TODO: Use dependency injection.
-        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
+        $container = \Controller::getContainer();
+
+        $this->eventDispatcher = $container->get('event_dispatcher');
+        $this->typeManager     = $container->get('contao_bootstrap.config.type_manager');
+        $this->config          = $container->get('contao_bootstrap.config');
 
         $this->loadLanguageFile('bootstrap_config_types');
     }
@@ -129,7 +130,7 @@ class BootstrapConfig extends \Backend
         }
 
         $event = new GetMultipleConfigNamesEvent($dataContainer->activeRecord);
-        $this->getEventDispatcher()->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event::NAME, $event);
         $options = $event->getOptions();
 
         if ($options) {
@@ -400,17 +401,5 @@ class BootstrapConfig extends \Backend
         }
 
         return $file;
-    }
-
-    /**
-     * Get the event dispatcher.
-     *
-     * @return EventDispatcherInterface
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
-    private function getEventDispatcher()
-    {
-        return $GLOBALS['container']['event-dispatcher'];
     }
 }

@@ -16,5 +16,19 @@ services:
   contao_bootstrap.config:
     class: ContaoBootstrap\Core\Config\ArrayConfig
 
+  contao_bootstrap.config.type_manager:
+    class: ContaoBootstrap\Core\Config\TypeManager
+    arguments:
+      - "@contao_bootstrap.config"
+      - "@contao_bootstrap.config.types"
+
+  contao_bootstrap.config.types:
+    factory: ["@contao_bootstrap.config.type_factory", createAll]
+
+  contao_bootstrap.config.type_factory:
+    class: ContaoBootstrap\Core\Config\TypeFactory
+    arguments:
+      - "@contao_bootstrap.config"
+
   contao_bootstrap.icon_set:
     class: ContaoBootstrap\Core\IconSet
