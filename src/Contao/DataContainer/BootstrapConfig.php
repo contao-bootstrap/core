@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @package ContaoBootstrap\Core\Contao\DataContainer
  */
-class BootstrapConfig extends \Backend
+class BootstrapConfig
 {
     /**
      * The event dispatcher.
@@ -50,8 +50,6 @@ class BootstrapConfig extends \Backend
      */
     public function __construct()
     {
-        parent::__construct();
-
         // TODO: Use dependency injection.
         $container = \Controller::getContainer();
 
@@ -59,7 +57,7 @@ class BootstrapConfig extends \Backend
         $this->typeManager     = $container->get('contao_bootstrap.config.type_manager');
         $this->config          = $container->get('contao_bootstrap.config');
 
-        $this->loadLanguageFile('bootstrap_config_types');
+        \Controller::loadLanguageFile('bootstrap_config_types');
     }
 
     /**
@@ -141,7 +139,7 @@ class BootstrapConfig extends \Backend
             $type = $this->typeManager->getType($dataContainer->activeRecord->type);
 
             if (!$type->isMultiple()) {
-                $this->redirect('main.php?act=error');
+                \Controller::redirect('main.php?act=error');
             }
 
             $names = $this->typeManager->getExistingNames($dataContainer->activeRecord->type);
@@ -191,7 +189,7 @@ class BootstrapConfig extends \Backend
                 $model->save();
 
                 // unset parameter was only introduced in Contao 3.3
-                $this->redirect($this->addToUrl('override=', true, array('override')));
+                \Controller::redirect(\Backend::addToUrl('override=', true, array('override')));
             }
         }
 
@@ -301,7 +299,7 @@ class BootstrapConfig extends \Backend
 
         if (strlen(\Input::get('tid'))) {
             $this->toggleVisibility(\Input::get('tid'), (\Input::get('state') == 0));
-            $this->redirect($this->getReferer());
+            \Controller::redirect(\Backend::getReferer());
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
@@ -318,10 +316,10 @@ class BootstrapConfig extends \Backend
 
         return sprintf(
             '<a href="%s" title="%s" %s>%s</a> ',
-            $this->addToUrl($href),
+            \Backend::addToUrl($href),
             specialchars($title),
             $attributes,
-            $this->generateImage($icon, $label)
+            \Controller::generateImage($icon, $label)
         );
     }
 
@@ -341,23 +339,24 @@ class BootstrapConfig extends \Backend
 
         // Check permissions to publish
         if (!$user->isAdmin && !$user->hasAccess('tl_bootstrap_config::published', 'alexf')) {
-            $this->log(
+            \Controller::log(
                 'Not enough permissions to show/hide record ID "'.$configId.'"',
                 'tl_bootstrap_config toggleVisibility',
                 TL_ERROR
             );
 
-            $this->redirect('contao/main.php?act=error');
+            \Controller::redirect('contao/main.php?act=error');
         }
 
-        $this->createInitialVersion('tl_bootstrap_config', $configId);
+        $versions = new \Versions('tl_bootstrap_config', $configId);
+        $versions->initialize();
 
         // Trigger the save_callback
         if (isset($GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'])) {
             $callbacks = (array) $GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'];
 
             foreach ($callbacks as $callback) {
-                $this->import($callback[0]);
+                \Controller::importStatic($callback[0]);
                 $published = $this->$callback[0]->$callback[1]($published, $this);
             }
         }
@@ -370,7 +369,7 @@ class BootstrapConfig extends \Backend
                     'published' => ($published ? '' : '1')
                 ))
             ->execute($configId);
-        $this->createNewVersion('tl_bootstrap_config', $configId);
+        $versions->create();
     }
 
     /**
