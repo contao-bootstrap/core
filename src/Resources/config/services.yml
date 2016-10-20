@@ -14,7 +14,7 @@ services:
       - "@event_dispatcher"
 
   contao_bootstrap.config:
-    class: ContaoBootstrap\Core\Config
+    class: ContaoBootstrap\Core\Config\ArrayConfig
 
   contao_bootstrap.icon_set:
     class: ContaoBootstrap\Core\IconSet

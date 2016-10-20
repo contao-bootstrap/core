@@ -10,10 +10,11 @@
 namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Bootstrap;
-use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Config\Config;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class DefaultSubscriber contains initializes the core.
@@ -52,7 +53,6 @@ class CoreSubscriber implements EventSubscriberInterface
         $config = $event->getEnvironment()->getConfig();
 
         $this->loadConfigFromModules($config);
-        $this->loadConfigFromGlobals($config);
     }
 
     /**
@@ -99,29 +99,20 @@ class CoreSubscriber implements EventSubscriberInterface
      */
     private function loadConfigFromModules(Config $config)
     {
-        foreach (\Config::getInstance()->getActiveModules() as $module) {
-            $file = TL_ROOT . '/system/modules/' . $module . '/config/contao-bootstrap.php';
+        /** @var Config $config */
+        $container = \Controller::getContainer();
 
-            if (file_exists($file)) {
-                $config->import($file);
+        // Todo: Is there a more perfomant way to collect the data?
+        foreach ($container->getParameter('kernel.bundles') as $name => $bundleClass) {
+            $refClass   = new \ReflectionClass($bundleClass);
+            $bundleDir  = dirname($refClass->getFileName());
+            $configFile = $bundleDir . '/Resources/config/contao-bootstrap.yml';
+
+            if (file_exists($configFile)) {
+                $config->merge(
+                    Yaml::parse(file_get_contents($configFile))
+                );
             }
-        }
-    }
-
-    /**
-     * Load deprecated global config.
-     *
-     * @param Config $config Bootstrap config.
-     *
-     * @return void
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
-    private function loadConfigFromGlobals(Config $config)
-    {
-        // support deprecated config
-        if (isset($GLOBALS['BOOTSTRAP'])) {
-            $config->merge($GLOBALS['BOOTSTRAP']);
         }
     }
 }

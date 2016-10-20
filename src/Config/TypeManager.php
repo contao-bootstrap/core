@@ -10,7 +10,6 @@
 namespace ContaoBootstrap\Core\Config;
 
 use Model\Collection;
-use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
 
 /**
@@ -225,7 +224,7 @@ class TypeManager
      */
     public function buildContextualConfig(Collection $collection = null)
     {
-        $local      = new Config();
+        $local      = new ArrayConfig();
         $contextual = new ContextualConfig($this->config, $local);
 
         $this->buildConfigTypes($local, $collection);

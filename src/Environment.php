@@ -9,6 +9,7 @@
 
 namespace ContaoBootstrap\Core;
 
+use ContaoBootstrap\Core\Config\Config;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

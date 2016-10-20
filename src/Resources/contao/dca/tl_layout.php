@@ -10,15 +10,16 @@
 /**
  * Config
  */
-$GLOBALS['TL_DCA']['tl_layout']['config']['palettes_callback'][]   = array(
+$GLOBALS['TL_DCA']['tl_layout']['config']['palettes_callback'][] = array(
     'ContaoBootstrap\Core\Contao\DataContainer\Layout',
     'generatePalette'
 );
 
-
 /**
  * Fields
  */
+$GLOBALS['TL_DCA']['tl_layout']['fields']['name']['eval']['tl_class'] .= ' w50';
+
 $GLOBALS['TL_DCA']['tl_layout']['fields']['layoutType'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_layout']['layoutType'],

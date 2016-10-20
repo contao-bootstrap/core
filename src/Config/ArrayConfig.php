@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core;
+namespace ContaoBootstrap\Core\Config;
 
 use ContaoBootstrap\Core\Util\ArrayUtil;
 
@@ -16,7 +16,7 @@ use ContaoBootstrap\Core\Util\ArrayUtil;
  *
  * @package ContaoBootstrap
  */
-class Config
+class ArrayConfig implements Config
 {
     /**
      * Config values.
@@ -36,12 +36,7 @@ class Config
     }
 
     /**
-     * Get a config value.
-     *
-     * @param string $key     Name of the config param.
-     * @param mixed  $default Default value if config is not set.
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function get($key, $default = null)
     {
@@ -60,12 +55,7 @@ class Config
     }
 
     /**
-     * Set a config value.
-     *
-     * @param string $key   Name of the config param.
-     * @param mixed  $value The new value.
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function set($key, $value)
     {
@@ -87,11 +77,7 @@ class Config
     }
 
     /**
-     * Remove a config param.
-     *
-     * @param string $key Name of the config param.
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function remove($key)
     {
@@ -113,11 +99,7 @@ class Config
     }
 
     /**
-     * Consider if config param exists.
-     *
-     * @param string $key Name of the config param.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function has($key)
     {
@@ -136,12 +118,7 @@ class Config
     }
 
     /**
-     * Merge config values into config.
-     *
-     * @param array $data New data.
-     * @param null  $path Optional sub path where to merge in.
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function merge(array $data, $path = null)
     {
@@ -153,33 +130,6 @@ class Config
         } else {
             $this->config = ArrayUtil::merge($this->config, $data);
         }
-
-        return $this;
-    }
-
-    /**
-     * Import a file.
-     *
-     * @param string $file File path.
-     *
-     * @throws \RuntimeException         If file returns not an array.
-     * @throws \InvalidArgumentException If file does not exists.
-     *
-     * @return $this
-     */
-    public function import($file)
-    {
-        if (!file_exists($file)) {
-            throw new \InvalidArgumentException(sprintf('File "%s" not found', $file));
-        }
-
-        $config = include $file;
-
-        if (!is_array($config)) {
-            throw new \RuntimeException('Loaded config is not an array');
-        }
-
-        $this->merge($config);
 
         return $this;
     }

@@ -11,7 +11,6 @@
 
 namespace ContaoBootstrap\Core\Config;
 
-use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Util\ArrayUtil;
 
 /**
@@ -24,7 +23,7 @@ use ContaoBootstrap\Core\Util\ArrayUtil;
  *
  * @package ContaoBootstrap\Core\Config
  */
-class ContextualConfig
+class ContextualConfig implements Config
 {
     /**
      * The local config.
@@ -49,7 +48,7 @@ class ContextualConfig
     public function __construct(Config $global, Config $local = null)
     {
         $this->global = $global;
-        $this->local  = $local ?: new Config();
+        $this->local  = $local ?: new ArrayConfig();
     }
 
     /**
@@ -100,13 +99,5 @@ class ContextualConfig
     public function merge(array $data, $path = null)
     {
         return $this->local->merge($data, $path);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function import($file)
-    {
-        return $this->local->import($file);
     }
 }

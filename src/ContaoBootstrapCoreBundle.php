@@ -14,11 +14,11 @@ use ContaoBootstrap\Core\DependencyInjection\ConfigPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-
+/**
+ * Class ContaoBootstrapCoreBundle.
+ *
+ * @package ContaoBootstrap\Core
+ */
 class ContaoBootstrapCoreBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
-    {
-        $container->addCompilerPass(new ConfigPass());
-    }
 }
