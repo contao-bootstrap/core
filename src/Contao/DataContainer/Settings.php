@@ -9,7 +9,7 @@
 
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
-use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Config\Config;
 
 /**
  * Class Settings is used in tl_settings.
@@ -19,6 +19,22 @@ use ContaoBootstrap\Core\Bootstrap;
 class Settings
 {
     /**
+     * Bootstrap config.
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * Settings constructor.
+     */
+    public function __construct()
+    {
+        // TODO: Use Dependency injection
+        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
+    }
+
+    /**
      * Get all icon set names.
      *
      * @return array
@@ -26,7 +42,7 @@ class Settings
     public function getIconSets()
     {
         $options = array();
-        $sets    = Bootstrap::getConfigVar('icons.sets', array());
+        $sets    = $this->config->get('icons.sets', array());
 
         foreach ($sets as $name => $config) {
             if (isset($config['label'])) {

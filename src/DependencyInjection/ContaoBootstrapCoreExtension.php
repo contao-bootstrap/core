@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * Class ContaoBootstrapCoreExtension
+ * Class ContaoBootstrapCoreExtension.
  *
  * @package DependencyInjection
  */

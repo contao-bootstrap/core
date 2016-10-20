@@ -10,7 +10,7 @@
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
-use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Config\Config;
 use Input;
 use LayoutModel;
 
@@ -21,6 +21,22 @@ use LayoutModel;
  */
 class Layout
 {
+    /**
+     * Bootstrap config.
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * Settings constructor.
+     */
+    public function __construct()
+    {
+        // TODO: Use Dependency injection
+        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
+    }
+
     /**
      * Modify palette if bootstrap is used.
      *
@@ -46,12 +62,12 @@ class Layout
         if ($layout->layoutType == 'bootstrap') {
             $metaPalettes                             = & $GLOBALS['TL_DCA']['tl_layout']['metapalettes'];
             $metaPalettes['__base__']                 = $this->getMetaPaletteOfPalette('tl_layout');
-            $metaPalettes['default extends __base__'] = Bootstrap::getConfigVar('layout.metapalette', array());
+            $metaPalettes['default extends __base__'] = $this->config->get('layout.metapalette', array());
 
             // unset default palette. otherwise metapalettes will not render this palette
             unset($GLOBALS['TL_DCA']['tl_layout']['palettes']['default']);
 
-            $subSelectPalettes = Bootstrap::getConfigVar('layout.metasubselectpalettes', array());
+            $subSelectPalettes = $this->config->get('layout.metasubselectpalettes', array());
 
             foreach ($subSelectPalettes as $field => $meta) {
                 foreach ($meta as $value => $definition) {

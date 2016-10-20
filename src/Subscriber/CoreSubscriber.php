@@ -9,8 +9,8 @@
 
 namespace ContaoBootstrap\Core\Subscriber;
 
-use ContaoBootstrap\Core\Bootstrap;
 use ContaoBootstrap\Core\Config\Config;
+use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -23,6 +23,22 @@ use Symfony\Component\Yaml\Yaml;
  */
 class CoreSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Bootstrap environment.
+     *
+     * @var Environment
+     */
+    private $environment;
+
+    /**
+     * Settings constructor.
+     */
+    public function __construct()
+    {
+        // TODO: Use Dependency injection
+        $this->environment = \Controller::getContainer()->get('contao_bootstrap.environment');
+    }
+
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -83,7 +99,7 @@ class CoreSubscriber implements EventSubscriberInterface
     public function replaceIconInsertTag(ReplaceInsertTagsEvent $event)
     {
         if ($event->getTag() == 'icon' || $event->getTag() == 'i') {
-            $icon = Bootstrap::generateIcon($event->getParam(0), $event->getParam(1));
+            $icon = $this->environment->getIconSet()->generateIcon($event->getParam(0), $event->getParam(1));
 
             $event->setHtml($icon);
             $event->stopPropagation();
@@ -103,7 +119,7 @@ class CoreSubscriber implements EventSubscriberInterface
         $container = \Controller::getContainer();
 
         // Todo: Is there a more perfomant way to collect the data?
-        foreach ($container->getParameter('kernel.bundles') as $name => $bundleClass) {
+        foreach ($container->getParameter('kernel.bundles') as $bundleClass) {
             $refClass   = new \ReflectionClass($bundleClass);
             $bundleDir  = dirname($refClass->getFileName());
             $configFile = $bundleDir . '/Resources/config/contao-bootstrap.yml';

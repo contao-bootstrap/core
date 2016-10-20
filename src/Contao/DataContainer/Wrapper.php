@@ -11,7 +11,7 @@
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
-use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Config\Config;
 use ContaoBootstrap\Core\Contao\ContentElement\Wrapper\Helper;
 
 /**
@@ -35,6 +35,22 @@ class Wrapper
      * @var Helper
      */
     protected $wrapper;
+
+    /**
+     * Bootstrap config.
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * Settings constructor.
+     */
+    public function __construct()
+    {
+        // TODO: Use Dependency injection
+        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
+    }
 
     /**
      * Try to create wrapper elements, triggered by save_callback of type field.
@@ -170,7 +186,7 @@ class Wrapper
                     $GLOBALS['TL_DCA']['tl_content']['palettes']['bootstrap_parent'];
             }
         } elseif (\Input::get('act') === 'editAll') {
-            $wrappers = Bootstrap::getConfigVar('wrappers');
+            $wrappers = $this->config->get('wrappers');
 
             foreach ($wrappers as $wrapper) {
                 foreach ($wrapper as $name => $type) {
@@ -201,7 +217,7 @@ class Wrapper
             }
 
             $helper = Helper::create($row);
-            $start  = Bootstrap::getConfigVar('wrappers.' . $helper->getGroup() . '.start.name');
+            $start  = $this->config->get('wrappers.' . $helper->getGroup() . '.start.name');
 
             if ($start) {
                 $table  = \ContentModel::getTable();
@@ -269,7 +285,7 @@ class Wrapper
      */
     protected function isTrigger($trigger, $target, $action = self::TRIGGER_CREATE)
     {
-        $config = Bootstrap::getConfigVar(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
+        $config = $this->config->get(sprintf('wrappers.%s', $this->wrapper->getGroup()), array());
 
         if (array_key_exists($action, $config[$trigger]) && $config[$trigger][$action]) {
             $key = $action == static::TRIGGER_DELETE ? 'auto-delete' : 'auto-create';
@@ -353,7 +369,7 @@ class Wrapper
      */
     private function createSeparators($wrapper, $record, $sorting)
     {
-        $config = Bootstrap::getConfigVar(sprintf('wrappers.%s.%s', $wrapper->getGroup(), Helper::TYPE_SEPARATOR));
+        $config = $this->config->get(sprintf('wrappers.%s.%s', $wrapper->getGroup(), Helper::TYPE_SEPARATOR));
 
         $callback = $config['count-existing'];
         $instance = \Controller::importStatic($callback[0]);

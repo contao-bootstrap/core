@@ -10,8 +10,6 @@
 
 namespace ContaoBootstrap\Core\Contao\ContentElement\Wrapper;
 
-use ContaoBootstrap\Core\Bootstrap;
-
 /**
  * Class Helper for wrapper elements.
  *
@@ -80,7 +78,8 @@ class Helper
      */
     public static function create($model)
     {
-        $wrappers = Bootstrap::getConfigVar('wrappers', array());
+        // TODO: Use Dependency injection.
+        $wrappers = \Controller::getContainer()->get('contao_bootstrap.config')->get('wrappers', array());
         foreach ($wrappers as $groupName => $group) {
             foreach ($group as $type => $config) {
                 if ($config['name'] == $model->type) {
@@ -137,7 +136,8 @@ class Helper
         $type  = $type === null ? $this->getType() : $type;
         $path  = sprintf('wrappers.%s.%s.name', $group, $type);
 
-        return Bootstrap::getConfigVar($path);
+        // TODO: Use Dependency injection.
+        return \Controller::getContainer()->get('contao_bootstrap.config')->get($path);
     }
 
     /**

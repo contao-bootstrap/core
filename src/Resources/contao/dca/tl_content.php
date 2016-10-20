@@ -9,6 +9,7 @@
 
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array(
     'ContaoBootstrap\Core\Contao\DataContainer\Wrapper', 'enableFixParentPalette',
+    'ContaoBootstrap\Core\Contao\DataContainer\Content', 'setIconTemplate',
 );
 
 // define default bootstrap palette
@@ -65,11 +66,11 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_icon'] = array
     'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_icon'],
     'exclude'                 => true,
     'inputType'               => 'icon',
-    'options'                 => \ContaoBootstrap\Core\Bootstrap::getIconSet()->getIcons(),
+    'options_callback'        => [],
     'reference'               => &$GLOBALS['TL_LANG']['tl_content'],
     'eval'                    => array(
         'tl_class'     => 'w50',
-        'iconTemplate' => \ContaoBootstrap\Core\Bootstrap::getIconSet()->getTemplate()
+        'iconTemplate' => null
     ),
     'sql'                     => "varchar(32) NOT NULL default ''",
 );
@@ -89,7 +90,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
                 'label'     => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes_name'],
                 'exclude'   => true,
                 'inputType' => 'select',
-                'options'   => \ContaoBootstrap\Core\Bootstrap::getConfigVar('form.data-attributes', array()),
+                'options_callback' => ['ContaoBootstrap\Core\Contao\DataContainer\Content', 'getDataAttributes'],
                 'reference' => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_buttons_types'],
                 'eval'      => array('style' => 'width: 145px;', 'includeBlankOption' => true, 'chosen' => true),
             ),

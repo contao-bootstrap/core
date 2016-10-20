@@ -9,7 +9,6 @@
 
 namespace ContaoBootstrap\Core\Contao;
 
-use ContaoBootstrap\Core\Bootstrap;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
@@ -116,8 +115,8 @@ class Hooks
     public function addIconStylesheet()
     {
         if (TL_MODE == 'BE') {
-            $active = Bootstrap::getConfigVar('icons.active');
-            $css    = Bootstrap::getConfigVar(sprintf('icons.sets.%s.stylesheet', $active));
+            $active = $this->environment->getConfig()->get('icons.active');
+            $css    = $this->environment->getConfig()->get(sprintf('icons.sets.%s.stylesheet', $active));
 
             AssetsManager::addStylesheets($css, 'bootstrap-icon-set');
         }
@@ -130,8 +129,8 @@ class Hooks
      */
     protected function selectIconSet()
     {
-        $config   = Bootstrap::getConfig();
-        $iconSet  = Bootstrap::getIconSet();
+        $config   = $this->environment->getConfig();
+        $iconSet  = $this->environment->getIconSet();
         $active   = $config->get('icons.active');
         $template = $config->get(sprintf('icons.sets.%s.template', $active));
         $path     = $config->get(sprintf('icons.sets.%s.path', $active));

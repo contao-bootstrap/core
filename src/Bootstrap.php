@@ -13,6 +13,7 @@ namespace ContaoBootstrap\Core;
  * Class Bootstrap provides access to core bootstrap component module.
  *
  * @package ContaoBootstrap
+ * @deprecated
  */
 class Bootstrap
 {

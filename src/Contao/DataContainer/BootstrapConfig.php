@@ -9,7 +9,7 @@
 
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
-use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Config\Config;
 use ContaoBootstrap\Core\Config\TypeManager;
 use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\GetMultipleConfigNamesEvent;
@@ -37,6 +37,13 @@ class BootstrapConfig extends \Backend
     private $typeManager;
 
     /**
+     * Bootstrap config.
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
      * Construct.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
@@ -47,6 +54,9 @@ class BootstrapConfig extends \Backend
 
         $this->eventDispatcher = $GLOBALS['container']['event-dispatcher'];
         $this->typeManager     = $GLOBALS['container']['bootstrap.config-type-manager'];
+
+        // TODO: Use dependency injection.
+        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
 
         $this->loadLanguageFile('bootstrap_config_types');
     }
@@ -176,7 +186,7 @@ class BootstrapConfig extends \Backend
                 $model->type = $value;
                 $model->name = $dataContainer->activeRecord->name;
 
-                $type->extractConfig($key, Bootstrap::getConfig(), $model);
+                $type->extractConfig($key, $this->config, $model);
                 $model->save();
 
                 // unset parameter was only introduced in Contao 3.3
@@ -269,7 +279,7 @@ class BootstrapConfig extends \Backend
      */
     public function getDropdownTemplates()
     {
-        return Bootstrap::getConfigVar('config.options.dropdown.formless', array());
+        return $this->config->get('config.options.dropdown.formless', array());
     }
 
     /**

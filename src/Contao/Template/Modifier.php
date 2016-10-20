@@ -9,7 +9,7 @@
 
 namespace ContaoBootstrap\Core\Contao\Template;
 
-use ContaoBootstrap\Core\Bootstrap;
+use ContaoBootstrap\Core\Environment;
 
 /**
  * Class TemplateModifier contains all template modifiers used by bootstrap config.
@@ -18,6 +18,21 @@ use ContaoBootstrap\Core\Bootstrap;
  */
 class Modifier
 {
+    /**
+     * Bootstrap environment.
+     *
+     * @var Environment
+     */
+    private $environment;
+
+    /**
+     * Modifier constructor.
+     */
+    public function __construct()
+    {
+        // TODO: Use Dependency injection.
+        $this->environment = \Controller::getContainer()->get('contao_bootstrap.environment');
+    }
 
     /**
      * Execute all registered template modifiers.
@@ -28,11 +43,11 @@ class Modifier
      */
     public function modify(\Template $template)
     {
-        if (!Bootstrap::isEnabled()) {
+        if (!$this->environment->isEnabled()) {
             return;
         }
 
-        foreach ((array) Bootstrap::getConfigVar('templates.modifiers') as $config) {
+        foreach ((array) $this->environment->getConfig()->get('templates.modifiers') as $config) {
             if ($config['disabled'] || !$this->isTemplateAffected($template->getName(), (array) $config['templates'])) {
                 continue;
             }
@@ -61,11 +76,11 @@ class Modifier
      */
     public function parse($buffer, $templateName)
     {
-        if (!Bootstrap::isEnabled()) {
+        if (!$this->environment->isEnabled()) {
             return $buffer;
         }
 
-        foreach ((array) Bootstrap::getConfigVar('templates.parsers') as $config) {
+        foreach ((array) $this->environment->getConfig()->get('templates.parsers') as $config) {
             if ($config['disabled'] || !$this->isTemplateAffected($templateName, (array) $config['templates'])) {
                 continue;
             }
