@@ -9,9 +9,6 @@
 
 namespace ContaoBootstrap\Core;
 
-use ContaoBootstrap\Core\Config;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
 /**
  * Class Environment contain all things being provided in the bootstrap environment.
  *
@@ -19,13 +16,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Environment
 {
-    /**
-     * The event dispatcher.
-     *
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
     /**
      * Bootstrap enabled state.
      *
@@ -57,15 +47,13 @@ class Environment
     /**
      * Construct.
      *
-     * @param Config                   $config          Bootstrap config.
-     * @param IconSet                  $iconSet         Icon set.
-     * @param EventDispatcherInterface $eventDispatcher Event dispatcher.
+     * @param Config  $config  Bootstrap config.
+     * @param IconSet $iconSet Icon set.
      */
-    public function __construct(Config $config, IconSet $iconSet, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Config $config, IconSet $iconSet)
     {
-        $this->config          = $config;
-        $this->iconSet         = $iconSet;
-        $this->eventDispatcher = $eventDispatcher;
+        $this->config  = $config;
+        $this->iconSet = $iconSet;
     }
 
     /**
