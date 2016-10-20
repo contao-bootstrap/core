@@ -9,7 +9,7 @@
 
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
-use ContaoBootstrap\Core\Config\Config;
+use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\TypeManager;
 use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\GetMultipleConfigNamesEvent;

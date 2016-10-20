@@ -9,7 +9,7 @@
 
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
-use ContaoBootstrap\Core\Config\Config;
+use ContaoBootstrap\Core\Config;
 
 /**
  * Class Settings is used in tl_settings.

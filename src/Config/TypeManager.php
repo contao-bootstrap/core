@@ -9,6 +9,7 @@
 
 namespace ContaoBootstrap\Core\Config;
 
+use ContaoBootstrap\Core\Config;
 use Model\Collection;
 use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
 

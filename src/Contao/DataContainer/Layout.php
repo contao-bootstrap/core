@@ -10,7 +10,7 @@
 namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
-use ContaoBootstrap\Core\Config\Config;
+use ContaoBootstrap\Core\Config;
 use Input;
 use LayoutModel;
 

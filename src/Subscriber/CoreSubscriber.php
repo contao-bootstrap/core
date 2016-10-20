@@ -9,7 +9,7 @@
 
 namespace ContaoBootstrap\Core\Subscriber;
 
-use ContaoBootstrap\Core\Config\Config;
+use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;

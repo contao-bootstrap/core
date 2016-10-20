@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Config;
+namespace ContaoBootstrap\Core;
 
 /**
  * Class Config.
