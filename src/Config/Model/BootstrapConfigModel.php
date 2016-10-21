@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\Model;
+namespace ContaoBootstrap\Core\Config\Model;
 
 use ContaoBootstrap\Core\Config\TypeManager;
 

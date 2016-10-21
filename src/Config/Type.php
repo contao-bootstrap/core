@@ -10,7 +10,7 @@
 namespace ContaoBootstrap\Core\Config;
 
 use ContaoBootstrap\Core\Config;
-use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 
 /**
  * Interface Type describe a config type.

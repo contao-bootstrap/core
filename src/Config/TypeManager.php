@@ -11,7 +11,7 @@ namespace ContaoBootstrap\Core\Config;
 
 use ContaoBootstrap\Core\Config;
 use Model\Collection;
-use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 
 /**
  * Class TypeManager is used to manage different config types.

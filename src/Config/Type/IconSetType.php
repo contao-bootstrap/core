@@ -10,7 +10,7 @@
 namespace ContaoBootstrap\Core\Config\Type;
 
 use ContaoBootstrap\Core\Config\Type;
-use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Config;
 
 /**

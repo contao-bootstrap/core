@@ -8,7 +8,7 @@
  */
 
 // Models
-$GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel';
+$GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'ContaoBootstrap\Core\Config\Model\BootstrapConfigModel';
 
 // Modules
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';

@@ -10,7 +10,7 @@
 namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Config\TypeManager;
-use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
 use ContaoBootstrap\Core\Util\Contao;

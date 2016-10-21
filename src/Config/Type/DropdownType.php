@@ -11,7 +11,7 @@ namespace ContaoBootstrap\Core\Config\Type;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\Type;
-use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 
 /**
  * Class DropdownType is used for dropdown informations.

@@ -11,7 +11,7 @@ namespace ContaoBootstrap\Core\Contao\DataContainer;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\TypeManager;
-use ContaoBootstrap\Core\Contao\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\GetMultipleConfigNamesEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
