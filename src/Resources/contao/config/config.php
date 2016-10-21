@@ -20,11 +20,6 @@ $GLOBALS['TL_HOOKS']['getPageLayout'][]         = ['ContaoBootstrap\Core\Subscri
 $GLOBALS['TL_HOOKS']['parseTemplate'][]         = ['ContaoBootstrap\Core\View\Template\Modifier', 'modify'];
 $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['ContaoBootstrap\Core\View\Template\Modifier', 'parse'];
 
-// Event subscribers
-$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'ContaoBootstrap\Core\Subscriber\CoreSubscriber';
-$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'ContaoBootstrap\Core\Subscriber\ConfigSubscriber';
-$GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'ContaoBootstrap\Core\Subscriber\AssetsCollector';
-
 if(TL_MODE == 'BE') {
     // Add backend stylesheet
     // TODO: Check if styles are still required
