@@ -17,13 +17,13 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         'ptable'        => 'tl_theme',
         'oncreate_callback' => array(
             array(
-                'ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig',
+                'ContaoBootstrap\Core\DataContainer\BootstrapConfig',
                 'addOverrideInformation'
             )
         ),
         'palettes_callback' => array(
             array(
-                'ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig',
+                'ContaoBootstrap\Core\DataContainer\BootstrapConfig',
                 'addNameToPalette'
             )
         ),
@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'fields'         => array('type'),
             'format'         => '%s',
             'label_callback' => array(
-                'ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig',
+                'ContaoBootstrap\Core\DataContainer\BootstrapConfig',
                 'generateLabel'
             ),
         ),
@@ -79,7 +79,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
                 'icon'            => 'visible.gif',
                 'attributes'      => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
                 'button_callback' => array(
-                    'ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig',
+                    'ContaoBootstrap\Core\DataContainer\BootstrapConfig',
                     'toggleIcon'
                 ),
             ),
@@ -133,13 +133,13 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'label'            => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['type'],
             'inputType'        => 'select',
             'filter'           => true,
-            'options_callback' => array('ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig', 'getTypes'),
+            'options_callback' => array('ContaoBootstrap\Core\DataContainer\BootstrapConfig', 'getTypes'),
             'reference'        => &$GLOBALS['TL_LANG']['bootstrap_config_type'],
             'save_callback'    => array(
-                array('ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig', 'importFromConfig'),
+                array('ContaoBootstrap\Core\DataContainer\BootstrapConfig', 'importFromConfig'),
             ),
             'load_callback'    => array(
-                array('ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig', 'warnByGlobalConfig'),
+                array('ContaoBootstrap\Core\DataContainer\BootstrapConfig', 'warnByGlobalConfig'),
             ),
             'eval'             => array(
                 'tl_class'           => 'w50',
@@ -153,7 +153,7 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         (
             'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['name'],
             'inputType' => 'text',
-            'options_callback' => array('ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig', 'getNames'),
+            'options_callback' => array('ContaoBootstrap\Core\DataContainer\BootstrapConfig', 'getNames'),
             'eval'      => array(
                 'tl_class'           => 'w50',
                 'mandatory'          => true,

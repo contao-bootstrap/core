@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\ContentElement;
+namespace ContaoBootstrap\Core\Component\ContentElement;
 
 /**
  * Class Wrapper provides basic functions for wrapping content elements.

@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
 use ContaoBootstrap\Core\Config;
@@ -17,7 +17,7 @@ use LayoutModel;
 /**
  * Class Layout is used in tl_layout.
  *
- * @package ContaoBootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\DataContainer
  */
 class Layout
 {

@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao;
+namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @package ContaoBootstrap\Core\Contao
  */
-class Hooks
+class HookSubscriber
 {
     /**
      * The event dispatcher.

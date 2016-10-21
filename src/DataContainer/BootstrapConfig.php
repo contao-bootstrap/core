@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\DataContainer;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\TypeManager;
@@ -18,7 +18,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * Class BootstrapConfig is used for the bootstrap config.
  *
- * @package ContaoBootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\DataContainer
  */
 class BootstrapConfig
 {

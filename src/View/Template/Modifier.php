@@ -7,7 +7,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\Template;
+namespace ContaoBootstrap\Core\View\Template;
 
 use ContaoBootstrap\Core\Environment;
 

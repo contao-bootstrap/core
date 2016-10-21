@@ -8,11 +8,11 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
 use ContaoBootstrap\Core\Config;
-use ContaoBootstrap\Core\Contao\ContentElement\Wrapper\Helper;
+use ContaoBootstrap\Core\Component\ContentElement\Wrapper\Helper;
 
 /**
  * Class WrapperDataContainer handles wrapper content elements in the backend configuration.

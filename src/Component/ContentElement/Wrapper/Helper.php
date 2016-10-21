@@ -8,7 +8,7 @@
  * @copyright 2013-2015 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Contao\ContentElement\Wrapper;
+namespace ContaoBootstrap\Core\Component\ContentElement\Wrapper;
 
 /**
  * Class Helper for wrapper elements.

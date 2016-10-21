@@ -14,11 +14,11 @@ $GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'ContaoBootstrap\Core\Config\Mode
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';
 
 // Hooks
-$GLOBALS['TL_HOOKS']['initializeSystem'][]      = array('ContaoBootstrap\Core\Contao\Hooks', 'initializeSystem');
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][]     = array('ContaoBootstrap\Core\Contao\Hooks', 'replaceInsertTags');
-$GLOBALS['TL_HOOKS']['getPageLayout'][]         = array('ContaoBootstrap\Core\Contao\Hooks', 'initializeLayout');
-$GLOBALS['TL_HOOKS']['parseTemplate'][]         = array('ContaoBootstrap\Core\Contao\Template\Modifier', 'modify');
-$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = array('ContaoBootstrap\Core\Contao\Template\Modifier', 'parse');
+$GLOBALS['TL_HOOKS']['initializeSystem'][]      = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'initializeSystem'];
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][]     = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'replaceInsertTags'];
+$GLOBALS['TL_HOOKS']['getPageLayout'][]         = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'initializeLayout'];
+$GLOBALS['TL_HOOKS']['parseTemplate'][]         = ['ContaoBootstrap\Core\View\Template\Modifier', 'modify'];
+$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['ContaoBootstrap\Core\View\Template\Modifier', 'parse'];
 
 // Event subscribers
 $GLOBALS['TL_EVENT_SUBSCRIBERS'][] = 'ContaoBootstrap\Core\Subscriber\CoreSubscriber';

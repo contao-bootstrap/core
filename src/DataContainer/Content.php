@@ -8,14 +8,14 @@
  *
  */
 
-namespace ContaoBootstrap\Core\Contao\DataContainer;
+namespace ContaoBootstrap\Core\DataContainer;
 
 use ContaoBootstrap\Core\Environment;
 
 /**
  * Data container helper class for tl_content.
  *
- * @package ContaoBootstrap\Core\Contao\DataContainer
+ * @package ContaoBootstrap\Core\DataContainer
  */
 class Content
 {
