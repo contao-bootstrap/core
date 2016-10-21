@@ -31,7 +31,6 @@
         "netzmacht/contao-bootstrap": "*"
     },
     "suggest": {
-        "netzmacht/contao-theme-plus-importer": "Import assets into Theme+",
         "twbs/bootstrap": "Official Bootstrap package",
         "components/bootstrap": "Bootstrap Components package"
     },
