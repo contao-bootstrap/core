@@ -13,7 +13,7 @@ use ContaoBootstrap\Core\Config\TypeManager;
 use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
-use ContaoBootstrap\Core\Util\Contao;
+use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -23,6 +23,32 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class ConfigSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Bootstrap config type manager.
+     *
+     * @var TypeManager
+     */
+    private $typeManager;
+
+    /**
+     * Database connection.
+     *
+     * @var Connection
+     */
+    private $connection;
+
+    /**
+     * ConfigSubscriber constructor.
+     *
+     * @param TypeManager $typeManager Bootstrap config type manager.
+     * @param Connection  $connection  Database connection.
+     */
+    public function __construct(TypeManager $typeManager, Connection $connection)
+    {
+        $this->typeManager = $typeManager;
+        $this->connection  = $connection;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -41,15 +67,12 @@ class ConfigSubscriber implements EventSubscriberInterface
      */
     public function loadGlobalConfig()
     {
-        // prevent that database is loaded before user object
-        Contao::intializeObjectStack();
-
-        if (!\Database::getInstance()->tableExists('tl_bootstrap_config')) {
+        if (!$this->connection->getSchemaManager()->tablesExist('tl_bootstrap_config')) {
             return;
         }
 
         $collection = BootstrapConfigModel::findGlobalPublished();
-        $this->getTypeManager()->buildConfig($collection);
+        $this->typeManager->buildConfig($collection);
     }
 
     /**
@@ -66,19 +89,6 @@ class ConfigSubscriber implements EventSubscriberInterface
         $themeId    = $event->getLayoutModel()->pid;
         $collection = BootstrapConfigModel::findPublishedByTheme($themeId);
 
-        $this->getTypeManager()->buildConfig($collection);
-    }
-
-    /**
-     * Get type manager.
-     *
-     * @return TypeManager
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
-    private function getTypeManager()
-    {
-        // TODO: Use Dependency injection.
-        return \Controller::getContainer()->get('contao_bootstrap.config.type_manager');
+        $this->typeManager->buildConfig($collection);
     }
 }
