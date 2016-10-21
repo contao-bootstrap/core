@@ -108,10 +108,6 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
         (
             '+config' => array('icons_path', 'icons_template', 'icons_default', 'icons_source'),
         ),
-        'dropdown extends default' => array
-        (
-            '+config' => array('dropdown_toggle', 'dropdown_formless'),
-        )
     ),
     'metasubselectpalettes' => array
     (
@@ -272,43 +268,6 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
                 'fieldType'  => 'checkbox',
             ),
             'sql'       => "blob NULL"
-        ),
-        'dropdown_toggle' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_toggle'],
-            'inputType' => 'text',
-            'eval'      => array(
-                'tl_class'  => 'w50',
-                'allowHtml' => true,
-            ),
-            'sql'       => "varchar(255) NOT NULL default ''"
-        ),
-
-        'dropdown_formless' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless'],
-            'inputType' => 'multiColumnWizard',
-            'eval'      => array(
-                'tl_class'  => 'clr',
-                'allowHtml' => true,
-                'columnFields' => array(
-                    'template' => array(
-                        'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless_template'],
-                        'inputType' => 'select',
-                        'options_callback' => array(
-                            'ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig',
-                            'getDropdownTemplates',
-                        ),
-                        'eval'      => array(
-                            'style'              => 'width: 350px;',
-                            'includeBlankOption' => true,
-                            'chosen'             => true
-                        ),
-                    )
-                ),
-                'flatArray' => true,
-            ),
-            'sql'       => "mediumblob NULL"
         ),
     )
 );

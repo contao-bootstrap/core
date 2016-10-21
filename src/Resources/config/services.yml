@@ -31,8 +31,3 @@ services:
     class: ContaoBootstrap\Core\Config\Type\IconSetType
     tags:
       - { name: contao_bootstrap.config.type}
-
-  contao_bootstrap.config.types.dropdown:
-    class: ContaoBootstrap\Core\Config\Type\DropdownType
-    tags:
-      - { name: contao_bootstrap.config.type}

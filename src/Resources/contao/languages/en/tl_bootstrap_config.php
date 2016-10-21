@@ -46,13 +46,5 @@ $GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_source'][1] = 'Please choose h
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_paths'][0] = 'Stylesheet paths';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_paths'][1] = 'Please insert one or more stylesheet paths as relative url to your ROOT directory. External urls are allowed as well.';
 
-// dropdown
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_toggle'][0] = 'Dropdown-Toggle';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_toggle'][1] = 'HTML-snippet used for the dropdown toggle symbol.';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless'][0] = 'Formless dropdown';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless'][1] = 'Some module uses a dropdown. You can activate a formless dropdown rendering.';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless_template'][0] = 'Template';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_formless_template'][1] = 'Please choose the templates being used for the formless dropdown.';
-
 // Warning
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'] = 'Config type "%s" has a global scope. If activated, it will affect other themes as well.';
