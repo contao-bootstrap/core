@@ -10,6 +10,8 @@
 
 namespace ContaoBootstrap\Core\Component\ContentElement\Wrapper;
 
+use Contao\Database;
+
 /**
  * Class Helper for wrapper elements.
  *
@@ -57,9 +59,9 @@ class Helper
      * @param \Model|\Database\Result $model    The wrapper model.
      * @param string                  $type     Type of the wrapper.
      * @param string                  $group    Group element contains to.
-     * @param \Database               $database The database connection.
+     * @param Database               $database The database connection.
      */
-    public function __construct($model, $type, $group, \Database $database)
+    public function __construct($model, $type, $group, Database $database)
     {
         $this->model    = $model;
         $this->type     = $type;
@@ -202,7 +204,7 @@ class Helper
      *
      * @param string|null $type Name of the type. If empty current type is used.
      *
-     * @return \ContentModel|null
+     * @return \Contao\ContentModel|null
      */
     public function findRelatedElement($type = null)
     {
