@@ -1,11 +1,4 @@
 services:
-  contao_bootstrap.core.core_subscriber:
-    class: ContaoBootstrap\Core\Subscriber\CoreSubscriber
-    arguments:
-      - "@contao_bootstrap.environment"
-    tags:
-      - { name: kernel.event_subscriber }
-
   contao_bootstrap.core.config_subscriber:
     class: ContaoBootstrap\Core\Subscriber\ConfigSubscriber
     arguments:

@@ -103,18 +103,6 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
             'config'      => array(),
             'published'   => array('published'),
         ),
-
-        'icons_set extends default' => array
-        (
-            '+config' => array('icons_path', 'icons_template', 'icons_default', 'icons_source'),
-        ),
-    ),
-    'metasubselectpalettes' => array
-    (
-        'icons_source' => array(
-            'files' => array('icons_files'),
-            'paths' => array('icons_paths'),
-        )
     ),
     'fields'                => array
     (
@@ -212,62 +200,6 @@ $GLOBALS['TL_DCA']['tl_bootstrap_config'] = array
                 'submitOnChange' => true,
             ),
             'sql'       => "char(1) NOT NULL default ''"
-        ),
-        'icons_path'     => array
-        (
-            'label'         => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path'],
-            'inputType'     => 'text',
-            'eval'          => array(
-                'tl_class'  => 'long',
-                'mandatory' => true,
-            ),
-            'sql'           => "varchar(64) NOT NULL default ''",
-            'save_callback' => array(
-                array('ContaoBootstrap\Core\Contao\DataContainer\BootstrapConfig', 'guardValidIconFile')
-            )
-        ),
-        'icons_template' => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_template'],
-            'inputType' => 'text',
-            'eval'      => array(
-                'tl_class'  => 'long',
-                'allowHtml' => true,
-            ),
-            'sql'       => "varchar(255) NOT NULL default ''"
-        ),
-        'icons_source'   => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_source'],
-            'inputType' => 'select',
-            'options'   => array('files', 'paths'),
-            'eval'      => array(
-                'tl_class'           => 'w50',
-                'includeBlankOption' => true,
-                'submitOnChange'     => true,
-            ),
-            'sql'       => "char(5) NOT NULL default ''"
-        ),
-        'icons_paths'    => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_paths'],
-            'inputType' => 'textarea',
-            'eval'      => array(
-                'tl_class' => 'clr long',
-            ),
-            'sql'       => "text NULL"
-        ),
-        'icons_files'    => array
-        (
-            'label'     => &$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_files'],
-            'inputType' => 'fileTree',
-            'eval'      => array(
-                'tl_class'   => 'clr',
-                'filesOnly'  => true,
-                'extensions' => 'css',
-                'fieldType'  => 'checkbox',
-            ),
-            'sql'       => "blob NULL"
         ),
     )
 );

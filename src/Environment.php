@@ -31,13 +31,6 @@ class Environment
     protected $config;
 
     /**
-     * Icon set.
-     *
-     * @var IconSet
-     */
-    protected $iconSet;
-
-    /**
      * Layout model of current page.
      *
      * @var \LayoutModel
@@ -48,22 +41,10 @@ class Environment
      * Construct.
      *
      * @param Config  $config  Bootstrap config.
-     * @param IconSet $iconSet Icon set.
      */
-    public function __construct(Config $config, IconSet $iconSet)
+    public function __construct(Config $config)
     {
         $this->config  = $config;
-        $this->iconSet = $iconSet;
-    }
-
-    /**
-     * Get the icon set.
-     *
-     * @return IconSet
-     */
-    public function getIconSet()
-    {
-        return $this->iconSet;
     }
 
     /**

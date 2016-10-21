@@ -3,7 +3,6 @@ services:
     class: ContaoBootstrap\Core\Environment
     arguments:
       - "@contao_bootstrap.config"
-      - "@contao_bootstrap.icon_set"
 
   contao_bootstrap.config:
     class: ContaoBootstrap\Core\Config\ArrayConfig
@@ -23,11 +22,3 @@ services:
     class: ContaoBootstrap\Core\Config\TypeFactory
     arguments:
       - "@contao_bootstrap.config"
-
-  contao_bootstrap.icon_set:
-    class: ContaoBootstrap\Core\IconSet
-
-  contao_bootstrap.config.types.icon_set:
-    class: ContaoBootstrap\Core\Config\Type\IconSetType
-    tags:
-      - { name: contao_bootstrap.config.type}

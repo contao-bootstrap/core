@@ -61,21 +61,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_parentId'] = array
     'sql'                     => "int(10) unsigned NULL",
 );
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_icon'] = array
-(
-    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_icon'],
-    'exclude'                 => true,
-    'inputType'               => 'icon',
-    'options_callback'        => [],
-    'reference'               => &$GLOBALS['TL_LANG']['tl_content'],
-    'eval'                    => array(
-        'tl_class'     => 'w50',
-        'iconTemplate' => null
-    ),
-    'sql'                     => "varchar(32) NOT NULL default ''",
-);
-
-
 $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
 (
     'label'     => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes'],

@@ -13,7 +13,6 @@ use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
 use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;
-use ContaoBootstrap\Core\Util\AssetsManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -75,7 +74,6 @@ class Hooks
     public function initializeSystem()
     {
         $this->initializeEnvironment();
-        $this->selectIconSet();
     }
 
     /**
@@ -105,44 +103,5 @@ class Hooks
 
         $event = new InitializeLayoutEvent($environment, $layout, $page);
         $this->eventDispatcher->dispatch($event::NAME, $event);
-    }
-
-    /**
-     * Add icon stylesheet to the backend template.
-     *
-     * @return void
-     */
-    public function addIconStylesheet()
-    {
-        if (TL_MODE == 'BE') {
-            $active = $this->environment->getConfig()->get('icons.active');
-            $css    = $this->environment->getConfig()->get(sprintf('icons.sets.%s.stylesheet', $active));
-
-            AssetsManager::addStylesheets($css, 'bootstrap-icon-set');
-        }
-    }
-
-    /**
-     * Select an icon set.
-     *
-     * @return void
-     */
-    protected function selectIconSet()
-    {
-        $config   = $this->environment->getConfig();
-        $iconSet  = $this->environment->getIconSet();
-        $active   = $config->get('icons.active');
-        $template = $config->get(sprintf('icons.sets.%s.template', $active));
-        $path     = $config->get(sprintf('icons.sets.%s.path', $active));
-
-        if ($active && $path && file_exists(TL_ROOT . '/' . $path)) {
-            $icons = include TL_ROOT . '/' . $path;
-            $iconSet
-                ->setIconSetName($active)
-                ->setIcons($icons)
-                ->setTemplate($template);
-        }
-
-        $this->addIconStylesheet();
     }
 }

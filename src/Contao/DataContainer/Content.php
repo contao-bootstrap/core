@@ -36,28 +36,6 @@ class Content
     }
 
     /**
-     * Get all icons.
-     *
-     * @return array
-     */
-    public function getIcons()
-    {
-        return $this->environment->getIconSet()->getIcons();
-    }
-
-    /**
-     * Set the icon template.
-     *
-     * @return void
-     * @SuppressWarnings(PHPMD.Superglobals)
-     */
-    public function setIconTemplate()
-    {
-        $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_icon']['eval']['iconTemplate'] =
-            $this->environment->getIconSet()->getTemplate();
-    }
-
-    /**
      * Get all data attributes.
      *
      * @return array

@@ -64,29 +64,6 @@ class Bootstrap
     }
 
     /**
-     * Generates an icon.
-     *
-     * @param string      $icon  Icon name.
-     * @param string|null $class Additional icon class.
-     *
-     * @return string
-     */
-    public static function generateIcon($icon, $class = null)
-    {
-        return static::getIconSet()->generateIcon($icon, $class);
-    }
-
-    /**
-     * Get the icon set.
-     *
-     * @return IconSet
-     */
-    public static function getIconSet()
-    {
-        return static::getEnvironment()->getIconSet();
-    }
-
-    /**
      * Get the page layout.
      *
      * @return \LayoutModel|null

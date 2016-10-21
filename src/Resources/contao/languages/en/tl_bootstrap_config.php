@@ -34,17 +34,5 @@ $GLOBALS['TL_LANG']['tl_bootstrap_config']['description'][1] = 'Please insert a 
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['published'][0] = 'Enable configuration';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['published'][1] = 'Enable configuration.';
 
-// icons
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path'][0] = 'PHP config file';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path'][1] = 'Path to the PHP config file of the icon set.';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_template'][0] = 'Icon Template';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_template'][1] = 'The template will be used for generating the icon as html. Expects an "%s" placeholder for the icon name.';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_files'][0] = 'Stylesheet files';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_files'][1] = 'Please choose the icon stylesheet files.';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_source'][0] = 'Stylesheet source';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_source'][1] = 'Please choose how to define the stylesheet source.';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_paths'][0] = 'Stylesheet paths';
-$GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_paths'][1] = 'Please insert one or more stylesheet paths as relative url to your ROOT directory. External urls are allowed as well.';
-
 // Warning
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'] = 'Config type "%s" has a global scope. If activated, it will affect other themes as well.';
