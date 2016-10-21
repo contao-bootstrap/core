@@ -50,25 +50,10 @@ class CoreSubscriber implements EventSubscriberInterface
     {
         return array(
             InitializeEnvironmentEvent::NAME => array(
-                array('loadConfig', 1000),
                 array('importContaoSettings', 1000)
             ),
             ReplaceInsertTagsEvent::NAME  => 'replaceIconInsertTag',
         );
-    }
-
-    /**
-     * Load configuration.
-     *
-     * @param InitializeEnvironmentEvent $event Initialize environment event.
-     *
-     * @return void
-     */
-    public function loadConfig(InitializeEnvironmentEvent $event)
-    {
-        $config = $event->getEnvironment()->getConfig();
-
-        $this->loadConfigFromModules($config);
     }
 
     /**
@@ -103,32 +88,6 @@ class CoreSubscriber implements EventSubscriberInterface
 
             $event->setHtml($icon);
             $event->stopPropagation();
-        }
-    }
-
-    /**
-     * Load config of each module.
-     *
-     * @param Config $config Bootstrap configuration.
-     *
-     * @return void
-     */
-    private function loadConfigFromModules(Config $config)
-    {
-        /** @var Config $config */
-        $container = \Controller::getContainer();
-
-        // Todo: Is there a more perfomant way to collect the data?
-        foreach ($container->getParameter('kernel.bundles') as $bundleClass) {
-            $refClass   = new \ReflectionClass($bundleClass);
-            $bundleDir  = dirname($refClass->getFileName());
-            $configFile = $bundleDir . '/Resources/config/contao-bootstrap.yml';
-
-            if (file_exists($configFile)) {
-                $config->merge(
-                    Yaml::parse(file_get_contents($configFile))
-                );
-            }
         }
     }
 }

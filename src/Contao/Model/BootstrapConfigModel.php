@@ -100,7 +100,7 @@ class BootstrapConfigModel extends \Model
      */
     private static function getTypeManager()
     {
-        return $GLOBALS['container']['bootstrap.config-type-manager'];
+        return \Controller::getContainer()->get('contao_bootstrap.config.type_manager');
     }
 
     /**
