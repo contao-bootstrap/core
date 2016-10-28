@@ -50,23 +50,6 @@ class HookSubscriber
     }
 
     /**
-     * Replace insert tags. Dispatches an event an get the result.
-     *
-     * @param string $tag   Insert tag.
-     * @param bool   $cache Insert tag cache.
-     *
-     * @return string|false
-     */
-    public function replaceInsertTags($tag, $cache = true)
-    {
-        $event = new ReplaceInsertTagsEvent($tag, $cache);
-
-        $this->eventDispatcher->dispatch($event::NAME, $event);
-
-        return $event->getHtml() ?: false;
-    }
-
-    /**
      * Initialize bootstrap at initialize system hook.
      *
      * @return void

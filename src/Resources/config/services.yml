@@ -7,12 +7,13 @@ services:
   contao_bootstrap.config:
     class: ContaoBootstrap\Core\Config\ArrayConfig
     arguments:
-      - "%contao_bootstrap.config.config%"
+      - "%contao_bootstrap.config%"
 
   contao_bootstrap.config.type_manager:
     class: ContaoBootstrap\Core\Config\TypeManager
     arguments:
       - "@contao_bootstrap.config"
+      - []
 
   contao_bootstrap.config.types:
     class: ContaoBootstrap\Core\Config\TypeFactory
@@ -22,3 +23,8 @@ services:
     class: ContaoBootstrap\Core\Config\TypeFactory
     arguments:
       - "@contao_bootstrap.config"
+
+  contao_bootstrap.view.template_modifier:
+    class: ContaoBootstrap\Core\View\Template\ModifierChain
+    arguments:
+      - []

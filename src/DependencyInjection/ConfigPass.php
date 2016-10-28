@@ -54,7 +54,7 @@ class ConfigPass implements CompilerPass
             }
         }
 
-        $container->setParameter('contao_bootstrap.config.config', $config);
+        $container->setParameter('contao_bootstrap.config', $config);
     }
 
     /**

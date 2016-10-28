@@ -15,10 +15,9 @@ $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';
 
 // Hooks
 $GLOBALS['TL_HOOKS']['initializeSystem'][]      = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'initializeSystem'];
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][]     = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'replaceInsertTags'];
 $GLOBALS['TL_HOOKS']['getPageLayout'][]         = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'initializeLayout'];
-$GLOBALS['TL_HOOKS']['parseTemplate'][]         = ['ContaoBootstrap\Core\View\Template\Modifier', 'modify'];
-$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['ContaoBootstrap\Core\View\Template\Modifier', 'parse'];
+$GLOBALS['TL_HOOKS']['parseTemplate'][]         = ['ContaoBootstrap\Core\Subscriber\TemplateParseSubscriber', 'prepare'];
+$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['ContaoBootstrap\Core\Subscriber\TemplateParseSubscriber', 'parse'];
 
 if(TL_MODE == 'BE') {
     // Add backend stylesheet

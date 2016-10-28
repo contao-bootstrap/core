@@ -1,127 +1,47 @@
 <?php
 
 /**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2015 netzmacht creative David Molineus
+ * @package    contao-bootstrap
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2016 netzmacht David Molineus. All rights reserved.
+ * @filesource
+ *
  */
 
 namespace ContaoBootstrap\Core\View\Template;
 
-use ContaoBootstrap\Core\Environment;
-
 /**
- * Class TemplateModifier contains all template modifiers used by bootstrap config.
+ * Interface Modifier describes an
  *
- * @package ContaoBootstrap
+ * @package ContaoBootstrap\Core\View\Template
  */
-class Modifier
+interface Modifier
 {
     /**
-     * Bootstrap environment.
+     * Check if modifier supports a specific template by its name.
      *
-     * @var Environment
-     */
-    private $environment;
-
-    /**
-     * Modifier constructor.
-     */
-    public function __construct()
-    {
-        // TODO: Use Dependency injection.
-        $this->environment = \Controller::getContainer()->get('contao_bootstrap.environment');
-    }
-
-    /**
-     * Execute all registered template modifiers.
-     *
-     * @param \Template $template Current template.
-     *
-     * @return void
-     */
-    public function modify(\Template $template)
-    {
-        if (!$this->environment->isEnabled()) {
-            return;
-        }
-
-        foreach ((array) $this->environment->getConfig()->get('templates.modifiers') as $config) {
-            if ($config['disabled'] || !$this->isTemplateAffected($template->getName(), (array) $config['templates'])) {
-                continue;
-            }
-
-            if ($config['type'] == 'replace') {
-                if (is_callable($config['replace'])) {
-                    $value = call_user_func($config['replace'], $template);
-                } else {
-                    $value = $config['replace'];
-                }
-
-                $template->$config['key'] = str_replace($config['search'], $value, $template->$config['key']);
-            } elseif ($config['type'] == 'callback') {
-                call_user_func($config['callback'], $template);
-            }
-        }
-    }
-
-    /**
-     * Parse current template.
-     *
-     * @param string $buffer       Parsed template.
-     * @param string $templateName Name of the template.
-     *
-     * @return string
-     */
-    public function parse($buffer, $templateName)
-    {
-        if (!$this->environment->isEnabled()) {
-            return $buffer;
-        }
-
-        foreach ((array) $this->environment->getConfig()->get('templates.parsers') as $config) {
-            if ($config['disabled'] || !$this->isTemplateAffected($templateName, (array) $config['templates'])) {
-                continue;
-            }
-
-            if ($config['type'] == 'replace') {
-                if (is_callable($config['replace'])) {
-                    $value = call_user_func($config['replace'], $buffer, $templateName);
-                } else {
-                    $value = $config['replace'];
-                }
-
-                $buffer = str_replace($config['search'], $value, $buffer);
-            } elseif ($config['type'] == 'callback') {
-                $buffer = call_user_func($config['callback'], $buffer, $templateName);
-            }
-        }
-
-        return $buffer;
-    }
-
-    /**
-     * Consider if template is affected.
-     *
-     * @param string $template  Name of current template.
-     * @param array  $templates Defined templates of the modifier.
+     * @param string $templateName Template name.
      *
      * @return bool
      */
-    protected function isTemplateAffected($template, $templates)
-    {
-        foreach ($templates as $config) {
-            if ($template == $config) {
-                return true;
-            } elseif (substr($config, -1) == '*'
-                && 0 == strcasecmp(substr($config, 0, -1), substr($template, 0, (strlen($config) - 1)))
-            ) {
-                return true;
-            }
+    public function supports($templateName);
 
-        }
+    /**
+     * Prepare a template before parsing.
+     *
+     * @param \Template $template Template.
+     *
+     * @return void
+     */
+    public function prepare(\Template $template);
 
-        return false;
-    }
+    /**
+     * Modify the generated output.
+     *
+     * @param string $buffer       Template output.
+     * @param string $templateName Template name.
+     *
+     * @return string
+     */
+    public function parse($buffer, $templateName);
 }
