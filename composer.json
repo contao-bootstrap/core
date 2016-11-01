@@ -19,8 +19,8 @@
         "source":"https://github.com/contao-bootstrap/core"
     },
     "require":{
-        "php":">=5.3.4",
-        "contao/core-bundle":"^4.2",
+        "php":">=5.5.0",
+        "contao/core-bundle":"^4.3",
         "contao-community-alliance/meta-palettes": "~1.10",
         "doctrine/doctrine-bundle": "~1.6"
     },
