@@ -18,7 +18,9 @@ namespace ContaoBootstrap\Core\View\Template;
 abstract class AbstractModifier implements Modifier
 {
     /**
-     * List of supported template names. It's allowed to wildcard a template, e.g. fe_*
+     * List of supported template names.
+     *
+     * It's allowed to wildcard a template name pattern, e.g. fe_*.
      *
      * @var array
      */

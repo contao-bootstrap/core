@@ -74,7 +74,7 @@ class ConfigPass implements CompilerPass
         $taggedServiceIds = $container->findTaggedServiceIds('contao_bootstrap.config.type');
         $services         = (array) $definition->getArgument(1);
 
-        foreach ($taggedServiceIds as $serviceId => $tags) {
+        foreach (array_keys($taggedServiceIds) as $serviceId) {
             $services[] = new Reference($serviceId);
         }
 

@@ -27,7 +27,7 @@ final class ModifierChain implements Modifier
     /**
      * ModifierChain constructor.
      *
-     * @param Modifier[] $modifiers Template modifiers.
+     * @param array|Modifier[] $modifiers Template modifiers.
      */
     public function __construct(array $modifiers)
     {

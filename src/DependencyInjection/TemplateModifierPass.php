@@ -34,7 +34,7 @@ class TemplateModifierPass implements CompilerPassInterface
         $taggedServiceIds = $container->findTaggedServiceIds('contao_bootstrap.view.template_modifier');
         $services         = (array) $definition->getArgument(0);
 
-        foreach ($taggedServiceIds as $serviceId => $tags) {
+        foreach (array_keys($taggedServiceIds) as $serviceId) {
             $services[] = new Reference($serviceId);
         }
 

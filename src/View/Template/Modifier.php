@@ -11,7 +11,7 @@
 namespace ContaoBootstrap\Core\View\Template;
 
 /**
- * Interface Modifier describes an
+ * Interface Modifier describes an template modifier which is called when a template is parsed.
  *
  * @package ContaoBootstrap\Core\View\Template
  */

@@ -16,7 +16,7 @@ namespace ContaoBootstrap\Core\View\Template;
  *
  * @package ContaoBootstrap\Core\View\Template
  */
-abstract  class AbstractPrepareModifier extends AbstractModifier
+abstract class AbstractPrepareModifier extends AbstractModifier
 {
     /**
      * {@inheritdoc}
