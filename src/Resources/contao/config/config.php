@@ -22,11 +22,11 @@ $GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['ContaoBootstrap\Core\Subscri
 if(TL_MODE == 'BE') {
     // Add backend stylesheet
     // TODO: Check if styles are still required
-    $GLOBALS['TL_CSS']['bootstrap-core'] = 'system/modules/bootstrap-core/assets/css/backend.css|all|static';
+    $GLOBALS['TL_CSS']['bootstrap-core'] = 'bundles/contaobootstrapcore/css/backend.css|all|static';
 
     // load stylepicker config
     if(\Input::get('key') == 'stylepicker4ward_import') {
-        require TL_ROOT . '/system/modules/bootstrap-core/config/stylepicker.php';
+        require TL_ROOT . '/vendor/contao-bootstrap/core/src/Resources/contao/onfig/stylepicker.php';
     }
 }
 
