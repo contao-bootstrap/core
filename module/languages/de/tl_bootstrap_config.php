@@ -8,9 +8,8 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2014-10-24T14:31:13+02:00
+ * last-updated: 2016-08-01T09:36:48+02:00
  */
-
 
 $GLOBALS['TL_LANG']['bootstrap_config_type']['dropdown']                      = 'Dropdown';
 $GLOBALS['TL_LANG']['bootstrap_config_type']['icons_set']                     = 'Icon-Set';
@@ -28,6 +27,7 @@ $GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_toggle']['0']            = 
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['dropdown_toggle']['1']            = 'HTML-Snippet zur Generierung des Toggle-Symbols des Dropdowns.';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['edit']['0']                       = 'Konfiguration bearbeiten';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['edit']['1']                       = 'Konfiguration "ID %s" bearbeiten';
+$GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning']              = 'Config Typ "%s" hat eine globale Reichweite. Wenn aktiviert, wird es auch noch andere Themen betreffen.';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_files']['0']                = 'Stylesheet-Dateien';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_files']['1']                = 'Bitte die Stylesheet-Dateien für Icons auswählen.';
 $GLOBALS['TL_LANG']['tl_bootstrap_config']['icons_path']['0']                 = 'PHP-Konfigurationsdatei';
