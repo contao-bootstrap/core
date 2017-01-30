@@ -357,11 +357,11 @@ class Wrapper
 
         $callback = $config['count-existing'];
         $instance = \Controller::importStatic($callback[0]);
-        $existing = $instance->$callback[1]($record, $wrapper);
+        $existing = $instance->{$callback[1]}($record, $wrapper);
 
         $callback = $config['count-required'];
         $instance = \Controller::importStatic($callback[0]);
-        $required = $instance->$callback[1]($record, $wrapper);
+        $required = $instance->{$callback[1]}($record, $wrapper);
 
         if ($existing < $required) {
             if ($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR)) {

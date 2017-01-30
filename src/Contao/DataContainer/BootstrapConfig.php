@@ -347,7 +347,7 @@ class BootstrapConfig extends \Backend
 
             foreach ($callbacks as $callback) {
                 $this->import($callback[0]);
-                $published = $this->$callback[0]->$callback[1]($published, $this);
+                $published = $this->{$callback[0]}->{$callback[1]}($published, $this);
             }
         }
 
