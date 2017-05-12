@@ -25,10 +25,12 @@
         "doctrine/doctrine-bundle": "~1.6"
     },
     "require-dev": {
-        "netzmacht/contao-build-tools": "~1.1"
+        "netzmacht/contao-build-tools": "~1.1",
+        "contao/manager-plugin": "^2.0"
     },
     "conflict": {
-        "netzmacht/contao-bootstrap": "*"
+        "netzmacht/contao-bootstrap": "*",
+        "contao/manager-plugin": "<2.0 || >=3.0"
     },
     "suggest": {
         "twbs/bootstrap": "Official Bootstrap package",
