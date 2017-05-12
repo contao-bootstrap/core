@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package    Website
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @filesource
- *
+ * @package   contao-bootstrap
+ * @author    David Molineus <david.molineus@netzmacht.de>
+ * @license   LGPL 3+
+ * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
 namespace ContaoBootstrap\Core\ContaoManager;
