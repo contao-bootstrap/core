@@ -22,6 +22,9 @@ use ContaoBootstrap\Core\ContaoBootstrapCoreBundle;
  */
 class Plugin implements BundlePluginInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getBundles(ParserInterface $parser)
     {
         $bundleConfig = BundleConfig::create(ContaoBootstrapCoreBundle::class)
