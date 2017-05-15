@@ -15,15 +15,6 @@ services:
       - "@contao_bootstrap.config"
       - []
 
-  contao_bootstrap.config.types:
-    class: ContaoBootstrap\Core\Config\TypeFactory
-    factory: ["@contao_bootstrap.config.type_factory", createAll]
-
-  contao_bootstrap.config.type_factory:
-    class: ContaoBootstrap\Core\Config\TypeFactory
-    arguments:
-      - "@contao_bootstrap.config"
-
   contao_bootstrap.view.template_modifier:
     class: ContaoBootstrap\Core\View\Template\ModifierChain
     arguments:
