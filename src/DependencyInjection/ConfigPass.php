@@ -43,7 +43,6 @@ class ConfigPass implements CompilerPass
     {
         $config = [];
 
-        // Todo: Is there a more perfomant way to collect the data?
         foreach ($container->getParameter('kernel.bundles') as $bundleClass) {
             $refClass   = new \ReflectionClass($bundleClass);
             $bundleDir  = dirname($refClass->getFileName());
