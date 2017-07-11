@@ -1,8 +1,0 @@
-services:
-  contao_bootstrap.core.config_subscriber:
-    class: ContaoBootstrap\Core\Subscriber\ConfigSubscriber
-    arguments:
-      - "@contao_bootstrap.config.type_manager"
-      - "@database_connection"
-    tags:
-      - { name: kernel.event_subscriber }

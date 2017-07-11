@@ -14,10 +14,10 @@ $GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'ContaoBootstrap\Core\Config\Mode
 $GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';
 
 // Hooks
-$GLOBALS['TL_HOOKS']['initializeSystem'][]      = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'initializeSystem'];
-$GLOBALS['TL_HOOKS']['getPageLayout'][]         = ['ContaoBootstrap\Core\Subscriber\HookSubscriber', 'initializeLayout'];
-$GLOBALS['TL_HOOKS']['parseTemplate'][]         = ['ContaoBootstrap\Core\Subscriber\TemplateParseSubscriber', 'prepare'];
-$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['ContaoBootstrap\Core\Subscriber\TemplateParseSubscriber', 'parse'];
+$GLOBALS['TL_HOOKS']['initializeSystem'][]      = ['contao_bootstrap.core.listener.hook_subscriber', 'initializeSystem'];
+$GLOBALS['TL_HOOKS']['getPageLayout'][]         = ['contao_bootstrap.core.listener.hook_subscriber', 'initializeLayout'];
+$GLOBALS['TL_HOOKS']['parseTemplate'][]         = ['contao_bootstrap.core.listener.parse_template', 'prepare'];
+$GLOBALS['TL_HOOKS']['parseFrontendTemplate'][] = ['contao_bootstrap.core.listener.parse_template', 'parse'];
 
 if(TL_MODE == 'BE') {
     // Add backend stylesheet

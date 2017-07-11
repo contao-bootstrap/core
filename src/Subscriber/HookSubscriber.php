@@ -12,7 +12,6 @@ namespace ContaoBootstrap\Core\Subscriber;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
 use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
-use ContaoBootstrap\Core\Event\ReplaceInsertTagsEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -39,14 +38,15 @@ class HookSubscriber
     /**
      * Construct.
      *
+     * @param EventDispatcherInterface $eventDispatcher The event dispatcher.
+     * @param Environment              $environment     The bootstrap environment.
+     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function __construct()
+    public function __construct(EventDispatcherInterface $eventDispatcher, Environment $environment)
     {
-        $container = \Controller::getContainer();
-
-        $this->eventDispatcher = $container->get('event_dispatcher');
-        $this->environment     = $container->get('contao_bootstrap.environment');
+        $this->eventDispatcher = $eventDispatcher;
+        $this->environment     = $environment;
     }
 
     /**

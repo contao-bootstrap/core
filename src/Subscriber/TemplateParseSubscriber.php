@@ -19,7 +19,7 @@ use ContaoBootstrap\Core\View\Template\Modifier;
 class TemplateParseSubscriber
 {
     /**
-     * Template modifier..
+     * Template modifier.
      *
      * @var Modifier
      */
@@ -27,11 +27,12 @@ class TemplateParseSubscriber
 
     /**
      * Modifier constructor.
+     *
+     * @param Modifier $modifier Template modifier.
      */
-    public function __construct()
+    public function __construct(Modifier $modifier)
     {
-        // TODO: Use Dependency injection.
-        $this->modifier = \Controller::getContainer()->get('contao_bootstrap.view.template_modifier');
+        $this->modifier = $modifier;
     }
 
     /**

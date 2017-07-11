@@ -1,0 +1,19 @@
+services:
+  contao_bootstrap.core.config_subscriber:
+    class: ContaoBootstrap\Core\Subscriber\ConfigSubscriber
+    arguments:
+      - "@contao_bootstrap.config.type_manager"
+      - "@database_connection"
+    tags:
+      - { name: kernel.event_subscriber }
+
+  contao_bootstrap.core.listener.parse_template:
+    class: ContaoBootstrap\Core\Subscriber\TemplateParseSubscriber
+    arguments:
+      - '@contao_bootstrap.view.template_modifier'
+
+  contao_bootstrap.core.listener.hook_subscriber:
+    class: ContaoBootstrap\Core\Subscriber\HookSubscriber
+    arguments:
+      - '@event_dispatcher'
+      - '@contao_bootstrap.environment'
