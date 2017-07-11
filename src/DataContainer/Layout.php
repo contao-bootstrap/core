@@ -30,11 +30,12 @@ class Layout
 
     /**
      * Settings constructor.
+     *
+     * @param Config $config
      */
-    public function __construct()
+    public function __construct(Config $config)
     {
-        // TODO: Use Dependency injection
-        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
+        $this->config = $config;
     }
 
     /**

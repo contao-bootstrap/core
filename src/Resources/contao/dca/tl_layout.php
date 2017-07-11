@@ -11,7 +11,7 @@
  * Config
  */
 $GLOBALS['TL_DCA']['tl_layout']['config']['palettes_callback'][] = array(
-    'ContaoBootstrap\Core\DataContainer\Layout',
+    'contao_bootstrap.dca.layout',
     'generatePalette'
 );
 

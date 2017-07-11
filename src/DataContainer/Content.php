@@ -28,11 +28,12 @@ class Content
 
     /**
      * Content constructor.
+     *
+     * @param Environment $environment Bootstrap environment.
      */
-    public function __construct()
+    public function __construct(Environment $environment)
     {
-        // TODO: Use Dependency injection.
-        $this->environment = \Controller::getContainer()->get('contao_bootstrap.environment');
+        $this->environment = $environment;
     }
 
     /**

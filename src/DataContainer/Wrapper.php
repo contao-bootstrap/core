@@ -45,11 +45,12 @@ class Wrapper
 
     /**
      * Settings constructor.
+     *
+     * @param Config $config Bootstrap config.
      */
-    public function __construct()
+    public function __construct(Config $config)
     {
-        // TODO: Use Dependency injection
-        $this->config = \Controller::getContainer()->get('contao_bootstrap.config');
+        $this->config = $config;
     }
 
     /**

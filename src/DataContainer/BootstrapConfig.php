@@ -13,7 +13,7 @@ use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\TypeManager;
 use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\GetMultipleConfigNamesEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 /**
  * Class BootstrapConfig is used for the bootstrap config.
@@ -25,7 +25,7 @@ class BootstrapConfig
     /**
      * The event dispatcher.
      *
-     * @var EventDispatcherInterface
+     * @var EventDispatcher
      */
     private $eventDispatcher;
 
@@ -47,17 +47,17 @@ class BootstrapConfig
      * Construct.
      *
      * @SuppressWarnings(PHPMD.Superglobals)
+     * @param EventDispatcher $eventDispatcher Event dispatcher.
+     * @param TypeManager     $typeManager     Config type manager.
+     * @param Config          $config          Bootstrap config.
      */
-    public function __construct()
+    public function __construct(EventDispatcher $eventDispatcher, TypeManager $typeManager, Config $config)
     {
-        // TODO: Use dependency injection.
-        $container = \Controller::getContainer();
-
-        $this->eventDispatcher = $container->get('event_dispatcher');
-        $this->typeManager     = $container->get('contao_bootstrap.config.type_manager');
-        $this->config          = $container->get('contao_bootstrap.config');
-
         \Controller::loadLanguageFile('bootstrap_config_types');
+
+        $this->eventDispatcher = $eventDispatcher;
+        $this->typeManager     = $typeManager;
+        $this->config          = $config;
     }
 
     /**

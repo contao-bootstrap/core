@@ -2,20 +2,42 @@ services:
   contao_bootstrap.environment:
     class: ContaoBootstrap\Core\Environment
     arguments:
-      - "@contao_bootstrap.config"
+      - '@contao_bootstrap.config'
 
   contao_bootstrap.config:
     class: ContaoBootstrap\Core\Config\ArrayConfig
     arguments:
-      - "%contao_bootstrap.config%"
+      - '%contao_bootstrap.config%'
 
   contao_bootstrap.config.type_manager:
     class: ContaoBootstrap\Core\Config\TypeManager
     arguments:
-      - "@contao_bootstrap.config"
+      - '@contao_bootstrap.config'
       - []
 
   contao_bootstrap.view.template_modifier:
     class: ContaoBootstrap\Core\View\Template\ModifierChain
     arguments:
       - []
+
+  contao_bootstrap.dca.bootstrap_config:
+    class: ContaoBootstrap\Core\DataContainer\BootstrapConfig
+    arguments:
+      - '@event_dispatcher'
+      - '@contao_bootstrap.config.type_manager'
+      - '@contao_bootstrap.config'
+
+  contao_bootstrap.dca.content:
+    class: ContaoBootstrap\Core\DataContainer\Content
+    arguments:
+      - '@contao_bootstrap.environment'
+
+  contao_bootstrap.dca.layout:
+    class: ContaoBootstrap\Core\DataContainer\Layout
+    arguments:
+      - '@contao_bootstrap.config'
+
+  contao_boostrap.dca.wrapper:
+    class: ContaoBootstrap\Core\DataContainer\Wrapper
+    arguments:
+      - '@contao_bootstrap.config'
