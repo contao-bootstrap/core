@@ -20,24 +20,24 @@ services:
     arguments:
       - []
 
-  contao_bootstrap.dca.bootstrap_config:
+  contao_bootstrap.core.dca.bootstrap_config:
     class: ContaoBootstrap\Core\DataContainer\BootstrapConfig
     arguments:
       - '@event_dispatcher'
       - '@contao_bootstrap.config.type_manager'
       - '@contao_bootstrap.config'
 
-  contao_bootstrap.dca.content:
+  contao_bootstrap.core.dca.content:
     class: ContaoBootstrap\Core\DataContainer\Content
     arguments:
       - '@contao_bootstrap.environment'
 
-  contao_bootstrap.dca.layout:
+  contao_bootstrap.core.dca.layout:
     class: ContaoBootstrap\Core\DataContainer\Layout
     arguments:
       - '@contao_bootstrap.config'
 
-  contao_boostrap.dca.wrapper:
+  contao_boostrap.core.dca.wrapper:
     class: ContaoBootstrap\Core\DataContainer\Wrapper
     arguments:
       - '@contao_bootstrap.config'
