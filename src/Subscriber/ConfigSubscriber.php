@@ -67,7 +67,7 @@ class ConfigSubscriber implements EventSubscriberInterface
      */
     public function loadGlobalConfig()
     {
-        if (!$this->connection->getSchemaManager()->tablesExist('tl_bootstrap_config')) {
+        if (!$this->connection->getSchemaManager()->tablesExist(['tl_bootstrap_config'])) {
             return;
         }
 
