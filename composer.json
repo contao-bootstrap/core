@@ -21,7 +21,7 @@
     "require":{
         "php":">=5.6.0",
         "contao/core-bundle":"^4.3",
-        "contao-community-alliance/meta-palettes": "~1.10",
+        "contao-community-alliance/meta-palettes": "^1.10.1",
         "doctrine/doctrine-bundle": "~1.6"
     },
     "require-dev": {
