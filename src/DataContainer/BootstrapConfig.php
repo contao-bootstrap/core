@@ -9,10 +9,22 @@
 
 namespace ContaoBootstrap\Core\DataContainer;
 
+use Contao\Backend;
+use Contao\BackendUser;
+use Contao\Controller;
+use Contao\Database;
+use Contao\Database\Result;
+use Contao\DataContainer;
+use Contao\Image;
+use Contao\Input;
+use Contao\Message;
+use Contao\Versions;
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\TypeManager;
 use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 use ContaoBootstrap\Core\Event\GetMultipleConfigNamesEvent;
+use Exception;
+use InvalidArgumentException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 /**
@@ -46,14 +58,15 @@ class BootstrapConfig
     /**
      * Construct.
      *
-     * @SuppressWarnings(PHPMD.Superglobals)
      * @param EventDispatcher $eventDispatcher Event dispatcher.
      * @param TypeManager     $typeManager     Config type manager.
      * @param Config          $config          Bootstrap config.
+     *
+     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function __construct(EventDispatcher $eventDispatcher, TypeManager $typeManager, Config $config)
     {
-        \Controller::loadLanguageFile('bootstrap_config_types');
+        Controller::loadLanguageFile('bootstrap_config_types');
 
         $this->eventDispatcher = $eventDispatcher;
         $this->typeManager     = $typeManager;
@@ -69,7 +82,7 @@ class BootstrapConfig
      */
     public function addNameToPalette()
     {
-        if (\Input::get('act') == 'edit') {
+        if (Input::get('act') == 'edit') {
             $model = BootstrapConfigModel::findByPk(\Input::get('id'));
 
             if ($model && $model->type && $this->typeManager->hasType($model->type)) {
@@ -89,11 +102,11 @@ class BootstrapConfig
     /**
      * Get all types.
      *
-     * @param \DataContainer $dataContainer Data container driver.
+     * @param DataContainer $dataContainer Data container driver.
      *
      * @return array
      */
-    public function getTypes(\DataContainer $dataContainer)
+    public function getTypes(DataContainer $dataContainer)
     {
         $options = array();
 
@@ -115,15 +128,15 @@ class BootstrapConfig
     /**
      * Get config names.
      *
-     * @param \DataContainer $dataContainer Data container driver.
+     * @param DataContainer $dataContainer Data container driver.
      *
      * @return array
      */
-    public function getNames(\DataContainer $dataContainer)
+    public function getNames(DataContainer $dataContainer)
     {
         $options = array();
 
-        if (!$dataContainer->activeRecord) {
+        if (!$dataContainer->activeRecord instanceof Result) {
             return $options;
         }
 
@@ -139,7 +152,7 @@ class BootstrapConfig
             $type = $this->typeManager->getType($dataContainer->activeRecord->type);
 
             if (!$type->isMultiple()) {
-                \Controller::redirect('main.php?act=error');
+                Controller::redirect('main.php?act=error');
             }
 
             $names = $this->typeManager->getExistingNames($dataContainer->activeRecord->type);
@@ -155,12 +168,12 @@ class BootstrapConfig
     /**
      * Import from config.
      *
-     * @param mixed          $value         The value.
-     * @param \DataContainer $dataContainer Data container driver.
+     * @param mixed         $value         The value.
+     * @param DataContainer $dataContainer Data container driver.
      *
      * @return mixed
      */
-    public function importFromConfig($value, \DataContainer $dataContainer)
+    public function importFromConfig($value, DataContainer $dataContainer)
     {
         if (!$this->typeManager->hasType($value)) {
             return $value;
@@ -189,7 +202,7 @@ class BootstrapConfig
                 $model->save();
 
                 // unset parameter was only introduced in Contao 3.3
-                \Controller::redirect(\Backend::addToUrl('override=', true, array('override')));
+                Controller::redirect(\Backend::addToUrl('override=', true, array('override')));
             }
         }
 
@@ -221,9 +234,9 @@ class BootstrapConfig
                     ? $value
                     : $GLOBALS['TL_LANG']['bootstrap_config_type'][$value];
 
-                \Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'], $name));
+                Message::addInfo(sprintf($GLOBALS['TL_LANG']['tl_bootstrap_config']['globalScopeWarning'], $name));
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Do not throw, it's just a usability notice.
         }
 
@@ -241,7 +254,7 @@ class BootstrapConfig
     public function addOverrideInformation($table, $configId)
     {
         if ($table == 'tl_bootstrap_config' && \Input::get('override')) {
-            \Database::getInstance()
+            Database::getInstance()
                 ->prepare('UPDATE tl_bootstrap_config %s WHERE id=?')
                 ->set(array('override' => true))
                 ->execute($configId);
@@ -295,19 +308,19 @@ class BootstrapConfig
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        $user = \BackendUser::getInstance();
+        $user = BackendUser::getInstance();
 
-        if (strlen(\Input::get('tid'))) {
-            $this->toggleVisibility(\Input::get('tid'), (\Input::get('state') == 0));
-            \Controller::redirect(\Backend::getReferer());
+        if (strlen(Input::get('tid'))) {
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 0));
+            Controller::redirect(\Backend::getReferer());
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
-        if (!$user->isAdmin && !$user->hasAccess('tl_bootstrap_config::published', 'alexf')) {
+        if (!$user->isAdmin && !$user->hasAccess('tl_bootstrap_config::published', ['alexf'])) {
             return '';
         }
 
-        $href .= sprintf('&amp;id=%s&amp;tid=%s&amp;state=', \Input::get('id'), $row['id']);
+        $href .= sprintf('&amp;id=%s&amp;tid=%s&amp;state=', Input::get('id'), $row['id']);
 
         if (!$row['published']) {
             $icon  = 'invisible.gif';
@@ -316,10 +329,10 @@ class BootstrapConfig
 
         return sprintf(
             '<a href="%s" title="%s" %s>%s</a> ',
-            \Backend::addToUrl($href),
+            Backend::addToUrl($href),
             specialchars($title),
             $attributes,
-            \Controller::generateImage($icon, $label)
+            Image::getHtml($icon, $label)
         );
     }
 
@@ -335,20 +348,20 @@ class BootstrapConfig
      */
     public function toggleVisibility($configId, $published)
     {
-        $user = \BackendUser::getInstance();
+        $user = BackendUser::getInstance();
 
         // Check permissions to publish
-        if (!$user->isAdmin && !$user->hasAccess('tl_bootstrap_config::published', 'alexf')) {
-            \Controller::log(
+        if (!$user->isAdmin && !$user->hasAccess('tl_bootstrap_config::published', ['alexf'])) {
+            Controller::log(
                 'Not enough permissions to show/hide record ID "'.$configId.'"',
                 'tl_bootstrap_config toggleVisibility',
                 TL_ERROR
             );
 
-            \Controller::redirect('contao/main.php?act=error');
+            Controller::redirect('contao/main.php?act=error');
         }
 
-        $versions = new \Versions('tl_bootstrap_config', $configId);
+        $versions = new Versions('tl_bootstrap_config', $configId);
         $versions->initialize();
 
         // Trigger the save_callback
@@ -356,13 +369,13 @@ class BootstrapConfig
             $callbacks = (array) $GLOBALS['TL_DCA']['tl_bootstrap_config']['fields']['published']['save_callback'];
 
             foreach ($callbacks as $callback) {
-                \Controller::importStatic($callback[0]);
+                Controller::importStatic($callback[0]);
                 $published = $this->$callback[0]->$callback[1]($published, $this);
             }
         }
 
         // Update the database
-        \Database::getInstance()
+        Database::getInstance()
             ->prepare('UPDATE tl_bootstrap_config %s WHERE id=?')
             ->set(array(
                     'tstamp'    => time(),
@@ -377,25 +390,25 @@ class BootstrapConfig
      *
      * @param string $file File name.
      *
-     * @throws \InvalidArgumentException If icon file is not valid.
+     * @throws InvalidArgumentException If icon file is not valid.
      *
      * @return string
      */
     public function guardValidIconFile($file)
     {
         if (!file_exists(TL_ROOT . '/' . $file)) {
-            throw new \InvalidArgumentException('File does not exists');
+            throw new InvalidArgumentException('File does not exists');
         }
 
         $categories = include TL_ROOT . '/' . $file;
 
         if (!is_array($categories)) {
-            throw new \InvalidArgumentException('File does not return a valid icon configuration');
+            throw new InvalidArgumentException('File does not return a valid icon configuration');
         }
 
         foreach ($categories as $icons) {
             if (!is_array($icons)) {
-                throw new \InvalidArgumentException('File does not return a valid icon configuration');
+                throw new InvalidArgumentException('File does not return a valid icon configuration');
             }
         }
 

@@ -11,8 +11,8 @@ namespace ContaoBootstrap\Core\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
 use ContaoBootstrap\Core\Config;
-use Input;
-use LayoutModel;
+use Contao\Input;
+use Contao\LayoutModel;
 
 /**
  * Class Layout is used in tl_layout.

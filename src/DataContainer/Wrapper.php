@@ -11,8 +11,15 @@
 namespace ContaoBootstrap\Core\DataContainer;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
+use Contao\ContentModel;
+use Contao\Controller;
+use Contao\Database;
+use Contao\Database\Result;
+use Contao\Input;
+use Contao\Model;
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Component\ContentElement\Wrapper\Helper;
+use Exception;
 
 /**
  * Class WrapperDataContainer handles wrapper content elements in the backend configuration.
@@ -77,7 +84,7 @@ class Wrapper
         try {
             $wrapper       = Helper::create($record);
             $this->wrapper = $wrapper;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $value;
         }
 
@@ -117,12 +124,12 @@ class Wrapper
      */
     public function delete($dataContainer)
     {
-        $model = \ContentModel::findByPk($dataContainer->id);
+        $model = ContentModel::findByPk($dataContainer->id);
 
         try {
             $wrapper       = Helper::create($model);
             $this->wrapper = $wrapper;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return;
         }
 
@@ -138,7 +145,7 @@ class Wrapper
             }
 
             if (!empty($deleteTypes)) {
-                \Database::getInstance()
+                Database::getInstance()
                     ->prepare(sprintf(
                         'DELETE FROM tl_content WHERE bootstrap_parentId=? AND type IN(\'%s\')',
                         implode('\',\'', $deleteTypes)
@@ -147,7 +154,7 @@ class Wrapper
             }
         } elseif ($wrapper->isTypeOf(Helper::TYPE_STOP)) {
             if ($this->isTrigger($wrapper->getType(), Helper::TYPE_SEPARATOR, static::TRIGGER_DELETE)) {
-                \Database::getInstance()
+                Database::getInstance()
                     ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=?')
                     ->execute(
                         $model->bootstrap_parentId,
@@ -158,7 +165,7 @@ class Wrapper
             if ($this->isTrigger($wrapper->getType(), Helper::TYPE_START, static::TRIGGER_DELETE)) {
                 $query = sprintf('DELETE FROM %s WHERE id=?', $model->getTable());
 
-                \Database::getInstance()
+                Database::getInstance()
                     ->prepare($query)
                     ->execute($model->bootstrap_parentId);
             }
@@ -179,14 +186,14 @@ class Wrapper
      */
     public function enableFixParentPalette()
     {
-        if (\Input::get('bootstrap') === 'parent' && \Input::get('act') === 'edit') {
-            $row = \ContentModel::findByPk(\Input::get('id'));
+        if (Input::get('bootstrap') === 'parent' && Input::get('act') === 'edit') {
+            $row = ContentModel::findByPk(Input::get('id'));
 
             if ($row) {
                 $GLOBALS['TL_DCA']['tl_content']['palettes'][$row->type] =
                     $GLOBALS['TL_DCA']['tl_content']['palettes']['bootstrap_parent'];
             }
-        } elseif (\Input::get('act') === 'editAll') {
+        } elseif (Input::get('act') === 'editAll') {
             $wrappers = $this->config->get('wrappers');
 
             foreach ($wrappers as $wrapper) {
@@ -211,7 +218,7 @@ class Wrapper
     public function getParents($dataContainer)
     {
         if ($dataContainer->id) {
-            $row = \ContentModel::findByPk($dataContainer->id);
+            $row = ContentModel::findByPk($dataContainer->id);
 
             if (!$row) {
                 return array();
@@ -221,8 +228,8 @@ class Wrapper
             $start  = $this->config->get('wrappers.' . $helper->getGroup() . '.start.name');
 
             if ($start) {
-                $table  = \ContentModel::getTable();
-                $result = \ContentModel::findBy(
+                $table  = ContentModel::getTable();
+                $result = ContentModel::findBy(
                     array($table . '.pid=?', $table . '.type=?', $table . '.sorting<?'),
                     array($row->pid, $start, $row->sorting),
                     array('order' => $table. '.sorting DESC')
@@ -247,15 +254,15 @@ class Wrapper
     /**
      * Create a new wrapper element.
      *
-     * @param \Model $parent  The parent element.
+     * @param Model  $parent  The parent element.
      * @param int    $sorting The sorting index.
      * @param string $type    The wrapper type.
      *
-     * @return \ContentModel
+     * @return ContentModel
      */
     protected function createElement($parent, &$sorting, $type = Helper::TYPE_SEPARATOR)
     {
-        $model = new \ContentModel();
+        $model = new ContentModel();
 
         if ($type == Helper::TYPE_START) {
             $sorting = ($sorting - 2);
@@ -307,11 +314,11 @@ class Wrapper
     /**
      * Save start type.
      *
-     * @param mixed            $value   Value to be saved.
-     * @param \Database\Result $record  Current database record.
-     * @param Helper           $wrapper Wrapper helper.
-     * @param array            $set     Current data set.
-     * @param int              $sorting Sorting index.
+     * @param mixed  $value   Value to be saved.
+     * @param Result $record  Current database record.
+     * @param Helper $wrapper Wrapper helper.
+     * @param array  $set     Current data set.
+     * @param int    $sorting Sorting index.
      *
      * @return int
      *
@@ -335,7 +342,7 @@ class Wrapper
                     $record->$name = $v;
                 }
 
-                \Database::getInstance()
+                Database::getInstance()
                     ->prepare('UPDATE tl_content %s WHERE id=?')
                     ->set($set)
                     ->execute($record->id);
@@ -347,7 +354,7 @@ class Wrapper
             } else {
                 // no parent element exists, throw error
 
-                throw new \Exception(
+                throw new Exception(
                     sprintf(
                         $GLOBALS['TL_LANG']['ERR']['wrapperStartNotExists'],
                         $GLOBALS['TL_LANG']['CTE'][$value][0] ?: $value
@@ -373,11 +380,11 @@ class Wrapper
         $config = $this->config->get(sprintf('wrappers.%s.%s', $wrapper->getGroup(), Helper::TYPE_SEPARATOR));
 
         $callback = $config['count-existing'];
-        $instance = \Controller::importStatic($callback[0]);
+        $instance = Controller::importStatic($callback[0]);
         $existing = $instance->$callback[1]($record, $wrapper);
 
         $callback = $config['count-required'];
-        $instance = \Controller::importStatic($callback[0]);
+        $instance = Controller::importStatic($callback[0]);
         $required = $instance->$callback[1]($record, $wrapper);
 
         if ($existing < $required) {
@@ -405,7 +412,7 @@ class Wrapper
                     ? $record->id
                     : $record->bootstrap_parentId;
 
-                \Database::getInstance()
+                Database::getInstance()
                     ->prepare('DELETE FROM tl_content WHERE bootstrap_parentId=? AND type=? ORDER BY sorting DESC')
                     ->limit($count)
                     ->execute($parentId, $wrapper->getTypeName(Helper::TYPE_SEPARATOR));

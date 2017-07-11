@@ -9,6 +9,9 @@
 
 namespace ContaoBootstrap\Core\Config\Model;
 
+use Contao\Controller;
+use Contao\Model;
+use Contao\Model\Collection;
 use ContaoBootstrap\Core\Config\TypeManager;
 
 /**
@@ -20,7 +23,7 @@ use ContaoBootstrap\Core\Config\TypeManager;
  * @property string type
  * @property bool   override
  */
-class BootstrapConfigModel extends \Model
+class BootstrapConfigModel extends Model
 {
     /**
      * Table name.
@@ -36,7 +39,7 @@ class BootstrapConfigModel extends \Model
      * @param array $options      Optional options.
      * @param bool  $ignoreGlobal Ignore global configurations.
      *
-     * @return \Model\Collection|null
+     * @return Collection|null
      */
     public static function findPublishedByTheme($themeId, array $options = array(), $ignoreGlobal = true)
     {
@@ -66,7 +69,7 @@ class BootstrapConfigModel extends \Model
      *
      * @param array $options Optional query options.
      *
-     * @return \Model\Collection|null
+     * @return Collection|null
      */
     public static function findGlobalPublished(array $options = array())
     {
@@ -100,7 +103,7 @@ class BootstrapConfigModel extends \Model
      */
     private static function getTypeManager()
     {
-        return \Controller::getContainer()->get('contao_bootstrap.config.type_manager');
+        return Controller::getContainer()->get('contao_bootstrap.config.type_manager');
     }
 
     /**

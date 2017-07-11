@@ -9,6 +9,7 @@
 
 namespace ContaoBootstrap\Core\Event;
 
+use Contao\Database\Result;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -23,7 +24,7 @@ class GetMultipleConfigNamesEvent extends Event
     /**
      * Config model.
      *
-     * @var \Database\Result
+     * @var Result
      */
     private $model;
 
@@ -37,7 +38,7 @@ class GetMultipleConfigNamesEvent extends Event
     /**
      * Construct.
      *
-     * @param \Database\Result $model Config model.
+     * @param Result $model Config model.
      */
     public function __construct($model)
     {
@@ -47,7 +48,7 @@ class GetMultipleConfigNamesEvent extends Event
     /**
      * Get model.
      *
-     * @return \Database\Result
+     * @return Result
      */
     public function getModel()
     {

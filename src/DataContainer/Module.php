@@ -9,6 +9,14 @@
 
 namespace ContaoBootstrap\Core\DataContainer;
 
+use Contao\BackendUser;
+use Contao\Controller;
+use Contao\Database;
+use Contao\DataContainer;
+use Contao\Image;
+use Contao\Input;
+use MultiColumnWizard;
+
 /**
  * Class Module is used for tl_module.
  *
@@ -19,19 +27,19 @@ class Module
     /**
      * Get all templates. A templatePrefix can be defined using eval.templatePrefix.
      *
-     * @param \DataContainer $dataContainer The data container driver.
+     * @param DataContainer $dataContainer The data container driver.
      *
      * @return array
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getTemplates(\DataContainer $dataContainer)
+    public function getTemplates(DataContainer $dataContainer)
     {
         $config = array();
         $prefix = '';
 
         // MCW compatibility
-        if ($dataContainer instanceof \MultiColumnWizard) {
+        if ($dataContainer instanceof MultiColumnWizard) {
             $field = $dataContainer->strField;
             $table = $dataContainer->strTable;
         } else {
@@ -53,13 +61,13 @@ class Module
     /**
      * Generate the page picker.
      *
-     * @param \DataContainer $dataContainer The data container driver.
+     * @param DataContainer $dataContainer The data container driver.
      *
      * @return string
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function pagePicker(\DataContainer $dataContainer)
+    public function pagePicker(DataContainer $dataContainer)
     {
         $template  = ' <a href="contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s" title="%s"';
         $template .= ' onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'%s\'';
@@ -67,7 +75,7 @@ class Module
 
         return sprintf(
             $template,
-            \Input::get('do'),
+            Input::get('do'),
             $dataContainer->table,
             $dataContainer->field,
             str_replace(array('{{link_url::', '}}'), '', $dataContainer->value),
@@ -75,7 +83,7 @@ class Module
             specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])),
             $dataContainer->field,
             $dataContainer->field . ((\Input::get('act') == 'editAll') ? '_' . $dataContainer->id : ''),
-            \Image::getHtml(
+            Image::getHtml(
                 'pickpage.gif',
                 $GLOBALS['TL_LANG']['MSC']['pagepicker'],
                 'style="vertical-align:top;cursor:pointer"'
@@ -92,20 +100,20 @@ class Module
      */
     public function getAllArticles()
     {
-        $user     = \BackendUser::getInstance();
+        $user     = BackendUser::getInstance();
         $pids     = array();
         $articles = array();
 
         // Limit pages to the user's pagemounts
         if ($user->isAdmin) {
-            $objArticle = \Database::getInstance()->execute(
+            $objArticle = Database::getInstance()->execute(
                 'SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent FROM tl_article a
                 LEFT JOIN tl_page p ON p.id=a.pid ORDER BY parent, a.sorting'
             );
         } else {
             foreach ($user->pagemounts as $id) {
                 $pids[] = $id;
-                $pids   = array_merge($pids, \Database::getInstance()->getChildRecords($id, 'tl_page'));
+                $pids   = array_merge($pids, Database::getInstance()->getChildRecords($id, 'tl_page'));
             }
 
             if (empty($pids)) {
@@ -114,7 +122,7 @@ class Module
 
             $pids = implode(',', array_map('intval', array_unique($pids)));
 
-            $objArticle = \Database::getInstance()->execute(
+            $objArticle = Database::getInstance()->execute(
                 'SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent
                 FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid WHERE a.pid IN(' . $pids . ')
                 ORDER BY parent, a.sorting'
@@ -123,7 +131,7 @@ class Module
 
         // Edit the result
         if ($objArticle->numRows) {
-            \Controller::loadLanguageFile('tl_article');
+            Controller::loadLanguageFile('tl_article');
 
             while ($objArticle->next()) {
                 $key                             = $objArticle->parent . ' (ID ' . $objArticle->pid . ')';
@@ -146,14 +154,14 @@ class Module
         $modules = array();
         $query   = 'SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id';
 
-        if (\Input::get('table') == 'tl_module' && \Input::get('act') == 'edit') {
+        if (Input::get('table') == 'tl_module' && \Input::get('act') == 'edit') {
             $query .= ' WHERE m.id != ?';
         }
 
         $query .= ' ORDER BY t.name, m.name';
-        $result = \Database::getInstance()
+        $result = Database::getInstance()
             ->prepare($query)
-            ->execute(\Input::get('id'));
+            ->execute(Input::get('id'));
 
         while ($result->next()) {
             $modules[$result->theme][$result->id] = $result->name . ' (ID ' . $result->id . ')';
