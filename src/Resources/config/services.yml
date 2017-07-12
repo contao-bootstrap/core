@@ -37,7 +37,7 @@ services:
     arguments:
       - '@contao_bootstrap.config'
 
-  contao_boostrap.core.dca.wrapper:
+  contao_bootstrap.core.dca.wrapper:
     class: ContaoBootstrap\Core\DataContainer\Wrapper
     arguments:
       - '@contao_bootstrap.config'
