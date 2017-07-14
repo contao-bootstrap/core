@@ -21,7 +21,7 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @package ContaoBootstrap\Core\DependencyInjection
  */
-class ConfigPass implements CompilerPass
+final class ConfigPass implements CompilerPass
 {
     /**
      * {@inheritdoc}
@@ -39,7 +39,7 @@ class ConfigPass implements CompilerPass
      *
      * @return void
      */
-    protected function loadConfigFromBundles(ContainerBuilder $container)
+    private function loadConfigFromBundles(ContainerBuilder $container)
     {
         $config = [];
 
