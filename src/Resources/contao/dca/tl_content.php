@@ -7,11 +7,6 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
-$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array(
-    'contao_bootstrap.core.dca.wrapper', 'enableFixParentPalette',
-    'contao_bootstrap.core.dca.content', 'setIconTemplate',
-);
-
 // define default bootstrap palette
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_default_'] = array
 (
@@ -33,32 +28,6 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_empty_'] = array
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bootstrap_parent extends _bootstrap_empty_'] = array
 (
     '+type' => array('bootstrap_parentId'),
-);
-
-// wrapper elements
-$GLOBALS['TL_DCA']['tl_content']['config']['ondelete_callback'][]     = array(
-    'contao_bootstrap.core.dca.wrapper',
-    'delete'
-);
-
-$GLOBALS['TL_DCA']['tl_content']['fields']['type']['save_callback'][] = array(
-    'contao_bootstrap.core.dca.wrapper',
-    'save'
-);
-
-
-// fields
-$GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_parentId'] = array
-(
-    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_parentId'],
-    'inputType'               => 'select',
-    'options_callback'        => array('contao_bootstrap.core.dca.wrapper', 'getParents'),
-    'eval'                    => array(
-        'includeBlankOption' => true,
-        'mandatory'          => true,
-        'doNotCopy'          => true,
-    ),
-    'sql'                     => "int(10) unsigned NULL",
 );
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array

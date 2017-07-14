@@ -37,10 +37,5 @@ services:
     arguments:
       - '@contao_bootstrap.config'
 
-  contao_bootstrap.core.dca.wrapper:
-    class: ContaoBootstrap\Core\DataContainer\Wrapper
-    arguments:
-      - '@contao_bootstrap.config'
-
   contao_bootstrap.core.helper.color_rotate:
     class: ContaoBootstrap\Core\Helper\ColorRotate
