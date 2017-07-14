@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @package ContaoBootstrap\Core\DependencyInjection
  */
-class TemplateModifierPass implements CompilerPassInterface
+final class TemplateModifierPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}

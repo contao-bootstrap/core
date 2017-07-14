@@ -17,7 +17,7 @@ use ContaoBootstrap\Core\Environment;
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-class Content
+final class Content
 {
     /**
      * Bootstrap environment.

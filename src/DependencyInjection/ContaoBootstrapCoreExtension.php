@@ -20,7 +20,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * @package DependencyInjection
  */
-class ContaoBootstrapCoreExtension extends Extension
+final class ContaoBootstrapCoreExtension extends Extension
 {
     /**
      * {@inheritdoc}

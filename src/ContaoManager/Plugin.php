@@ -20,7 +20,7 @@ use ContaoBootstrap\Core\ContaoBootstrapCoreBundle;
  *
  * @package ContaoBootstrap\Core\ContaoManager.
  */
-class Plugin implements BundlePluginInterface
+final class Plugin implements BundlePluginInterface
 {
     /**
      * {@inheritdoc}

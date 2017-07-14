@@ -19,7 +19,7 @@ use Contao\LayoutModel;
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-class Layout
+final class Layout
 {
     /**
      * Bootstrap config.

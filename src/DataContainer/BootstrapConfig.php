@@ -32,7 +32,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-class BootstrapConfig
+final class BootstrapConfig
 {
     /**
      * The event dispatcher.

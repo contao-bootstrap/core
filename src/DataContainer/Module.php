@@ -22,7 +22,7 @@ use MultiColumnWizard;
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-class Module
+final class Module
 {
     /**
      * Get all templates. A templatePrefix can be defined using eval.templatePrefix.
