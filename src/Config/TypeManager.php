@@ -75,7 +75,12 @@ class TypeManager
      */
     public function getNames()
     {
-        return array_keys($this->types);
+        return array_map(
+            function (Type $type) {
+                return $type->getName();
+            },
+            $this->types
+        );
     }
 
     /**
@@ -89,7 +94,9 @@ class TypeManager
     {
         $types = array();
 
-        foreach ($this->types as $name => $type) {
+        foreach ($this->types as $type) {
+            $name = $type->getName();
+
             if ($type->isMultiple()) {
                 if ($type->isNameEditable()) {
                     $types[$name] = $type;
@@ -128,7 +135,12 @@ class TypeManager
         );
 
         if ($keysOnly) {
-            return array_keys($types);
+            return array_map(
+                function (Type $type) {
+                    return $type->getName();
+                },
+                $types
+            );
         }
 
         return $types;
@@ -185,11 +197,13 @@ class TypeManager
      */
     public function getType($typeName)
     {
-        if (!$this->hasType($typeName)) {
-            throw new \InvalidArgumentException(sprintf('Type "%s" does not exists', $typeName));
+        foreach ($this->types as $type) {
+            if ($type->getName() === $typeName) {
+                return $type;
+            }
         }
 
-        return $this->types[$typeName];
+        throw new \InvalidArgumentException(sprintf('Type "%s" does not exists', $typeName));
     }
 
     /**
@@ -201,7 +215,13 @@ class TypeManager
      */
     public function hasType($typeName)
     {
-        return isset($this->types[$typeName]);
+        foreach ($this->types as $type) {
+            if ($type->getName() === $typeName) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

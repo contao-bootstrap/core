@@ -20,6 +20,13 @@ use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
 interface Type
 {
     /**
+     * Get the name of the config.
+     *
+     * @return int
+     */
+    public function getName();
+
+    /**
      * Build config from model.
      *
      * @param Config               $config Bootstrap config.
