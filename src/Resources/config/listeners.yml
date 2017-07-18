@@ -2,7 +2,6 @@ services:
   contao_bootstrap.core.config_subscriber:
     class: ContaoBootstrap\Core\Subscriber\ConfigSubscriber
     arguments:
-      - '@contao_bootstrap.config.type_manager'
       - '@database_connection'
       - '@contao_bootstrap.config'
     tags:
