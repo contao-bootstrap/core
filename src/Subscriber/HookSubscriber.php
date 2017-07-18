@@ -10,8 +10,8 @@
 namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Environment;
-use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
-use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
+use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
+use ContaoBootstrap\Core\Message\Command\InitializeLayout;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -66,7 +66,7 @@ class HookSubscriber
      */
     protected function initializeEnvironment()
     {
-        $event = new InitializeEnvironmentEvent($this->environment);
+        $event = new InitializeEnvironment($this->environment);
         $this->eventDispatcher->dispatch($event::NAME, $event);
     }
 
@@ -84,7 +84,7 @@ class HookSubscriber
         $environment->setLayout($layout);
         $environment->setEnabled($layout->layoutType == 'bootstrap');
 
-        $event = new InitializeLayoutEvent($environment, $layout, $page);
+        $event = new InitializeLayout($environment, $layout, $page);
         $this->eventDispatcher->dispatch($event::NAME, $event);
     }
 }

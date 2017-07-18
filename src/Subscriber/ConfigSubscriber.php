@@ -11,7 +11,7 @@ namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Environment\ApplicationContext;
-use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
+use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -55,19 +55,19 @@ class ConfigSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            InitializeEnvironmentEvent::NAME => 'enterApplicationContext',
-            BuildContextConfig::NAME => 'buildContextConfig'
+            InitializeEnvironment::NAME => 'enterApplicationContext',
+            BuildContextConfig::NAME    => 'buildContextConfig'
         ];
     }
 
     /**
      * Initialize environment.
      *
-     * @param InitializeEnvironmentEvent $event The event.
+     * @param InitializeEnvironment $event The event.
      *
      * @return void
      */
-    public function enterApplicationContext(InitializeEnvironmentEvent $event)
+    public function enterApplicationContext(InitializeEnvironment $event)
     {
         $event->getEnvironment()->enterContext(ApplicationContext::create());
     }

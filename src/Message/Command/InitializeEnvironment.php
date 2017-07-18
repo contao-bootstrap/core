@@ -7,7 +7,7 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\Event;
+namespace ContaoBootstrap\Core\Message\Command;
 
 use ContaoBootstrap\Core\Environment;
 use Symfony\Component\EventDispatcher\Event;
@@ -17,9 +17,9 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package ContaoBootstrap\Core\Event
  */
-final class InitializeEnvironmentEvent extends Event
+final class InitializeEnvironment extends Event
 {
-    const NAME = 'bootstrap.initialize-environment';
+    const NAME = 'contao_bootstrap.core.initialize_environment';
 
     /**
      * Bootstrap environment.
