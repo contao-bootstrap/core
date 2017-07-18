@@ -85,7 +85,7 @@ class ColorRotate
      */
     private function rotateColor()
     {
-        $color = $this->convertHSVtoRGB($this->rotatingColor, $this->saturation, $this->value);
+        $color                = $this->convertHSVtoRGB($this->rotatingColor, $this->saturation, $this->value);
         $this->rotatingColor += .3;
 
         if ($this->rotatingColor > 1) {
@@ -98,27 +98,30 @@ class ColorRotate
     /**
      * Convert hsv value to rgb value.
      *
-     * @see http://stackoverflow.com/a/3597447
-     *
-     * @param integer $saturation Saturation.
-     * @param double  $value      Color value.
+     * @param float $hue        Hue.
+     * @param float $saturation Saturation.
+     * @param float $value      Color value.
      *
      * @return string
+     * @see    http://stackoverflow.com/a/3597447
      *
      * @SuppressWarnings(PHPMD.ShortVariable)
      */
     private function convertHSVtoRGB($hue, $saturation, $value)
     {
-        //1
+        // First
         $hue *= 6;
-        //2
+
+        // Second
         $i = floor($hue);
-        $f = $hue - $i;
-        //3
-        $m = $value * (1 - $saturation);
-        $n = $value * (1 - $saturation * $f);
-        $k = $value * (1 - $saturation * (1 - $f));
-        //4
+        $f = ($hue - $i);
+
+        // Third
+        $m = ($value * (1 - $saturation));
+        $n = ($value * (1 - $saturation * $f));
+        $k = ($value * (1 - $saturation * (1 - $f)));
+
+        // Forth
         switch ($i) {
             case 0:
                 list($red, $green, $blue) = array($value, $k, $m);
@@ -136,12 +139,13 @@ class ColorRotate
                 list($red, $green, $blue) = array($k, $m, $value);
                 break;
             case 5:
-            case 6: //for when $H=1 is given
+            case 6:
+                // for when $H=1 is given
             default:
                 list($red, $green, $blue) = array($value, $m, $n);
                 break;
         }
 
-        return sprintf('#%02x%02x%02x', $red * 255, $green * 255, $blue * 255);
+        return sprintf('#%02x%02x%02x', ($red * 255), ($green * 255), ($blue * 255));
     }
 }

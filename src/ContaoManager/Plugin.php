@@ -16,7 +16,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use ContaoBootstrap\Core\ContaoBootstrapCoreBundle;
 
 /**
- * Class Plugin
+ * Contao manager plugin.
  *
  * @package ContaoBootstrap\Core\ContaoManager.
  */
