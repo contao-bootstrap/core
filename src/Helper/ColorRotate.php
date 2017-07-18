@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package    Website
+ * @package    contao-bootstrap
  * @author     David Molineus <david.molineus@netzmacht.de>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
  * @filesource
@@ -104,39 +104,41 @@ class ColorRotate
      * @param double  $value      Color value.
      *
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
      */
     private function convertHSVtoRGB($hue, $saturation, $value)
     {
         //1
         $hue *= 6;
         //2
-        $I = floor($hue);
-        $F = $hue - $I;
+        $i = floor($hue);
+        $f = $hue - $i;
         //3
-        $M = $value * (1 - $saturation);
-        $N = $value * (1 - $saturation * $F);
-        $K = $value * (1 - $saturation * (1 - $F));
+        $m = $value * (1 - $saturation);
+        $n = $value * (1 - $saturation * $f);
+        $k = $value * (1 - $saturation * (1 - $f));
         //4
-        switch ($I) {
+        switch ($i) {
             case 0:
-                list($red, $green, $blue) = array($value, $K, $M);
+                list($red, $green, $blue) = array($value, $k, $m);
                 break;
             case 1:
-                list($red, $green, $blue) = array($N, $value, $M);
+                list($red, $green, $blue) = array($n, $value, $m);
                 break;
             case 2:
-                list($red, $green, $blue) = array($M, $value, $K);
+                list($red, $green, $blue) = array($m, $value, $k);
                 break;
             case 3:
-                list($red, $green, $blue) = array($M, $N, $value);
+                list($red, $green, $blue) = array($m, $n, $value);
                 break;
             case 4:
-                list($red, $green, $blue) = array($K, $M, $value);
+                list($red, $green, $blue) = array($k, $m, $value);
                 break;
             case 5:
             case 6: //for when $H=1 is given
             default:
-                list($red, $green, $blue) = array($value, $M, $N);
+                list($red, $green, $blue) = array($value, $m, $n);
                 break;
         }
 
