@@ -2,30 +2,17 @@ services:
   contao_bootstrap.environment:
     class: ContaoBootstrap\Core\Environment
     arguments:
-      - '@contao_bootstrap.config'
+      - '@event_dispatcher'
 
   contao_bootstrap.config:
     class: ContaoBootstrap\Core\Config\ArrayConfig
     arguments:
       - '%contao_bootstrap.config%'
 
-  contao_bootstrap.config.type_manager:
-    class: ContaoBootstrap\Core\Config\TypeManager
-    arguments:
-      - '@contao_bootstrap.config'
-      - []
-
   contao_bootstrap.view.template_modifier:
     class: ContaoBootstrap\Core\View\Template\ModifierChain
     arguments:
       - []
-
-  contao_bootstrap.core.dca.bootstrap_config:
-    class: ContaoBootstrap\Core\DataContainer\BootstrapConfig
-    arguments:
-      - '@event_dispatcher'
-      - '@contao_bootstrap.config.type_manager'
-      - '@contao_bootstrap.config'
 
   contao_bootstrap.core.dca.content:
     class: ContaoBootstrap\Core\DataContainer\Content
@@ -35,7 +22,7 @@ services:
   contao_bootstrap.core.dca.layout:
     class: ContaoBootstrap\Core\DataContainer\Layout
     arguments:
-      - '@contao_bootstrap.config'
+      - '@contao_bootstrap.environment'
 
   contao_bootstrap.core.helper.color_rotate:
     class: ContaoBootstrap\Core\Helper\ColorRotate

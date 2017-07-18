@@ -17,7 +17,7 @@ use ContaoBootstrap\Core\Util\ArrayUtil;
  *
  * @package ContaoBootstrap
  */
-class ArrayConfig implements Config
+final class ArrayConfig implements Config
 {
     /**
      * Config values.
@@ -58,50 +58,6 @@ class ArrayConfig implements Config
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value)
-    {
-        $chunks = $this->path($key);
-        $name   = array_pop($chunks);
-        $config = &$this->config;
-
-        foreach ($chunks as $chunk) {
-            if (!array_key_exists($chunk, $config)) {
-                $config[$chunk] = array();
-            }
-
-            $config = &$config[$chunk];
-        }
-
-        $config[$name] = $value;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function remove($key)
-    {
-        $chunks = $this->path($key);
-        $name   = array_pop($chunks);
-        $config = &$this->config;
-
-        foreach ($chunks as $chunk) {
-            if (!array_key_exists($chunk, $config)) {
-                return $this;
-            }
-
-            $config = &$config[$chunk];
-        }
-
-        unset($config[$name]);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function has($key)
     {
         $chunks = $this->path($key);
@@ -121,18 +77,9 @@ class ArrayConfig implements Config
     /**
      * {@inheritdoc}
      */
-    public function merge(array $data, $path = null)
+    public function merge(array $data)
     {
-        if ($path) {
-            $config = (array) $this->get($path);
-            $config = ArrayUtil::merge($config, $data);
-
-            $this->set($path, $config);
-        } else {
-            $this->config = ArrayUtil::merge($this->config, $data);
-        }
-
-        return $this;
+        return new static(ArrayUtil::merge($this->config, $data));
     }
 
     /**

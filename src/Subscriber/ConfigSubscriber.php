@@ -9,10 +9,10 @@
 
 namespace ContaoBootstrap\Core\Subscriber;
 
-use ContaoBootstrap\Core\Config\TypeManager;
-use ContaoBootstrap\Core\Config\Model\BootstrapConfigModel;
+use ContaoBootstrap\Core\Config;
+use ContaoBootstrap\Core\Environment\ApplicationContext;
 use ContaoBootstrap\Core\Event\InitializeEnvironmentEvent;
-use ContaoBootstrap\Core\Event\InitializeLayoutEvent;
+use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -24,13 +24,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class ConfigSubscriber implements EventSubscriberInterface
 {
     /**
-     * Bootstrap config type manager.
-     *
-     * @var TypeManager
-     */
-    private $typeManager;
-
-    /**
      * Database connection.
      *
      * @var Connection
@@ -38,15 +31,22 @@ class ConfigSubscriber implements EventSubscriberInterface
     private $connection;
 
     /**
+     * Bootstrap application config.
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
      * ConfigSubscriber constructor.
      *
-     * @param TypeManager $typeManager Bootstrap config type manager.
-     * @param Connection  $connection  Database connection.
+     * @param Connection $connection Database connection.
+     * @param Config     $config     Bootstrap application config.
      */
-    public function __construct(TypeManager $typeManager, Connection $connection)
+    public function __construct(Connection $connection, Config $config)
     {
-        $this->typeManager = $typeManager;
-        $this->connection  = $connection;
+        $this->connection = $connection;
+        $this->config     = $config;
     }
 
     /**
@@ -54,41 +54,37 @@ class ConfigSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            InitializeEnvironmentEvent::NAME => 'loadGlobalConfig',
-            InitializeLayoutEvent::NAME      => 'loadThemeConfig',
-        );
+        return [
+            InitializeEnvironmentEvent::NAME => 'enterApplicationContext',
+            BuildContextConfig::NAME => 'buildContextConfig'
+        ];
     }
 
     /**
-     * Load global configurations from database.
+     * Initialize environment.
+     *
+     * @param InitializeEnvironmentEvent $event The event.
      *
      * @return void
      */
-    public function loadGlobalConfig()
+    public function enterApplicationContext(InitializeEnvironmentEvent $event)
     {
-        if (!$this->connection->getSchemaManager()->tablesExist(['tl_bootstrap_config'])) {
-            return;
+        $event->getEnvironment()->enterContext(ApplicationContext::create());
+    }
+
+    /**
+     * Build context config.
+     *
+     * @param BuildContextConfig $command Command.
+     *
+     * @return void
+     */
+    public function buildContextConfig(BuildContextConfig $command)
+    {
+        $context = $command->getContext();
+
+        if ($context instanceof ApplicationContext) {
+            $command->setConfig($this->config);
         }
-
-        $collection = BootstrapConfigModel::findGlobalPublished();
-        $this->typeManager->buildConfig($collection);
-    }
-
-    /**
-     * Load theme configuration from database.
-     *
-     * @param InitializeLayoutEvent $event InitializeLayout event.
-     *
-     * @return void
-     *
-     * @internal param Config $config
-     */
-    public function loadThemeConfig(InitializeLayoutEvent $event)
-    {
-        $themeId    = $event->getLayoutModel()->pid;
-        $collection = BootstrapConfigModel::findPublishedByTheme($themeId);
-
-        $this->typeManager->buildConfig($collection);
     }
 }

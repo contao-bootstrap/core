@@ -1,18 +1,19 @@
 <?php
 
 /**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2017 netzmacht creative David Molineus
+ * @package    contao-bootstrap
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @filesource
+ *
  */
 
 namespace ContaoBootstrap\Core;
 
 /**
- * Class Config.
+ * Interface Config.
  *
- * @package ContaoBootstrap
+ * @package ContaoBootstrap\Core\Config
  */
 interface Config
 {
@@ -27,25 +28,6 @@ interface Config
     public function get($key, $default = null);
 
     /**
-     * Set a config value.
-     *
-     * @param string $key   Name of the config param.
-     * @param mixed  $value The new value.
-     *
-     * @return $this
-     */
-    public function set($key, $value);
-
-    /**
-     * Remove a config param.
-     *
-     * @param string $key Name of the config param.
-     *
-     * @return $this
-     */
-    public function remove($key);
-
-    /**
      * Consider if config param exists.
      *
      * @param string $key Name of the config param.
@@ -55,12 +37,11 @@ interface Config
     public function has($key);
 
     /**
-     * Merge config values into config.
+     * Merge new configuration values and return a new instance of Config.
      *
-     * @param array $data New data.
-     * @param null  $path Optional sub path where to merge in.
+     * @param array $config Config values.
      *
-     * @return $this
+     * @return static
      */
-    public function merge(array $data, $path = null);
+    public function merge(array $config);
 }

@@ -13,6 +13,7 @@ use Bit3\Contao\MetaPalettes\MetaPalettes;
 use ContaoBootstrap\Core\Config;
 use Contao\Input;
 use Contao\LayoutModel;
+use ContaoBootstrap\Core\Environment;
 
 /**
  * Class Layout is used in tl_layout.
@@ -22,20 +23,20 @@ use Contao\LayoutModel;
 final class Layout
 {
     /**
-     * Bootstrap config.
+     * Bootstrap environment..
      *
-     * @var Config
+     * @var Environment
      */
-    private $config;
+    private $environment;
 
     /**
      * Settings constructor.
      *
-     * @param Config $config
+     * @param Environment $environment Environment.
      */
-    public function __construct(Config $config)
+    public function __construct(Environment $environment)
     {
-        $this->config = $config;
+        $this->environment = $environment;
     }
 
     /**
@@ -63,12 +64,14 @@ final class Layout
         if ($layout->layoutType == 'bootstrap') {
             $metaPalettes                             = & $GLOBALS['TL_DCA']['tl_layout']['metapalettes'];
             $metaPalettes['__base__']                 = $this->getMetaPaletteOfPalette('tl_layout');
-            $metaPalettes['default extends __base__'] = $this->config->get('layout.metapalette', array());
+            $metaPalettes['default extends __base__'] = $this->environment
+                ->getConfig()
+                ->get('layout.metapalette', array());
 
             // unset default palette. otherwise metapalettes will not render this palette
             unset($GLOBALS['TL_DCA']['tl_layout']['palettes']['default']);
 
-            $subSelectPalettes = $this->config->get('layout.metasubselectpalettes', array());
+            $subSelectPalettes = $this->environment->getConfig()->get('layout.metasubselectpalettes', array());
 
             foreach ($subSelectPalettes as $field => $meta) {
                 foreach ($meta as $value => $definition) {

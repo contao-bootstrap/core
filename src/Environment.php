@@ -9,6 +9,14 @@
 
 namespace ContaoBootstrap\Core;
 
+use ContaoBootstrap\Core\Config\ArrayConfig;
+use ContaoBootstrap\Core\Environment\Context;
+use ContaoBootstrap\Core\Environment\ApplicationContext;
+use ContaoBootstrap\Core\Exception\LeavingContextFailed;
+use ContaoBootstrap\Core\Message\Event\ContextEntered;
+use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as MessageBus;
+
 /**
  * Class Environment contain all things being provided in the bootstrap environment.
  *
@@ -38,13 +46,35 @@ class Environment
     private $layout;
 
     /**
+     * Current context.
+     *
+     * @var Context
+     */
+    private $context;
+
+    /**
+     * List of contexts.
+     *
+     * @var Context[]
+     */
+    private $contextStack;
+
+    /**
+     * MessageBus.
+     *
+     * @var MessageBus
+     */
+    private $messageBus;
+
+    /**
      * Construct.
      *
-     * @param Config  $config  Bootstrap config.
+     * @param MessageBus $messageBus Message bus.
      */
-    public function __construct(Config $config)
+    public function __construct(MessageBus $messageBus)
     {
-        $this->config  = $config;
+        $this->messageBus = $messageBus;
+        $this->config     = new ArrayConfig();
     }
 
     /**
@@ -55,6 +85,68 @@ class Environment
     public function getConfig()
     {
         return $this->config;
+    }
+
+    /**
+     * Enter a context.
+     *
+     * @param Context $context Context.
+     *
+     * @return void
+     */
+    public function enterContext(Context $context)
+    {
+        // Already in the context.
+        if ($this->context && $this->context->match($context)) {
+            return;
+        }
+
+        $this->switchContext($context, true);
+    }
+
+    /**
+     * Leave current context and enter the context which was used before.
+     *
+     * @return void
+     * @throws LeavingContextFailed When context stack is empty.
+     */
+    public function leaveContext()
+    {
+        // Get last know context which was used before current context.
+        $context = array_pop($this->contextStack);
+
+        if ($context === null) {
+            throw LeavingContextFailed::inContext($this->context);
+        }
+
+        $this->switchContext($context);
+    }
+
+    /**
+     * Switch to another context.
+     *
+     * @param Context $context            New context.
+     * @param bool    $keepCurrentInStack If true current context is added to the stack.
+     *
+     * @return void
+     */
+    private function switchContext(Context $context, $keepCurrentInStack = false)
+    {
+        $command = new BuildContextConfig($this, $context, $this->config);
+        $this->messageBus->dispatch($command::NAME, $command);
+
+        if ($command->getConfig()) {
+            $this->config = $command->getConfig();
+        }
+
+        if ($keepCurrentInStack && $this->context) {
+            $this->contextStack[] = $this->context;
+        }
+
+        $this->context = $context;
+
+        $event = new ContextEntered($this, $context);
+        $this->messageBus->dispatch($event::NAME, $event);
     }
 
     /**
