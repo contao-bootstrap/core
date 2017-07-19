@@ -107,11 +107,22 @@ class Environment
     /**
      * Leave current context and enter the context which was used before.
      *
+     * @param Context|null $currentContext Optional expected current context. Won't do anything if context not match.
+     *
      * @return void
      * @throws LeavingContextFailed When context stack is empty.
      */
-    public function leaveContext()
+    public function leaveContext($currentContext = null)
     {
+        if (!$this->context) {
+            throw LeavingContextFailed::noContext();
+        }
+
+        // Not in expected context. Just quit.
+        if ($currentContext && !$currentContext->match($this->context)) {
+            return;
+        }
+
         // Get last know context which was used before current context.
         $context = array_pop($this->contextStack);
 

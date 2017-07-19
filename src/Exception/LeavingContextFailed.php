@@ -37,4 +37,21 @@ final class LeavingContextFailed extends Exception
             $previous
         );
     }
+
+    /**
+     * Create exception for no given context.
+     *
+     * @param int            $code     Error code.
+     * @param Throwable|null $previous Previous exception.
+     *
+     * @return static
+     */
+    public static function noContext($code = 0, Throwable $previous = null)
+    {
+        return new static(
+            'Leaving context failed. Environment has no context.',
+            $code,
+            $previous
+        );
+    }
 }
