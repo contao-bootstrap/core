@@ -25,34 +25,16 @@ final class ArrayUtil
      *
      * @param array $array1   First array.
      * @param array $array2   Second array.
-     * @param bool  $distinct If false php_merge_recursive will be used.
      *
      * @return array
      */
-    public static function merge(array $array1, array $array2, bool $distinct = true): array
-    {
-        if ($distinct) {
-            return static::mergeDistinct($array1, $array2);
-        }
-
-        return array_merge_recursive($array1, $array2);
-    }
-
-    /**
-     * Merge two arrays recursively.
-     *
-     * @param array $array1 First array.
-     * @param array $array2 Second array.
-     *
-     * @return array
-     */
-    private static function mergeDistinct(array $array1, array $array2): array
+    public static function merge(array $array1, array $array2): array
     {
         $merged = $array1;
 
         foreach ($array2 as $key => &$value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = static::mergeDistinct($merged[$key], $value);
+                $merged[$key] = static::merge($merged[$key], $value);
             } elseif (is_numeric($key)) {
                 $merged[] = $value;
             } else {
