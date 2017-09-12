@@ -19,13 +19,13 @@
         "source":"https://github.com/contao-bootstrap/core"
     },
     "require":{
-        "php":">=5.6.0",
+        "php":">=7.0",
         "contao/core-bundle":"^4.4",
         "contao-community-alliance/meta-palettes": "^1.10.1",
-        "doctrine/doctrine-bundle": "~1.6"
+        "doctrine/doctrine-bundle": "~1.6",
+        "phpcq/all-tasks": "^1.2"
     },
     "require-dev": {
-        "netzmacht/contao-build-tools": "~1.1",
         "contao/manager-plugin": "^2.0"
     },
     "conflict": {

@@ -10,7 +10,6 @@
 
 namespace ContaoBootstrap\Core\View\Template;
 
-
 /**
  * AbstractPrepareModifier provides a base parse method. So you only have to add prepare method.
  *
