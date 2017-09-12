@@ -9,9 +9,9 @@
 
 namespace ContaoBootstrap\Core;
 
+use Contao\LayoutModel;
 use ContaoBootstrap\Core\Config\ArrayConfig;
 use ContaoBootstrap\Core\Environment\Context;
-use ContaoBootstrap\Core\Environment\ApplicationContext;
 use ContaoBootstrap\Core\Exception\LeavingContextFailed;
 use ContaoBootstrap\Core\Message\Event\ContextEntered;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
@@ -22,7 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as MessageBus;
  *
  * @package ContaoBootstrap\Core
  */
-class Environment
+final class Environment
 {
     /**
      * Bootstrap enabled state.
@@ -82,7 +82,7 @@ class Environment
      *
      * @return Config
      */
-    public function getConfig()
+    public function getConfig(): Config
     {
         return $this->config;
     }
@@ -94,7 +94,7 @@ class Environment
      *
      * @return void
      */
-    public function enterContext(Context $context)
+    public function enterContext(Context $context): void
     {
         // Already in the context.
         if ($this->context && $this->context->match($context)) {
@@ -112,7 +112,7 @@ class Environment
      * @return void
      * @throws LeavingContextFailed When context stack is empty.
      */
-    public function leaveContext($currentContext = null)
+    public function leaveContext($currentContext = null): void
     {
         if (!$this->context) {
             throw LeavingContextFailed::noContext();
@@ -141,7 +141,7 @@ class Environment
      *
      * @return void
      */
-    private function switchContext(Context $context, $keepCurrentInStack = false)
+    private function switchContext(Context $context, $keepCurrentInStack = false): void
     {
         $command = new BuildContextConfig($this, $context, $this->config);
         $this->messageBus->dispatch($command::NAME, $command);
@@ -165,7 +165,7 @@ class Environment
      *
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -177,7 +177,7 @@ class Environment
      *
      * @return $this
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
@@ -187,11 +187,11 @@ class Environment
     /**
      * Set the layout.
      *
-     * @param \LayoutModel $layout Page layout.
+     * @param LayoutModel $layout Page layout.
      *
      * @return $this
      */
-    public function setLayout(\LayoutModel $layout)
+    public function setLayout(LayoutModel $layout): self
     {
         $this->layout = $layout;
 
@@ -201,7 +201,7 @@ class Environment
     /**
      * Get the page layout.
      *
-     * @return \LayoutModel
+     * @return LayoutModel|null
      */
     public function getLayout()
     {

@@ -8,7 +8,11 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\View\Template;
+
+use Contao\Template;
 
 /**
  * Interface Modifier describes an template modifier which is called when a template is parsed.
@@ -24,16 +28,16 @@ interface Modifier
      *
      * @return bool
      */
-    public function supports($templateName);
+    public function supports(string $templateName): bool;
 
     /**
      * Prepare a template before parsing.
      *
-     * @param \Template $template Template.
+     * @param Template $template Template.
      *
      * @return void
      */
-    public function prepare(\Template $template);
+    public function prepare(Template $template): void;
 
     /**
      * Modify the generated output.
@@ -43,5 +47,5 @@ interface Modifier
      *
      * @return string
      */
-    public function parse($buffer, $templateName);
+    public function parse(string $buffer, string $templateName): string;
 }

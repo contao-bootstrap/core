@@ -7,10 +7,11 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Listener;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
-use ContaoBootstrap\Core\Config;
 use Contao\Input;
 use Contao\LayoutModel;
 use ContaoBootstrap\Core\Environment;
@@ -48,7 +49,7 @@ final class LayoutDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function generatePalette()
+    public function generatePalette(): void
     {
         // @codingStandardsIgnoreStart
         // TODO: How to handle editAll actions?
@@ -94,7 +95,7 @@ final class LayoutDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function getMetaPaletteOfPalette($table, $name = 'default')
+    protected function getMetaPaletteOfPalette(string $table, string $name = 'default'): array
     {
         $palette     = $GLOBALS['TL_DCA'][$table]['palettes'][$name];
         $metaPalette = array();

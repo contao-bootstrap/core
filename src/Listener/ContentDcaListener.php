@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Listener;
 
 use ContaoBootstrap\Core\Environment;
@@ -41,7 +43,7 @@ final class ContentDcaListener
      *
      * @return array
      */
-    public function getDataAttributes()
+    public function getDataAttributes(): array
     {
         return $this->environment->getConfig()->get('form.data-attributes', array());
     }

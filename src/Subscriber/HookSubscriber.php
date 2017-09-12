@@ -7,6 +7,8 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Environment;
@@ -19,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @package ContaoBootstrap\Core\Contao
  */
-class HookSubscriber
+final class HookSubscriber
 {
     /**
      * The event dispatcher.
@@ -54,7 +56,7 @@ class HookSubscriber
      *
      * @return void
      */
-    public function initializeSystem()
+    public function initializeSystem(): void
     {
         $this->initializeEnvironment();
     }
@@ -64,7 +66,7 @@ class HookSubscriber
      *
      * @return void
      */
-    protected function initializeEnvironment()
+    protected function initializeEnvironment(): void
     {
         $event = new InitializeEnvironment($this->environment);
         $this->eventDispatcher->dispatch($event::NAME, $event);
@@ -78,7 +80,7 @@ class HookSubscriber
      *
      * @return void
      */
-    public function initializeLayout(\PageModel $page, \LayoutModel $layout)
+    public function initializeLayout(\PageModel $page, \LayoutModel $layout): void
     {
         $environment = $this->environment;
         $environment->setLayout($layout);

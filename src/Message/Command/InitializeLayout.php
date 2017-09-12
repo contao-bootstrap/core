@@ -7,8 +7,12 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Message\Command;
 
+use Contao\LayoutModel;
+use Contao\PageModel;
 use ContaoBootstrap\Core\Environment;
 use Symfony\Component\EventDispatcher\Event;
 
@@ -61,7 +65,7 @@ final class InitializeLayout extends Event
      *
      * @return Environment
      */
-    public function getEnvironment()
+    public function getEnvironment(): Environment
     {
         return $this->environment;
     }
@@ -69,9 +73,9 @@ final class InitializeLayout extends Event
     /**
      * Get layout model.
      *
-     * @return \LayoutModel
+     * @return LayoutModel
      */
-    public function getLayoutModel()
+    public function getLayoutModel(): LayoutModel
     {
         return $this->layoutModel;
     }
@@ -79,9 +83,9 @@ final class InitializeLayout extends Event
     /**
      * Get page model.
      *
-     * @return \PageModel
+     * @return PageModel
      */
-    public function getPageModel()
+    public function getPageModel(): PageModel
     {
         return $this->pageModel;
     }

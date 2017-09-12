@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Environment;
 
 /**
@@ -15,7 +17,7 @@ namespace ContaoBootstrap\Core\Environment;
  *
  * @package ContaoBootstrap\Core\Config\Context
  */
-class ThemeContext extends AbstractContext
+final class ThemeContext extends AbstractContext
 {
     /**
      * Theme id.
@@ -29,7 +31,7 @@ class ThemeContext extends AbstractContext
      *
      * @param int $themeId Theme id.
      */
-    private function __construct($themeId)
+    private function __construct(int $themeId)
     {
         $this->themeId = $themeId;
     }
@@ -37,7 +39,7 @@ class ThemeContext extends AbstractContext
     /**
      * {@inheritDoc}
      */
-    public function supports(Context $context)
+    public function supports(Context $context): bool
     {
         if ($context instanceof ApplicationContext) {
             return true;
@@ -57,7 +59,7 @@ class ThemeContext extends AbstractContext
      *
      * @return static
      */
-    public static function forTheme($themeId)
+    public static function forTheme(int $themeId): self
     {
         return new static($themeId);
     }
@@ -67,7 +69,7 @@ class ThemeContext extends AbstractContext
      *
      * @return int
      */
-    public function getThemeId()
+    public function getThemeId(): int
     {
         return $this->themeId;
     }
@@ -75,7 +77,7 @@ class ThemeContext extends AbstractContext
     /**
      * {@inheritdoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'theme:' . $this->themeId;
     }

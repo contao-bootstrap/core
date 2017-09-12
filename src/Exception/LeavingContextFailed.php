@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Exception;
 
 use ContaoBootstrap\Core\Environment\Context;
@@ -29,7 +31,7 @@ final class LeavingContextFailed extends Exception
      *
      * @return static
      */
-    public static function inContext(Context $context, $code = 0, Throwable $previous = null)
+    public static function inContext(Context $context, $code = 0, Throwable $previous = null): self
     {
         return new static(
             sprintf('Leaving context "%s" failed. Context stack is empty', $context->__toString()),
@@ -46,7 +48,7 @@ final class LeavingContextFailed extends Exception
      *
      * @return static
      */
-    public static function noContext($code = 0, Throwable $previous = null)
+    public static function noContext($code = 0, Throwable $previous = null): self
     {
         return new static(
             'Leaving context failed. Environment has no context.',

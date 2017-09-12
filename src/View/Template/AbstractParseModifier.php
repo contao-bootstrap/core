@@ -8,7 +8,11 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\View\Template;
+
+use Contao\Template;
 
 /**
  * AbstractPrepareModifier provides a base prepare method. So you only have to add parse method.
@@ -20,7 +24,7 @@ abstract class AbstractParseModifier extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function prepare(\Template $template)
+    public function prepare(Template $template): void
     {
     }
 }

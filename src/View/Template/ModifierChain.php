@@ -8,7 +8,11 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\View\Template;
+
+use Contao\Template;
 
 /**
  * Class ModifierChain.
@@ -37,7 +41,7 @@ final class ModifierChain implements Modifier
     /**
      * {@inheritdoc}
      */
-    public function supports($templateName)
+    public function supports(string $templateName): bool
     {
         return $this->modifiers ? true : false;
     }
@@ -45,7 +49,7 @@ final class ModifierChain implements Modifier
     /**
      * {@inheritdoc}
      */
-    public function prepare(\Template $template)
+    public function prepare(Template $template): void
     {
         foreach ($this->modifiers as $modifier) {
             if ($modifier->supports($template->getName())) {
@@ -57,7 +61,7 @@ final class ModifierChain implements Modifier
     /**
      * {@inheritdoc}
      */
-    public function parse($buffer, $templateName)
+    public function parse(string $buffer, string $templateName): string
     {
         foreach ($this->modifiers as $modifier) {
             if ($modifier->supports($templateName)) {

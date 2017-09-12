@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Environment;
 
 /**
@@ -24,7 +26,7 @@ interface Context
      *
      * @return bool
      */
-    public function supports(Context $context);
+    public function supports(Context $context): bool;
 
     /**
      * Check if the context match another context.
@@ -33,12 +35,12 @@ interface Context
      *
      * @return bool
      */
-    public function match(Context $context);
+    public function match(Context $context): bool;
 
     /**
      * Get string representation of context.
      *
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 }

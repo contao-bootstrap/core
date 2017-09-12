@@ -7,8 +7,11 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Subscriber;
 
+use Contao\Template;
 use ContaoBootstrap\Core\View\Template\Modifier;
 
 /**
@@ -16,7 +19,7 @@ use ContaoBootstrap\Core\View\Template\Modifier;
  *
  * @package ContaoBootstrap
  */
-class TemplateParseSubscriber
+final class TemplateParseSubscriber
 {
     /**
      * Template modifier.
@@ -38,11 +41,11 @@ class TemplateParseSubscriber
     /**
      * Execute all registered template modifiers.
      *
-     * @param \Template $template Current template.
+     * @param Template $template Current template.
      *
      * @return void
      */
-    public function prepare(\Template $template)
+    public function prepare(Template $template): void
     {
         if ($this->modifier->supports($template->getName())) {
             $this->modifier->prepare($template);
@@ -57,7 +60,7 @@ class TemplateParseSubscriber
      *
      * @return string
      */
-    public function parse($buffer, $templateName)
+    public function parse(string $buffer, string $templateName): string
     {
         if ($this->modifier->supports($templateName)) {
             $buffer = $this->modifier->parse($buffer, $templateName);

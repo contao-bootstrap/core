@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Environment;
 
 /**
@@ -15,12 +17,12 @@ namespace ContaoBootstrap\Core\Environment;
  *
  * @package ContaoBootstrap\Core\Config\Context
  */
-class ApplicationContext extends AbstractContext
+final class ApplicationContext extends AbstractContext
 {
     /**
      * {@inheritDoc}
      */
-    public function supports(Context $context)
+    public function supports(Context $context): bool
     {
         return $context instanceof ApplicationContext;
     }
@@ -28,7 +30,7 @@ class ApplicationContext extends AbstractContext
     /**
      * {@inheritDoc}
      */
-    public static function create()
+    public static function create(): self
     {
         return new static();
     }
@@ -36,7 +38,7 @@ class ApplicationContext extends AbstractContext
     /**
      * {@inheritDoc}
      */
-    public function __toString()
+    public function __toString(): string
     {
         return 'application';
     }

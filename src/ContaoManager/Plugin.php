@@ -7,6 +7,8 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;

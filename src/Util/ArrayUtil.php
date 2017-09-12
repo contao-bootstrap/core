@@ -7,6 +7,8 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Util;
 
 /**
@@ -16,7 +18,7 @@ namespace ContaoBootstrap\Core\Util;
  *
  * @package ContaoBootstrap\Core\Util
  */
-class ArrayUtil
+final class ArrayUtil
 {
     /**
      * Merge two arrays recursively.
@@ -27,7 +29,7 @@ class ArrayUtil
      *
      * @return array
      */
-    public static function merge($array1, $array2, $distinct = true)
+    public static function merge(array $array1, array $array2, bool $distinct = true): array
     {
         if ($distinct) {
             return static::mergeDistinct($array1, $array2);
@@ -44,7 +46,7 @@ class ArrayUtil
      *
      * @return array
      */
-    private static function mergeDistinct($array1, $array2)
+    private static function mergeDistinct(array $array1, array $array2): array
     {
         $merged = $array1;
 

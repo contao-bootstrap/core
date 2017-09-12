@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Helper;
 
 /**
@@ -17,7 +19,7 @@ namespace ContaoBootstrap\Core\Helper;
  *
  * @package ContaoBootstrap\Grid\Helper
  */
-class ColorRotate
+final class ColorRotate
 {
     /**
      * Color cache.
@@ -54,7 +56,7 @@ class ColorRotate
      * @param float        $saturation    Saturation.
      * @param float        $value         Value.
      */
-    public function __construct($rotatingColor = .5, $saturation = 0.7, $value = .7)
+    public function __construct(float $rotatingColor = .5, float $saturation = 0.7, float $value = .7)
     {
         $this->rotatingColor = $rotatingColor;
         $this->saturation    = $saturation;
@@ -67,9 +69,9 @@ class ColorRotate
      *
      * @param string $identifier Identifier.
      *
-     * @return mixed
+     * @return string
      */
-    public function getColor($identifier)
+    public function getColor(string $identifier): string
     {
         if (!isset($this->cache[$identifier])) {
             $this->cache[$identifier] = $this->rotateColor();
@@ -83,7 +85,7 @@ class ColorRotate
      *
      * @return string
      */
-    private function rotateColor()
+    private function rotateColor(): string
     {
         $color                = $this->convertHSVtoRGB($this->rotatingColor, $this->saturation, $this->value);
         $this->rotatingColor += .3;
@@ -107,7 +109,7 @@ class ColorRotate
      *
      * @SuppressWarnings(PHPMD.ShortVariable)
      */
-    private function convertHSVtoRGB($hue, $saturation, $value)
+    private function convertHSVtoRGB(float $hue, float $saturation, float $value): string
     {
         // First
         $hue *= 6;

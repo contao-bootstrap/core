@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Message\Event;
 
 use ContaoBootstrap\Core\Environment\Context;
@@ -19,7 +21,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package ContaoBootstrap\Core\Event
  */
-class ContextEntered extends Event
+final class ContextEntered extends Event
 {
     const NAME = 'contao_bootstrap.core.enter_context';
 
@@ -54,7 +56,7 @@ class ContextEntered extends Event
      *
      * @return Environment
      */
-    public function getEnvironment()
+    public function getEnvironment(): Environment
     {
         return $this->environment;
     }
@@ -64,7 +66,7 @@ class ContextEntered extends Event
      *
      * @return Context
      */
-    public function getContext()
+    public function getContext(): Context
     {
         return $this->context;
     }

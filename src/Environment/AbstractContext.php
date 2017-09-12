@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Environment;
 
 /**
@@ -20,7 +22,7 @@ abstract class AbstractContext implements Context
     /**
      * {@inheritDoc}
      */
-    public function match(Context $context)
+    public function match(Context $context): bool
     {
         return $this->__toString() === $context->__toString();
     }

@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;

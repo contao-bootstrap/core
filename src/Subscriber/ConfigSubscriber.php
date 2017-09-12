@@ -7,6 +7,8 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Subscriber;
 
 use ContaoBootstrap\Core\Config;
@@ -21,7 +23,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  *
  * @package ContaoBootstrap\Core\Subscriber
  */
-class ConfigSubscriber implements EventSubscriberInterface
+final class ConfigSubscriber implements EventSubscriberInterface
 {
     /**
      * Database connection.
@@ -52,7 +54,7 @@ class ConfigSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             InitializeEnvironment::NAME => 'enterApplicationContext',
@@ -67,7 +69,7 @@ class ConfigSubscriber implements EventSubscriberInterface
      *
      * @return void
      */
-    public function enterApplicationContext(InitializeEnvironment $event)
+    public function enterApplicationContext(InitializeEnvironment $event): void
     {
         $event->getEnvironment()->enterContext(ApplicationContext::create());
     }
@@ -79,7 +81,7 @@ class ConfigSubscriber implements EventSubscriberInterface
      *
      * @return void
      */
-    public function buildContextConfig(BuildContextConfig $command)
+    public function buildContextConfig(BuildContextConfig $command): void
     {
         $context = $command->getContext();
 

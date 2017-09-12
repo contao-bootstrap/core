@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\DependencyInjection;
 
 use ContaoBootstrap\Core\Util\ArrayUtil;
@@ -63,7 +65,7 @@ final class ConfigPass implements CompilerPass
      *
      * @return void
      */
-    private function setConfigTypesArgument(ContainerBuilder $container)
+    private function setConfigTypesArgument(ContainerBuilder $container): void
     {
         if (!$container->has('contao_bootstrap.config.type_manager')) {
             return;

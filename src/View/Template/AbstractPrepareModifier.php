@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\View\Template;
 
 /**
@@ -20,7 +22,7 @@ abstract class AbstractPrepareModifier extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function parse($buffer, $templateName)
+    public function parse(string $buffer, string $templateName): string
     {
         return $buffer;
     }

@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Message\Command;
 
 use ContaoBootstrap\Core\Config;
@@ -20,7 +22,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @package ContaoBootstrap\Core\Message\Command
  */
-class BuildContextConfig extends Event
+final class BuildContextConfig extends Event
 {
     const NAME = 'contao_bootstrap.core.build_context_config';
 
@@ -64,7 +66,7 @@ class BuildContextConfig extends Event
      *
      * @return Environment
      */
-    public function getEnvironment()
+    public function getEnvironment(): Environment
     {
         return $this->environment;
     }
@@ -74,7 +76,7 @@ class BuildContextConfig extends Event
      *
      * @return Context
      */
-    public function getContext()
+    public function getContext(): Context
     {
         return $this->context;
     }
@@ -84,7 +86,7 @@ class BuildContextConfig extends Event
      *
      * @return Config
      */
-    public function getConfig()
+    public function getConfig(): Config
     {
         return $this->config;
     }
@@ -96,7 +98,7 @@ class BuildContextConfig extends Event
      *
      * @return $this
      */
-    public function setConfig(Config $config)
+    public function setConfig(Config $config): self
     {
         $this->config = $config;
 

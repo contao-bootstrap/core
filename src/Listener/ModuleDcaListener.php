@@ -7,6 +7,8 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Listener;
 
 use Contao\BackendUser;
@@ -33,7 +35,7 @@ final class ModuleDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getTemplates(DataContainer $dataContainer)
+    public function getTemplates(DataContainer $dataContainer): array
     {
         $config = array();
         $prefix = '';
@@ -67,7 +69,7 @@ final class ModuleDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function pagePicker(DataContainer $dataContainer)
+    public function pagePicker(DataContainer $dataContainer): string
     {
         $template  = ' <a href="contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s" title="%s"';
         $template .= ' onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'%s\'';
@@ -98,7 +100,7 @@ final class ModuleDcaListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getAllArticles()
+    public function getAllArticles(): array
     {
         $user     = BackendUser::getInstance();
         $pids     = array();
@@ -149,7 +151,7 @@ final class ModuleDcaListener
      *
      * @return array
      */
-    public function getAllModules()
+    public function getAllModules(): array
     {
         $modules = array();
         $query   = 'SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id';
