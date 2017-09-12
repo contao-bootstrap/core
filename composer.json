@@ -23,7 +23,8 @@
         "contao/core-bundle":"^4.4",
         "contao-community-alliance/meta-palettes": "^1.10.1",
         "doctrine/doctrine-bundle": "~1.6",
-        "phpcq/all-tasks": "^1.2"
+        "phpcq/all-tasks": "^1.2",
+        "phpspec/phpspec": "^4.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0"

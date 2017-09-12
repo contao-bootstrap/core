@@ -8,6 +8,8 @@
  *
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core;
 
 /**
@@ -20,8 +22,8 @@ interface Config
     /**
      * Get a config value.
      *
-     * @param string $key     Name of the config param.
-     * @param mixed  $default Default value if config is not set.
+     * @param string|array $key     Name of the config param.
+     * @param mixed        $default Default value if config is not set.
      *
      * @return mixed
      */
@@ -30,7 +32,7 @@ interface Config
     /**
      * Consider if config param exists.
      *
-     * @param string $key Name of the config param.
+     * @param string|array $key Name of the config param.
      *
      * @return bool
      */
@@ -43,5 +45,5 @@ interface Config
      *
      * @return static
      */
-    public function merge(array $config);
+    public function merge(array $config): Config;
 }

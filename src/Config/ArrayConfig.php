@@ -7,6 +7,8 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
+declare(strict_types=1);
+
 namespace ContaoBootstrap\Core\Config;
 
 use ContaoBootstrap\Core\Config;
@@ -77,7 +79,7 @@ final class ArrayConfig implements Config
     /**
      * {@inheritdoc}
      */
-    public function merge(array $data)
+    public function merge(array $data): Config
     {
         return new static(ArrayUtil::merge($this->config, $data));
     }
