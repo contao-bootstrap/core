@@ -35,25 +35,25 @@ final class InitializeLayout extends Event
     /**
      * The layout model.
      *
-     * @var \LayoutModel
+     * @var LayoutModel
      */
     private $layoutModel;
 
     /**
      * The page model.
      *
-     * @var \PageModel
+     * @var PageModel
      */
     private $pageModel;
 
     /**
      * Construct.
      *
-     * @param Environment  $environment Bootstrap environment.
-     * @param \LayoutModel $layoutModel Layout model.
-     * @param \PageModel   $pageModel   Page model.
+     * @param Environment $environment Bootstrap environment.
+     * @param LayoutModel $layoutModel Layout model.
+     * @param PageModel   $pageModel   Page model.
      */
-    public function __construct(Environment $environment, \LayoutModel $layoutModel, \PageModel $pageModel)
+    public function __construct(Environment $environment, LayoutModel $layoutModel, PageModel $pageModel)
     {
         $this->environment = $environment;
         $this->layoutModel = $layoutModel;
