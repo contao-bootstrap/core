@@ -1,4 +1,5 @@
 .tx/
+.idea/
 vendor/
 module/.skip
 composer.lock
