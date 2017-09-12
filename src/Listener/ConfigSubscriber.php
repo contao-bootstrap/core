@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Core\Subscriber;
+namespace ContaoBootstrap\Core\Listener;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Environment\ApplicationContext;

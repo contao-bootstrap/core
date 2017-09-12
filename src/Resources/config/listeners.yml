@@ -1,6 +1,6 @@
 services:
   contao_bootstrap.core.config_subscriber:
-    class: ContaoBootstrap\Core\Subscriber\ConfigSubscriber
+    class: ContaoBootstrap\Core\Listener\ConfigSubscriber
     arguments:
       - '@database_connection'
       - '@contao_bootstrap.config'
@@ -8,25 +8,25 @@ services:
       - { name: kernel.event_subscriber }
 
   contao_bootstrap.core.listener.parse_template:
-    class: ContaoBootstrap\Core\Subscriber\TemplateParseSubscriber
+    class: ContaoBootstrap\Core\Listener\TemplateParseListener
     arguments:
       - '@contao_bootstrap.view.template_modifier'
 
-  contao_bootstrap.core.listener.hook_subscriber:
-    class: ContaoBootstrap\Core\Subscriber\HookSubscriber
+  contao_bootstrap.core.listener.hook_listener:
+    class: ContaoBootstrap\Core\Listener\HookListener
     arguments:
       - '@event_dispatcher'
       - '@contao_bootstrap.environment'
 
   contao_bootstrap.core.listener.content_dca:
-    class: ContaoBootstrap\Core\Listener\ContentDcaListener
+    class: ContaoBootstrap\Core\Listener\Dca\ContentDcaListener
     arguments:
       - '@contao_bootstrap.environment'
 
   contao_bootstrap.core.listener.layout_dca:
-    class: ContaoBootstrap\Core\Listener\LayoutDcaListener
+    class: ContaoBootstrap\Core\Listener\Dca\LayoutDcaListener
     arguments:
       - '@contao_bootstrap.environment'
 
   contao_bootstrap.core.listener.module_dca:
-    class: ContaoBootstrap\Core\Listener\ModuleDcaListener
+    class: ContaoBootstrap\Core\Listener\Dca\ModuleDcaListener

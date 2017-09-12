@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Core\Listener;
+namespace ContaoBootstrap\Core\Listener\Dca;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
 use Contao\Input;

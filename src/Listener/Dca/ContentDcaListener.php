@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Core\Listener;
+namespace ContaoBootstrap\Core\Listener\Dca;
 
 use ContaoBootstrap\Core\Environment;
 

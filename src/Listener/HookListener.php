@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Core\Subscriber;
+namespace ContaoBootstrap\Core\Listener;
 
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  *
  * @package ContaoBootstrap\Core\Contao
  */
-final class HookSubscriber
+final class HookListener
 {
     /**
      * The event dispatcher.

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace ContaoBootstrap\Core\Subscriber;
+namespace ContaoBootstrap\Core\Listener;
 
 use Contao\Template;
 use ContaoBootstrap\Core\View\Template\Modifier;
@@ -19,7 +19,7 @@ use ContaoBootstrap\Core\View\Template\Modifier;
  *
  * @package ContaoBootstrap
  */
-final class TemplateParseSubscriber
+final class TemplateParseListener
 {
     /**
      * Template modifier.
