@@ -10,9 +10,6 @@
 // Models
 $GLOBALS['TL_MODELS']['tl_bootstrap_config'] = 'ContaoBootstrap\Core\Config\Model\BootstrapConfigModel';
 
-// Modules
-$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_bootstrap_config';
-
 // Hooks
 $GLOBALS['TL_HOOKS']['initializeSystem'][]      = ['contao_bootstrap.core.listener.hook_subscriber', 'initializeSystem'];
 $GLOBALS['TL_HOOKS']['getPageLayout'][]         = ['contao_bootstrap.core.listener.hook_subscriber', 'initializeLayout'];
@@ -29,13 +26,3 @@ if(TL_MODE == 'BE') {
         require TL_ROOT . '/vendor/contao-bootstrap/core/src/Resources/contao/onfig/stylepicker.php';
     }
 }
-
-// Easy themes support for Contao Bootstrap config
-$GLOBALS['TL_EASY_THEMES_MODULES']['bootstrap_config'] = array
-(
-    'title'         => &$GLOBALS['TL_LANG']['bootstrapConfig'][1],
-    'label'         => &$GLOBALS['TL_LANG']['bootstrapConfig'][0],
-    'href_fragment' => 'table=tl_bootstrap_config',
-    'icon'          => 'system/modules/bootstrap-core/assets/img/bootstrap.png',
-    'appendRT'      => true
-);
