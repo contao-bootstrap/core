@@ -7,7 +7,7 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\DataContainer;
+namespace ContaoBootstrap\Core\Listener;
 
 use Bit3\Contao\MetaPalettes\MetaPalettes;
 use ContaoBootstrap\Core\Config;
@@ -20,7 +20,7 @@ use ContaoBootstrap\Core\Environment;
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-final class Layout
+final class LayoutDcaListener
 {
     /**
      * Bootstrap environment..

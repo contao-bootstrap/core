@@ -7,7 +7,7 @@
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
 
-namespace ContaoBootstrap\Core\DataContainer;
+namespace ContaoBootstrap\Core\Listener;
 
 use Contao\BackendUser;
 use Contao\Controller;
@@ -22,7 +22,7 @@ use MultiColumnWizard;
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-final class Module
+final class ModuleDcaListener
 {
     /**
      * Get all templates. A templatePrefix can be defined using eval.templatePrefix.

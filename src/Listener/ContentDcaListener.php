@@ -8,7 +8,7 @@
  *
  */
 
-namespace ContaoBootstrap\Core\DataContainer;
+namespace ContaoBootstrap\Core\Listener;
 
 use ContaoBootstrap\Core\Environment;
 
@@ -17,7 +17,7 @@ use ContaoBootstrap\Core\Environment;
  *
  * @package ContaoBootstrap\Core\DataContainer
  */
-final class Content
+final class ContentDcaListener
 {
     /**
      * Bootstrap environment.

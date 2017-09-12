@@ -17,3 +17,16 @@ services:
     arguments:
       - '@event_dispatcher'
       - '@contao_bootstrap.environment'
+
+  contao_bootstrap.core.listener.content_dca:
+    class: ContaoBootstrap\Core\Listener\ContentDcaListener
+    arguments:
+      - '@contao_bootstrap.environment'
+
+  contao_bootstrap.core.listener.layout_dca:
+    class: ContaoBootstrap\Core\Listener\LayoutDcaListener
+    arguments:
+      - '@contao_bootstrap.environment'
+
+  contao_bootstrap.core.listener.module_dca:
+    class: ContaoBootstrap\Core\Listener\ModuleDcaListener

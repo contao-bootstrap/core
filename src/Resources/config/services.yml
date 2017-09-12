@@ -14,15 +14,5 @@ services:
     arguments:
       - []
 
-  contao_bootstrap.core.dca.content:
-    class: ContaoBootstrap\Core\DataContainer\Content
-    arguments:
-      - '@contao_bootstrap.environment'
-
-  contao_bootstrap.core.dca.layout:
-    class: ContaoBootstrap\Core\DataContainer\Layout
-    arguments:
-      - '@contao_bootstrap.environment'
-
   contao_bootstrap.core.helper.color_rotate:
     class: ContaoBootstrap\Core\Helper\ColorRotate

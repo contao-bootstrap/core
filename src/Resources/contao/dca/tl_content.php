@@ -44,7 +44,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
                 'label'     => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_dataAttributes_name'],
                 'exclude'   => true,
                 'inputType' => 'select',
-                'options_callback' => ['contao_bootstrap.core.dca.content', 'getDataAttributes'],
+                'options_callback' => ['contao_bootstrap.core.listener.content_dca', 'getDataAttributes'],
                 'reference' => &$GLOBALS['TL_LANG']['tl_content']['bootstrap_buttons_types'],
                 'eval'      => array('style' => 'width: 145px;', 'includeBlankOption' => true, 'chosen' => true),
             ),
