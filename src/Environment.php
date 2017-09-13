@@ -112,7 +112,7 @@ final class Environment
      * @return void
      * @throws LeavingContextFailed When context stack is empty.
      */
-    public function leaveContext($currentContext = null): void
+    public function leaveContext(?Context $currentContext = null): void
     {
         if (!$this->context) {
             throw LeavingContextFailed::noContext();
@@ -141,7 +141,7 @@ final class Environment
      *
      * @return void
      */
-    private function switchContext(Context $context, $keepCurrentInStack = false): void
+    private function switchContext(Context $context, bool $keepCurrentInStack = false): void
     {
         $command = new BuildContextConfig($this, $context, $this->config);
         $this->messageBus->dispatch($command::NAME, $command);
