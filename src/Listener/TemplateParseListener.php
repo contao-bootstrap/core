@@ -51,12 +51,15 @@ final class TemplateParseListener
     /**
      * Modifier constructor.
      *
-     * @param Modifier         $modifier Template modifier.
-     * @param PreRenderFilter  $preRenderFilter
-     * @param PostRenderFilter $postRenderFilter
+     * @param Modifier         $modifier         Template modifier.
+     * @param PreRenderFilter  $preRenderFilter  Pre render filter.
+     * @param PostRenderFilter $postRenderFilter Post render filter.
      */
-    public function __construct(Modifier $modifier, PreRenderFilter $preRenderFilter, PostRenderFilter $postRenderFilter)
-    {
+    public function __construct(
+        Modifier $modifier,
+        PreRenderFilter $preRenderFilter,
+        PostRenderFilter $postRenderFilter
+    ) {
         $this->modifier         = $modifier;
         $this->preRenderFilter  = $preRenderFilter;
         $this->postRenderFilter = $postRenderFilter;

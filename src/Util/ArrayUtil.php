@@ -27,8 +27,8 @@ final class ArrayUtil
     /**
      * Merge two arrays recursively.
      *
-     * @param array $array1   First array.
-     * @param array $array2   Second array.
+     * @param array $array1 First array.
+     * @param array $array2 Second array.
      *
      * @return array
      */
