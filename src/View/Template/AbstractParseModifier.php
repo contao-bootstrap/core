@@ -18,6 +18,8 @@ use Contao\Template;
  * AbstractPrepareModifier provides a base prepare method. So you only have to add parse method.
  *
  * @package ContaoBootstrap\Core\View\Template
+ *
+ * @deprecated Get's removed in 2.0.0.
  */
 abstract class AbstractParseModifier extends AbstractModifier
 {

@@ -18,6 +18,8 @@ use Contao\Template;
  * Class ModifierChain.
  *
  * @package ContaoBootstrap\Core\View\Template
+ *
+ * @deprecated Get's removed in 2.0.0.
  */
 final class ModifierChain implements Modifier
 {

@@ -18,6 +18,8 @@ use Contao\Template;
  * Interface Modifier describes an template modifier which is called when a template is parsed.
  *
  * @package ContaoBootstrap\Core\View\Template
+ *
+ * @deprecated Get's removed in 2.0.0.
  */
 interface Modifier
 {

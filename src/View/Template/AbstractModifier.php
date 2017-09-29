@@ -16,6 +16,8 @@ namespace ContaoBootstrap\Core\View\Template;
  * Abstract modifier provides a predefined supports($templateName) method.
  *
  * @package ContaoBootstrap\Core\View\Template
+ *
+ * @deprecated Get's removed in 2.0.0.
  */
 abstract class AbstractModifier implements Modifier
 {
