@@ -1,4 +1,7 @@
 services:
+  _defaults:
+    public: true
+
   contao_bootstrap.core.config_subscriber:
     class: ContaoBootstrap\Core\Listener\ConfigSubscriber
     arguments:
