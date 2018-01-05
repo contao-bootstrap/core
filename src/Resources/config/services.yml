@@ -1,0 +1,29 @@
+services:
+  contao_bootstrap.environment:
+    class: ContaoBootstrap\Core\Environment
+    arguments:
+      - '@event_dispatcher'
+
+  contao_bootstrap.config:
+    class: ContaoBootstrap\Core\Config\ArrayConfig
+    arguments:
+      - '%contao_bootstrap.config%'
+
+  contao_bootstrap.view.template_modifier:
+    deprecated: 'The service "%service_id%" is deprecated and will be removed in 2.0.0. Use "contao_bootstrap.view.template.pre_render_filter" and "contao_bootstrap.view.template.post_render_filter" instead.'
+    class: ContaoBootstrap\Core\View\Template\ModifierChain
+    arguments:
+      - []
+
+  contao_bootstrap.view.template.pre_render_filter:
+    class: ContaoBootstrap\Core\View\Template\Filter\TemplatePreRenderFilter
+    arguments:
+      - []
+
+  contao_bootstrap.view.template.post_render_filter:
+      class: ContaoBootstrap\Core\View\Template\Filter\TemplatePostRenderFilter
+      arguments:
+        - []
+
+  contao_bootstrap.core.helper.color_rotate:
+    class: ContaoBootstrap\Core\Helper\ColorRotate

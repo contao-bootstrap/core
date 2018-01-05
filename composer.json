@@ -2,7 +2,7 @@
     "name":"contao-bootstrap/core",
     "description":"Core of Contao Bootstrap extension",
     "keywords":["bootstrap", "contao", "core"],
-    "type":"contao-module",
+    "type":"contao-bundle",
     "license":"LGPL-3.0+",
     "authors":[
         {
@@ -19,44 +19,40 @@
         "source":"https://github.com/contao-bootstrap/core"
     },
     "require":{
-        "php":">=5.3.4",
-        "contao/core":">=3.2,<3.6-dev",
-        "contao-community-alliance/composer-plugin": "~2.0",
-        "contao-community-alliance/event-dispatcher": "~1.0",
-        "contao-community-alliance/dependency-container": "~1.4",
-        "contao-community-alliance/meta-palettes": "~1.9"
+        "php":">=7.1",
+        "contao/core-bundle":"^4.4",
+        "contao-community-alliance/meta-palettes": "^2.0 || ^1.11",
+        "doctrine/doctrine-bundle": "~1.6"
     },
     "require-dev": {
-        "netzmacht/contao-build-tools": "~1.1"
+        "contao/manager-plugin": "^2.0",
+        "phpcq/all-tasks": "^1.2",
+        "phpspec/phpspec": "^4.0"
     },
     "conflict": {
         "netzmacht/contao-bootstrap": "*"
     },
     "suggest": {
-        "netzmacht/contao-theme-plus-importer": "Import assets into Theme+",
         "twbs/bootstrap": "Official Bootstrap package",
         "components/bootstrap": "Bootstrap Components package"
     },
     "autoload": {
-        "psr-4": { "Netzmacht\\Bootstrap\\Core\\": "src/" }
+        "psr-4": { "ContaoBootstrap\\Core\\": "src/" }
     },
     "extra":{
         "branch-alias": {
-            "dev-master": "1.1.x-dev",
-            "dev-develop": "1.2.x-dev"
+            "dev-master": "2.0.x-dev",
+            "dev-develop": "2.1.x-dev",
+            "dev-support/1.x": "~1.1.x-dev"
         },
         "contao": {
-            "sources":{
-                "module": "system/modules/bootstrap-core"
-            },
             "transifex": {
                 "project": "contao-bootstrap",
                 "prefix": "core-",
-                "languages_cto": "module/languages",
+                "languages_cto": "src/Resources/contao/languages",
                 "languages_tx": ".tx"
             }
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+        },
+        "contao-manager-plugin": "ContaoBootstrap\\Core\\ContaoManager\\Plugin"
+    }
 }

@@ -1,30 +1,33 @@
 <?php
 
 /**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2015 netzmacht creative David Molineus
+ * Contao Bootstrap
+ *
+ * @package    contao-bootstrap
+ * @subpackage Core
+ * @author     David Molineus <david.molineus@netzmacht.de>
+ * @copyright  2017 netzmacht David Molineus. All rights reserved.
+ * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
+ * @filesource
  */
 
-namespace Netzmacht\Bootstrap\Core;
+namespace ContaoBootstrap\Core;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Contao\LayoutModel;
+use ContaoBootstrap\Core\Config\ArrayConfig;
+use ContaoBootstrap\Core\Environment\Context;
+use ContaoBootstrap\Core\Exception\LeavingContextFailed;
+use ContaoBootstrap\Core\Message\Event\ContextEntered;
+use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as MessageBus;
 
 /**
  * Class Environment contain all things being provided in the bootstrap environment.
  *
- * @package Netzmacht\Bootstrap\Core
+ * @package ContaoBootstrap\Core
  */
-class Environment
+final class Environment
 {
-    /**
-     * The event dispatcher.
-     *
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
     /**
      * Bootstrap enabled state.
      *
@@ -40,13 +43,6 @@ class Environment
     protected $config;
 
     /**
-     * Icon set.
-     *
-     * @var IconSet
-     */
-    protected $iconSet;
-
-    /**
      * Layout model of current page.
      *
      * @var \LayoutModel
@@ -54,27 +50,35 @@ class Environment
     private $layout;
 
     /**
-     * Construct.
+     * Current context.
      *
-     * @param Config                   $config          Bootstrap config.
-     * @param IconSet                  $iconSet         Icon set.
-     * @param EventDispatcherInterface $eventDispatcher Event dispatcher.
+     * @var Context
      */
-    public function __construct(Config $config, IconSet $iconSet, EventDispatcherInterface $eventDispatcher)
-    {
-        $this->config          = $config;
-        $this->iconSet         = $iconSet;
-        $this->eventDispatcher = $eventDispatcher;
-    }
+    private $context;
 
     /**
-     * Get the icon set.
+     * List of contexts.
      *
-     * @return IconSet
+     * @var Context[]
      */
-    public function getIconSet()
+    private $contextStack;
+
+    /**
+     * MessageBus.
+     *
+     * @var MessageBus
+     */
+    private $messageBus;
+
+    /**
+     * Construct.
+     *
+     * @param MessageBus $messageBus Message bus.
+     */
+    public function __construct(MessageBus $messageBus)
     {
-        return $this->iconSet;
+        $this->messageBus = $messageBus;
+        $this->config     = new ArrayConfig();
     }
 
     /**
@@ -82,9 +86,82 @@ class Environment
      *
      * @return Config
      */
-    public function getConfig()
+    public function getConfig(): Config
     {
         return $this->config;
+    }
+
+    /**
+     * Enter a context.
+     *
+     * @param Context $context Context.
+     *
+     * @return void
+     */
+    public function enterContext(Context $context): void
+    {
+        // Already in the context.
+        if ($this->context && $this->context->match($context)) {
+            return;
+        }
+
+        $this->switchContext($context, true);
+    }
+
+    /**
+     * Leave current context and enter the context which was used before.
+     *
+     * @param Context|null $currentContext Optional expected current context. Won't do anything if context not match.
+     *
+     * @return void
+     * @throws LeavingContextFailed When context stack is empty.
+     */
+    public function leaveContext(?Context $currentContext = null): void
+    {
+        if (!$this->context) {
+            throw LeavingContextFailed::noContext();
+        }
+
+        // Not in expected context. Just quit.
+        if ($currentContext && !$currentContext->match($this->context)) {
+            return;
+        }
+
+        // Get last know context which was used before current context.
+        $context = array_pop($this->contextStack);
+
+        if ($context === null) {
+            throw LeavingContextFailed::inContext($this->context);
+        }
+
+        $this->switchContext($context);
+    }
+
+    /**
+     * Switch to another context.
+     *
+     * @param Context $context            New context.
+     * @param bool    $keepCurrentInStack If true current context is added to the stack.
+     *
+     * @return void
+     */
+    private function switchContext(Context $context, bool $keepCurrentInStack = false): void
+    {
+        $command = new BuildContextConfig($this, $context, $this->config);
+        $this->messageBus->dispatch($command::NAME, $command);
+
+        if ($command->getConfig()) {
+            $this->config = $command->getConfig();
+        }
+
+        if ($keepCurrentInStack && $this->context) {
+            $this->contextStack[] = $this->context;
+        }
+
+        $this->context = $context;
+
+        $event = new ContextEntered($this, $context);
+        $this->messageBus->dispatch($event::NAME, $event);
     }
 
     /**
@@ -92,7 +169,7 @@ class Environment
      *
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -104,7 +181,7 @@ class Environment
      *
      * @return $this
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
@@ -114,11 +191,11 @@ class Environment
     /**
      * Set the layout.
      *
-     * @param \LayoutModel $layout Page layout.
+     * @param LayoutModel $layout Page layout.
      *
      * @return $this
      */
-    public function setLayout(\LayoutModel $layout)
+    public function setLayout(LayoutModel $layout): self
     {
         $this->layout = $layout;
 
@@ -128,7 +205,7 @@ class Environment
     /**
      * Get the page layout.
      *
-     * @return \LayoutModel
+     * @return LayoutModel|null
      */
     public function getLayout()
     {

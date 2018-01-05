@@ -1,6 +1,6 @@
 
 exclude:
-  languages
+  - languages
 
 mapping:
   "David Molineus <david.molineus@netzmacht.de>":
