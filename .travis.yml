@@ -2,6 +2,7 @@ language: php
 
 php:
   - "7.1"
+  - "7.2"
 
 env:
   - CONTAO_VERSION=contao/core-bundle ~4.4.0

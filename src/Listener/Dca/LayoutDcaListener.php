@@ -15,10 +15,10 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener\Dca;
 
-use Bit3\Contao\MetaPalettes\MetaPalettes;
 use Contao\Input;
 use Contao\LayoutModel;
 use ContaoBootstrap\Core\Environment;
+use ContaoCommunityAlliance\MetaPalettes\MetaPalettes;
 
 /**
  * Class Layout is used in tl_layout.
