@@ -43,7 +43,7 @@
         "branch-alias": {
             "dev-master": "2.0.x-dev",
             "dev-develop": "2.1.x-dev",
-            "dev-support/1.x": "~1.1.x-dev"
+            "dev-support/1.x": "1.1.x-dev"
         },
         "contao": {
             "transifex": {
