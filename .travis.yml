@@ -6,6 +6,7 @@ php:
 
 env:
   - CONTAO_VERSION=contao/core-bundle ~4.4.0
+  - CONTAO_VERSION=contao/core-bundle ~4.5.0
 
 matrix:
   exclude:

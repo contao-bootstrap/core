@@ -17,8 +17,10 @@ namespace ContaoBootstrap\Core\Listener;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Environment\ApplicationContext;
+use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
+use ContaoBootstrap\Core\Message\Command\InitializeLayout;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -62,7 +64,8 @@ final class ConfigSubscriber implements EventSubscriberInterface
     {
         return [
             InitializeEnvironment::NAME => 'enterApplicationContext',
-            BuildContextConfig::NAME    => 'buildContextConfig'
+            InitializeLayout::NAME      => 'enterThemeContext',
+            BuildContextConfig::NAME    => 'buildContextConfig',
         ];
     }
 
@@ -76,6 +79,18 @@ final class ConfigSubscriber implements EventSubscriberInterface
     public function enterApplicationContext(InitializeEnvironment $event): void
     {
         $event->getEnvironment()->enterContext(ApplicationContext::create());
+    }
+
+    /**
+     * Enter the heme context.
+     *
+     * @param InitializeLayout $event The subscribed event.
+     *
+     * @return void
+     */
+    public function enterThemeContext(InitializeLayout $event): void
+    {
+        $event->getEnvironment()->enterContext(ThemeContext::forTheme((int) $event->getLayoutModel()->pid));
     }
 
     /**
