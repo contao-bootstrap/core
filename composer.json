@@ -3,13 +3,13 @@
     "description":"Core of Contao Bootstrap extension",
     "keywords":["bootstrap", "contao", "core"],
     "type":"contao-bundle",
-    "license":"LGPL-3.0+",
+    "license":"LGPL-3.0-or-later",
     "authors":[
         {
             "name":"David Molineus",
             "email":"mail@netzmacht.de",
-            "homepage":"http://www.netzmacht.de",
-            "role":"Project leader"
+            "homepage":"https://netzmacht.de",
+            "role":"Developer"
         }
     ],
     "support":{
