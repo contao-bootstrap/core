@@ -1,6 +1,7 @@
 services:
   contao_bootstrap.environment:
     class: ContaoBootstrap\Core\Environment
+    public: true
     arguments:
       - '@event_dispatcher'
 
