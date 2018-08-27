@@ -17,7 +17,6 @@ namespace ContaoBootstrap\Core;
 
 use ContaoBootstrap\Core\DependencyInjection\ConfigPass;
 use ContaoBootstrap\Core\DependencyInjection\TemplateFilterPass;
-use ContaoBootstrap\Core\DependencyInjection\TemplateModifierPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -34,7 +33,6 @@ class ContaoBootstrapCoreBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new ConfigPass());
-        $container->addCompilerPass(new TemplateModifierPass());
         $container->addCompilerPass(new TemplateFilterPass());
     }
 }

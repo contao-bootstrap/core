@@ -13,7 +13,6 @@ services:
   contao_bootstrap.core.listener.parse_template:
     class: ContaoBootstrap\Core\Listener\TemplateParseListener
     arguments:
-      - '@contao_bootstrap.view.template_modifier'
       - '@contao_bootstrap.view.template.pre_render_filter'
       - '@contao_bootstrap.view.template.post_render_filter'
 
