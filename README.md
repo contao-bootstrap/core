@@ -1,11 +1,11 @@
 Contao-Bootstrap Core
 =====================
 
-[![Build Status](http://img.shields.io/travis/contao-bootstrap/core/master.svg?style=flat-square)](https://travis-ci.org/contao-bootstrap/core)
-[![Version](http://img.shields.io/packagist/v/contao-bootstrap/core.svg?style=flat-square)](http://packagist.org/packages/contao-bootstrap/core)
-[![License](http://img.shields.io/packagist/l/contao-bootstrap/core.svg?style=flat-square)](http://packagist.org/packages/contao-bootstrap/core)
-[![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/core.svg?style=flat-square)](http://packagist.org/packages/contao-bootstrap/core)
-[![Contao Community Alliance coding standard](http://img.shields.io/badge/cca-coding_standard-red.svg?style=flat-square)](https://github.com/contao-community-alliance/coding-standard)
+[![Version](http://img.shields.io/packagist/v/contao-bootstrap/core.svg?style=for-the-badge&label=Latest)](http://packagist.org/packages/contao-bootstrap/core)
+[![GitHub issues](https://img.shields.io/github/issues/contao-bootstrap/core.svg?style=for-the-badge&logo=github)](https://github.com/contao-bootstrap/core/issues)
+[![License](http://img.shields.io/packagist/l/contao-bootstrap/core.svg?style=for-the-badge&label=License)](http://packagist.org/packages/contao-bootstrap/core)
+[![Build Status](http://img.shields.io/travis/contao-bootstrap/core/master.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/contao-bootstrap/core)
+[![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/core.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/core)
 
 This extension provides Bootstrap 4 integration into Contao. 
 
@@ -40,15 +40,16 @@ Contao Manager and install it. Alternatively you can use the CLI.
 
 ```bash
 # Using the contao manager
-$ php contao-manager.phar.php composer require contao-bootstrap/core~2.0@beta
+$ php contao-manager.phar.php composer require contao-bootstrap/core~2.0
 
 # Using composer directly
-$ php composer.phar require contao-bootstrap/core~2.0@beta
+$ php composer.phar require contao-bootstrap/core~2.0
 ```
 
-### Standard edition
+### Symfony application
 
-Without the contao manager you also have to register the bundle
+If you use Contao in a symfony application without contao/manager-bundle, you have to register following bundles 
+manually:
 
 ```php
 
