@@ -1,12 +1,13 @@
 language: php
 
 php:
-  - "7.1"
   - "7.2"
+  - "7.1"
 
 env:
-  - CONTAO_VERSION=contao/core-bundle ~4.4.0
+  - CONTAO_VERSION=contao/core-bundle ~4.6.0
   - CONTAO_VERSION=contao/core-bundle ~4.5.0
+  - CONTAO_VERSION=contao/core-bundle ~4.4.0
 
 matrix:
   exclude:
