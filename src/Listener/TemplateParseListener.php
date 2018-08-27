@@ -18,7 +18,6 @@ namespace ContaoBootstrap\Core\Listener;
 use Contao\Template;
 use ContaoBootstrap\Core\View\Template\Filter\PostRenderFilter;
 use ContaoBootstrap\Core\View\Template\Filter\PreRenderFilter;
-use ContaoBootstrap\Core\View\Template\Modifier;
 
 /**
  * Class TemplateModifier contains all template modifiers used by bootstrap config.
@@ -27,13 +26,6 @@ use ContaoBootstrap\Core\View\Template\Modifier;
  */
 final class TemplateParseListener
 {
-    /**
-     * Template modifier.
-     *
-     * @var Modifier
-     */
-    private $modifier;
-
     /**
      * Pre render filter.
      *
@@ -51,16 +43,13 @@ final class TemplateParseListener
     /**
      * Modifier constructor.
      *
-     * @param Modifier         $modifier         Template modifier.
      * @param PreRenderFilter  $preRenderFilter  Pre render filter.
      * @param PostRenderFilter $postRenderFilter Post render filter.
      */
     public function __construct(
-        Modifier $modifier,
         PreRenderFilter $preRenderFilter,
         PostRenderFilter $postRenderFilter
     ) {
-        $this->modifier         = $modifier;
         $this->preRenderFilter  = $preRenderFilter;
         $this->postRenderFilter = $postRenderFilter;
     }
@@ -74,10 +63,6 @@ final class TemplateParseListener
      */
     public function prepare(Template $template): void
     {
-        if ($this->modifier->supports($template->getName())) {
-            $this->modifier->prepare($template);
-        }
-
         if ($this->preRenderFilter->supports($template)) {
             $this->preRenderFilter->filter($template);
         }
@@ -93,10 +78,6 @@ final class TemplateParseListener
      */
     public function parse(string $buffer, string $templateName): string
     {
-        if ($this->modifier->supports($templateName)) {
-            $buffer = $this->modifier->parse($buffer, $templateName);
-        }
-
         if ($this->postRenderFilter->supports($templateName)) {
             $buffer = $this->postRenderFilter->filter($buffer, $templateName);
         }

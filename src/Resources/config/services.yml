@@ -10,12 +10,6 @@ services:
     arguments:
       - '%contao_bootstrap.config%'
 
-  contao_bootstrap.view.template_modifier:
-    deprecated: 'The service "%service_id%" is deprecated and will be removed in 2.0.0. Use "contao_bootstrap.view.template.pre_render_filter" and "contao_bootstrap.view.template.post_render_filter" instead.'
-    class: ContaoBootstrap\Core\View\Template\ModifierChain
-    arguments:
-      - []
-
   contao_bootstrap.view.template.pre_render_filter:
     class: ContaoBootstrap\Core\View\Template\Filter\TemplatePreRenderFilter
     arguments:
