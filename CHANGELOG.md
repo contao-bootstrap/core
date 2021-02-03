@@ -5,7 +5,14 @@ Changelog
 2.0.3 (2018-08-27)
 ------------------
 
-[Full Changelog](https://github.com/contao-bootstrap/core/compare/2.0.2...2.0.4)
+[Full Changelog](https://github.com/contao-bootstrap/core/compare/2.0.3...2.0.4)
+
+ - Remove doctrine/doctrine-bundle dependency but rely on doctrine/dbal instead
+
+2.0.3 (2018-08-27)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/core/compare/2.0.2...2.0.3)
 
  - Add Contao 4.6 to the build matrix
  - Remove leftover template modifier, marked as being removed in 2.0.0
