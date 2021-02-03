@@ -22,7 +22,7 @@
         "php":">=7.1",
         "contao/core-bundle":"^4.4",
         "contao-community-alliance/meta-palettes": "^2.0 || ^1.11",
-        "doctrine/doctrine-bundle": "~1.6"
+        "doctrine/dbal": "^2.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0",
