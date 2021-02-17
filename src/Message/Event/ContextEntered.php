@@ -17,7 +17,7 @@ namespace ContaoBootstrap\Core\Message\Event;
 
 use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Environment;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class EnterContextEvent.
