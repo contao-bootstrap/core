@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Core\Message\Command;
 
 use ContaoBootstrap\Core\Environment;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class InitializeEnvironmentEvent is emitted then bootstrap environment is initialized.

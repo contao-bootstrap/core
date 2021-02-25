@@ -18,7 +18,7 @@ namespace ContaoBootstrap\Core\Message\Command;
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\Context;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class BuildContextConfig.
