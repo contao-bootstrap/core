@@ -2,7 +2,14 @@
 Changelog
 =========
 
-2.0.3 (2018-08-27)
+2.0.5 (2021-02-25)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/core/compare/2.0.4...2.0.5)
+
+ - Define dependencies of the symfony components
+
+2.0.4 (2018-08-27)
 ------------------
 
 [Full Changelog](https://github.com/contao-bootstrap/core/compare/2.0.3...2.0.4)
