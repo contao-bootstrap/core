@@ -3,6 +3,7 @@
 /**
  * @package   contao-bootstrap
  * @author    David Molineus <david.molineus@netzmacht.de>
+ * @author    Patrick Landolt <patrick.landolt@artack.ch>
  * @license   LGPL 3+
  * @copyright 2013-2017 netzmacht creative David Molineus
  */
@@ -24,16 +25,49 @@ class ArrayUtilSpec extends ObjectBehavior
     {
         $this->merge(
             [
-                'foo' => 'bar'
+                'foo' => 'bar',
             ],
             [
                 'foo' => 'baz',
             ]
         )->shouldReturn(['foo' => 'baz']);
+        $this->merge(
+            [
+                'foo' => 'bar',
+                'a' => 'b',
+            ],
+            [
+                'foo' => 'baz',
+                'c' => 'd',
+            ]
+        )->shouldReturn(['foo' => 'baz', 'a' => 'b', 'c' => 'd']);
+
+        $this->merge(
+            [
+                'foo' => 'bar',
+                'fooBar' => [
+                    'foo' => 'bar',
+                    'fooBar' => 'baz',
+                ]
+            ],
+            [
+                'foo' => 'baz',
+                'fooBar' => [
+                    'foo' => 'a',
+                ]
+            ]
+        )->shouldReturn(['foo' => 'baz', 'fooBar' => ['foo' => 'a', 'fooBar' => 'baz']]);
     }
 
     function it_append_numeric_keys()
     {
-        $this->merge(['a', 'b'], ['c'])->shouldReturn(['a', 'b', 'c']);
+        $this->merge(['a', 'b'], ['c'])->shouldReturn(['a', 'b', 'c']); // no recursion
+        $this->merge(['a' => ['b'], 'c'], ['a' => ['d']])->shouldReturn(['a' => ['b', 'd'], 'c']); // with recursion
+    }
+
+    function it_replace_numeric_keys()
+    {
+        $this->merge(['a', 'b'], ['c'], true)->shouldReturn(['c']); // no recursion
+        $this->merge(['a' => ['b'], 'c'], ['a' => ['d']], true)->shouldReturn(['a' => ['d'], 'c']); // with recursion
     }
 }

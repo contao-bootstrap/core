@@ -6,6 +6,7 @@
  * @package    contao-bootstrap
  * @subpackage Core
  * @author     David Molineus <david.molineus@netzmacht.de>
+ * @author     Patrick Landolt <patrick.landolt@artack.ch>
  * @copyright  2017 netzmacht David Molineus. All rights reserved.
  * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
  * @filesource
@@ -83,9 +84,9 @@ final class ArrayConfig implements Config
     /**
      * {@inheritdoc}
      */
-    public function merge(array $data): Config
+    public function merge(array $data, $replaceNumericArrays = false): Config
     {
-        return new static(ArrayUtil::merge($this->config, $data));
+        return new static(ArrayUtil::merge($this->config, $data, $replaceNumericArrays));
     }
 
     /**
