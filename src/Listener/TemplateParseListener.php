@@ -31,14 +31,14 @@ final class TemplateParseListener
      *
      * @var PreRenderFilter
      */
-    private $preRenderFilter;
+    private PreRenderFilter $preRenderFilter;
 
     /**
      * Post render filter.
      *
      * @var PostRenderFilter
      */
-    private $postRenderFilter;
+    private PostRenderFilter $postRenderFilter;
 
     /**
      * Modifier constructor.

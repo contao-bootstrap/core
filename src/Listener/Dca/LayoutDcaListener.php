@@ -32,7 +32,7 @@ final class LayoutDcaListener
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * Settings constructor.

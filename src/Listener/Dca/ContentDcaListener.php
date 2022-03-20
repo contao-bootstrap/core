@@ -29,7 +29,7 @@ final class ContentDcaListener
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * Content constructor.

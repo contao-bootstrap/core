@@ -36,14 +36,14 @@ final class ConfigSubscriber implements EventSubscriberInterface
      *
      * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     /**
      * Bootstrap application config.
      *
      * @var Config
      */
-    private $config;
+    private Config $config;
 
     /**
      * ConfigSubscriber constructor.

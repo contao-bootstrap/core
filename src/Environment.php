@@ -33,7 +33,7 @@ final class Environment
      *
      * @var bool
      */
-    protected $enabled = false;
+    protected bool $enabled = false;
 
     /**
      * Bootstrap config.
@@ -47,7 +47,7 @@ final class Environment
      *
      * @var \LayoutModel
      */
-    private $layout;
+    private \LayoutModel $layout;
 
     /**
      * Current context.
@@ -61,14 +61,14 @@ final class Environment
      *
      * @var Context[]
      */
-    private $contextStack;
+    private array $contextStack;
 
     /**
      * MessageBus.
      *
      * @var MessageBus
      */
-    private $messageBus;
+    private MessageBus $messageBus;
 
     /**
      * Construct.
@@ -148,7 +148,7 @@ final class Environment
     private function switchContext(Context $context, bool $keepCurrentInStack = false): void
     {
         $command = new BuildContextConfig($this, $context, $this->config);
-        $this->messageBus->dispatch($command::NAME, $command);
+        $this->messageBus->dispatch($command, $command::NAME);
 
         if ($command->getConfig()) {
             $this->config = $command->getConfig();
@@ -161,7 +161,7 @@ final class Environment
         $this->context = $context;
 
         $event = new ContextEntered($this, $context);
-        $this->messageBus->dispatch($event::NAME, $event);
+        $this->messageBus->dispatch($event, $event::NAME);
     }
 
     /**
