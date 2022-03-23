@@ -32,14 +32,14 @@ final class HookListener
      *
      * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * The bootstrap environment.
      *
      * @var Environment
      */
-    protected $environment;
+    protected Environment $environment;
 
     /**
      * Construct.
@@ -73,7 +73,7 @@ final class HookListener
     protected function initializeEnvironment(): void
     {
         $event = new InitializeEnvironment($this->environment);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
     }
 
     /**
@@ -91,6 +91,6 @@ final class HookListener
         $environment->setEnabled($layout->layoutType == 'bootstrap');
 
         $event = new InitializeLayout($environment, $layout, $page);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
     }
 }

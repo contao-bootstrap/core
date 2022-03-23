@@ -18,7 +18,7 @@ namespace ContaoBootstrap\Core\Message\Command;
 use Contao\LayoutModel;
 use Contao\PageModel;
 use ContaoBootstrap\Core\Environment;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class InitializeLayoutEvent is emitted when page layout is initialized.
@@ -34,21 +34,21 @@ final class InitializeLayout extends Event
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * The layout model.
      *
      * @var LayoutModel
      */
-    private $layoutModel;
+    private LayoutModel $layoutModel;
 
     /**
      * The page model.
      *
      * @var PageModel
      */
-    private $pageModel;
+    private PageModel $pageModel;
 
     /**
      * Construct.

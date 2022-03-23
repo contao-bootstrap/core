@@ -29,7 +29,7 @@ final class ColorRotate
      *
      * @var array
      */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * Rotating color value.
@@ -43,14 +43,14 @@ final class ColorRotate
      *
      * @var float
      */
-    private $saturation;
+    private float $saturation;
 
     /**
      * Color Value.
      *
      * @var float
      */
-    private $value;
+    private float $value;
 
     /**
      * ColorRotate constructor.
