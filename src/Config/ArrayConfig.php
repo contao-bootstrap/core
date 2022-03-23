@@ -30,7 +30,7 @@ final class ArrayConfig implements Config
      *
      * @var array
      */
-    protected $config = array();
+    protected array $config = array();
 
     /**
      * Construct.
