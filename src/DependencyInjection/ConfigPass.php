@@ -48,6 +48,7 @@ final class ConfigPass implements CompilerPass
     {
         $config = [];
 
+        /** @psalm-suppress UndefinedDocblockClass - UnitEnum is PHP 8 onlyFix  */
         foreach ((array) $container->getParameter('kernel.bundles') as $bundleClass) {
             $refClass   = new \ReflectionClass($bundleClass);
             $bundleDir  = dirname($refClass->getFileName());
