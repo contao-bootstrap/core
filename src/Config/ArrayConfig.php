@@ -30,14 +30,14 @@ final class ArrayConfig implements Config
      *
      * @var array
      */
-    protected array $config = array();
+    protected array $config = [];
 
     /**
      * Construct.
      *
      * @param array $config Initial config values.
      */
-    public function __construct(array $config = array())
+    public function __construct(array $config = [])
     {
         $this->config = $config;
     }
@@ -64,7 +64,7 @@ final class ArrayConfig implements Config
     /**
      * {@inheritdoc}
      */
-    public function has($key)
+    public function has($key): bool
     {
         $chunks = $this->path($key);
         $value  = $this->config;
@@ -83,9 +83,9 @@ final class ArrayConfig implements Config
     /**
      * {@inheritdoc}
      */
-    public function merge(array $data): Config
+    public function merge(array $config): Config
     {
-        return new static(ArrayUtil::merge($this->config, $data));
+        return new self(ArrayUtil::merge($this->config, $config));
     }
 
     /**

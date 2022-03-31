@@ -34,9 +34,9 @@ final class ColorRotate
     /**
      * Rotating color value.
      *
-     * @var string
+     * @var float
      */
-    private $rotatingColor;
+    private float $rotatingColor;
 
     /**
      * Initial saturation.
@@ -55,9 +55,9 @@ final class ColorRotate
     /**
      * ColorRotate constructor.
      *
-     * @param float|string $rotatingColor Initial hue value.
-     * @param float        $saturation    Saturation.
-     * @param float        $value         Value.
+     * @param float $rotatingColor Initial hue value.
+     * @param float $saturation    Saturation.
+     * @param float $value         Value.
      */
     public function __construct(float $rotatingColor = .5, float $saturation = 0.7, float $value = .7)
     {
@@ -79,7 +79,7 @@ final class ColorRotate
         if (!isset($this->cache[$identifier])) {
             $this->cache[$identifier] = $this->rotateColor();
         }
-        
+
         return $this->cache[$identifier];
     }
 
@@ -129,25 +129,25 @@ final class ColorRotate
         // Forth
         switch ($i) {
             case 0:
-                list($red, $green, $blue) = array($value, $k, $m);
+                [$red, $green, $blue] = array($value, $k, $m);
                 break;
             case 1:
-                list($red, $green, $blue) = array($n, $value, $m);
+                [$red, $green, $blue] = array($n, $value, $m);
                 break;
             case 2:
-                list($red, $green, $blue) = array($m, $value, $k);
+                [$red, $green, $blue] = array($m, $value, $k);
                 break;
             case 3:
-                list($red, $green, $blue) = array($m, $n, $value);
+                [$red, $green, $blue] = array($m, $n, $value);
                 break;
             case 4:
-                list($red, $green, $blue) = array($k, $m, $value);
+                [$red, $green, $blue] = array($k, $m, $value);
                 break;
             case 5:
             case 6:
                 // for when $H=1 is given
             default:
-                list($red, $green, $blue) = array($value, $m, $n);
+                [$red, $green, $blue] = array($value, $m, $n);
                 break;
         }
 

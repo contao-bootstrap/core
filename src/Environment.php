@@ -47,14 +47,14 @@ final class Environment
      *
      * @var LayoutModel|null
      */
-    private ?LayoutModel $layout;
+    private ?LayoutModel $layout = null;
 
     /**
      * Current context.
      *
      * @var Context|null
      */
-    private ?Context $context;
+    private ?Context $context = null;
 
     /**
      * List of contexts.
@@ -150,14 +150,11 @@ final class Environment
         $command = new BuildContextConfig($this, $context, $this->config);
         $this->messageBus->dispatch($command, $command::NAME);
 
-        if ($command->getConfig()) {
-            $this->config = $command->getConfig();
-        }
-
         if ($keepCurrentInStack && $this->context) {
             $this->contextStack[] = $this->context;
         }
 
+        $this->config  = $command->getConfig();
         $this->context = $context;
 
         $event = new ContextEntered($this, $context);

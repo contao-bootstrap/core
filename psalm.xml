@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <psalm
-        errorLevel="8"
-        resolveFromConfigFile="true"
+        errorLevel="3"
         hideExternalErrors="true"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
@@ -12,23 +11,19 @@
     </projectFiles>
 
     <issueHandlers>
-        <InternalMethod>
+        <UndefinedClass>
             <errorLevel type="suppress">
-                <referencedMethod name="Contao\CoreBundle\Framework\Adapter::__call"/>
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::getAdapter"/>
+                <referencedClass name="MultiColumnWizard"/>
             </errorLevel>
-        </InternalMethod>
-        <DeprecatedMethod>
+        </UndefinedClass>
+        <UndefinedDocblockClass>
             <errorLevel type="suppress">
-                <!-- We still support Contao 4.9 -->
-                <referencedMethod name="Contao\Controller::addImageToTemplate"/>
+                <referencedClass name="MultiColumnWizard"/>
             </errorLevel>
-        </DeprecatedMethod>
+        </UndefinedDocblockClass>
     </issueHandlers>
 
     <universalObjectCrates>
-        <class name="Contao\BackendTemplate"/>
-        <class name="Contao\File"/>
-        <class name="Contao\FrontendTemplate"/>
+        <class name="Contao\Database\Result"/>
     </universalObjectCrates>
 </psalm>

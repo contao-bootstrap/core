@@ -23,6 +23,8 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use MultiColumnWizard;
+use PhpParser\Node\Expr\AssignOp\Mul;
+use function assert;
 
 /**
  * Class Module is used for tl_module.
@@ -34,13 +36,13 @@ final class ModuleDcaListener
     /**
      * Get all templates. A templatePrefix can be defined using eval.templatePrefix.
      *
-     * @param DataContainer $dataContainer The data container driver.
+     * @param DataContainer|MultiColumnWizard $dataContainer The data container driver.
      *
      * @return array
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getTemplates(DataContainer $dataContainer): array
+    public function getTemplates($dataContainer): array
     {
         $config = array();
         $prefix = '';
@@ -89,7 +91,7 @@ final class ModuleDcaListener
             StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']),
             StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])),
             $dataContainer->field,
-            $dataContainer->field . ((Input::get('act') == 'editAll') ? '_' . $dataContainer->id : ''),
+            $dataContainer->field . ((Input::get('act') === 'editAll') ? '_' . $dataContainer->id : ''),
             Image::getHtml(
                 'pickpage.gif',
                 $GLOBALS['TL_LANG']['MSC']['pagepicker'],
@@ -107,7 +109,9 @@ final class ModuleDcaListener
      */
     public function getAllArticles(): array
     {
-        $user     = BackendUser::getInstance();
+        $user = BackendUser::getInstance();
+        assert($user instanceof BackendUser);
+
         $pids     = array();
         $articles = array();
 
@@ -123,7 +127,7 @@ final class ModuleDcaListener
                 $pids   = array_merge($pids, Database::getInstance()->getChildRecords($id, 'tl_page'));
             }
 
-            if (empty($pids)) {
+            if ($pids === []) {
                 return $articles;
             }
 

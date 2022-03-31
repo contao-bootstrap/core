@@ -30,7 +30,7 @@ class ContaoBootstrapCoreBundle extends Bundle
     /**
      * {@inheritdoc}
      */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ConfigPass());
         $container->addCompilerPass(new TemplateFilterPass());

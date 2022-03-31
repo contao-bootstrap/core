@@ -65,7 +65,7 @@ tasks:
     - phpcpd
     - phpmd
     - phpcs
-#    - psalm
+    - psalm
     - phpspec
 
   default:

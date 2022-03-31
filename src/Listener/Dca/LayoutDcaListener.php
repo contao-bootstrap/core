@@ -66,7 +66,8 @@ final class LayoutDcaListener
         $layout = LayoutModel::findByPk(Input::get('id'));
 
         // dynamically render palette so that extensions can plug into default palette
-        if ($layout->layoutType == 'bootstrap') {
+        /** @psalm-suppress UndefinedMagicPropertyFetch */
+        if ($layout && $layout->layoutType === 'bootstrap') {
             $metaPalettes                             = & $GLOBALS['TL_DCA']['tl_layout']['metapalettes'];
             $metaPalettes['__base__']                 = $this->getMetaPaletteOfPalette('tl_layout');
             $metaPalettes['default extends __base__'] = $this->environment

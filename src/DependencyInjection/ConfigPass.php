@@ -31,7 +31,7 @@ final class ConfigPass implements CompilerPass
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $this->loadConfigFromBundles($container);
         $this->setConfigTypesArgument($container);
@@ -44,11 +44,11 @@ final class ConfigPass implements CompilerPass
      *
      * @return void
      */
-    private function loadConfigFromBundles(ContainerBuilder $container)
+    private function loadConfigFromBundles(ContainerBuilder $container): void
     {
         $config = [];
 
-        foreach ($container->getParameter('kernel.bundles') as $bundleClass) {
+        foreach ((array) $container->getParameter('kernel.bundles') as $bundleClass) {
             $refClass   = new \ReflectionClass($bundleClass);
             $bundleDir  = dirname($refClass->getFileName());
             $configFile = $bundleDir . '/Resources/config/contao_bootstrap.yml';
