@@ -55,12 +55,6 @@
     "components/bootstrap": "Bootstrap Components package",
     "twbs/bootstrap": "Official Bootstrap package"
   },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "/home/netzmacht/Daten/Projekte/Entwicklung/vcs/netzmacht/phpcq-phpspec-plugin"
-    }
-  ],
   "autoload": {
     "psr-4": {
       "ContaoBootstrap\\Core\\": "src/"
