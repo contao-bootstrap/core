@@ -18,7 +18,7 @@ namespace ContaoBootstrap\Core\Message\Command;
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\Context;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class BuildContextConfig.
@@ -34,21 +34,21 @@ final class BuildContextConfig extends Event
      *
      * @var Config
      */
-    private $config;
+    private Config $config;
 
     /**
      * Bootstrap config.
      *
      * @var Context
      */
-    private $context;
+    private Context $context;
 
     /**
      * Bootstrap environment.
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * BuildContextConfig constructor.

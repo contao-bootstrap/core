@@ -17,7 +17,7 @@ namespace ContaoBootstrap\Core\Message\Event;
 
 use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Environment;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class EnterContextEvent.
@@ -33,14 +33,14 @@ final class ContextEntered extends Event
      *
      * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * Environment context.
      *
      * @var Context
      */
-    private $context;
+    private Context $context;
 
     /**
      * EnterContextEvent constructor.

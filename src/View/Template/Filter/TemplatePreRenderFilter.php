@@ -29,7 +29,7 @@ class TemplatePreRenderFilter implements PreRenderFilter
      *
      * @var PreRenderFilter[]
      */
-    private $filters;
+    private array $filters;
 
     /**
      * TemplatePreRenderFilter constructor.

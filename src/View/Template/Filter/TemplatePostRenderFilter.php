@@ -27,7 +27,7 @@ class TemplatePostRenderFilter implements PostRenderFilter
      *
      * @var PostRenderFilter[]
      */
-    private $filters;
+    private array $filters;
 
     /**
      * TemplatePostRenderFilter constructor.

@@ -27,7 +27,7 @@ final class ThemeContext extends AbstractContext
      *
      * @var int
      */
-    private $themeId;
+    private int $themeId;
 
     /**
      * ThemeContext constructor.
