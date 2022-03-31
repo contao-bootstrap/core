@@ -46,7 +46,7 @@
     "phpcq/coding-standard": "^2.1.2",
     "phpcq/plugin-api": "1.x-dev",
     "phpcq/runner-bootstrap": "1.x-dev",
-    "phpspec/phpspec": "^7.0"
+    "phpspec/phpspec": "^6.3.0 || ^7.0"
   },
   "conflict": {
     "netzmacht/contao-bootstrap": "*"
