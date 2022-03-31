@@ -61,11 +61,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
 
+      - name: Update phpcq
+        run: $GITHUB_WORKSPACE/vendor/bin/phpcq self-update --unsigned
+
       - name: Install phpcq toolchain
-        run: $GITHUB_WORKSPACE/phpcq ${{ matrix.phpcq_install }} -v
+        run: $GITHUB_WORKSPACE/vendor/bin/phpcq ${{ matrix.phpcq_install }} -v
 
       - name: Run tests
-        run: $GITHUB_WORKSPACE/phpcq run -o github-action -o default ${{ matrix.phpcq_flags }}
+        run: $GITHUB_WORKSPACE/vendor/bin/phpcq run -o github-action -o default ${{ matrix.phpcq_flags }}
 
       - name: Upload build directory to artifact
         uses: actions/upload-artifact@v2
