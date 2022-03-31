@@ -1,69 +1,93 @@
 {
-    "name":"contao-bootstrap/core",
-    "description":"Core of Contao Bootstrap extension",
-    "keywords":["bootstrap", "contao", "core"],
-    "type":"contao-bundle",
-    "license":"LGPL-3.0-or-later",
-    "authors":[
-        {
-            "name":"David Molineus",
-            "email":"mail@netzmacht.de",
-            "homepage":"https://netzmacht.de",
-            "role":"Developer"
-        },
-        {
-            "name": "Alexander Kehr",
-            "email": "info@kehr-solutions.de",
-            "homepage": "https://www.kehr-solutions.de",
-            "role": "Developer"
-        }
-    ],
-    "support":{
-        "email":"mail@netzmacht.de",
-        "issues":"https://github.com/contao-bootstrap/core/issues",
-        "wiki":"http://contao-bootstrap.netzmacht.de",
-        "source":"https://github.com/contao-bootstrap/core"
+  "name": "contao-bootstrap/core",
+  "description": "Core of Contao Bootstrap extension",
+  "license": "LGPL-3.0-or-later",
+  "type": "contao-bundle",
+  "keywords": [
+    "bootstrap",
+    "contao",
+    "core"
+  ],
+  "authors": [
+    {
+      "name": "David Molineus",
+      "email": "mail@netzmacht.de",
+      "homepage": "https://netzmacht.de",
+      "role": "Developer"
     },
-    "require":{
-        "php":"^7.4",
-        "contao/core-bundle":"^4.9",
-        "contao-community-alliance/meta-palettes": "^2.0 || ^1.11",
-        "symfony/config": "~4.4 || ^5.4",
-        "symfony/event-dispatcher": "~4.4 || ^5.4",
-        "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
-        "symfony/dependency-injection": "~4.4 || ^5.4",
-        "symfony/http-kernel": "~4.4 || ^5.4",
-        "doctrine/dbal": "^2.11 || ^3.3"
-    },
-    "require-dev": {
-        "contao/manager-plugin": "^2.0",
-        "phpcq/all-tasks": "^1.2",
-        "phpspec/phpspec": "^4.0"
-    },
-    "conflict": {
-        "netzmacht/contao-bootstrap": "*"
-    },
-    "suggest": {
-        "twbs/bootstrap": "Official Bootstrap package",
-        "components/bootstrap": "Bootstrap Components package"
-    },
-    "autoload": {
-        "psr-4": { "ContaoBootstrap\\Core\\": "src/" }
-    },
-    "extra":{
-        "branch-alias": {
-            "dev-master": "2.0.x-dev",
-            "dev-develop": "2.1.x-dev",
-            "dev-support/1.x": "1.1.x-dev"
-        },
-        "contao": {
-            "transifex": {
-                "project": "contao-bootstrap",
-                "prefix": "core-",
-                "languages_cto": "src/Resources/contao/languages",
-                "languages_tx": ".tx"
-            }
-        },
-        "contao-manager-plugin": "ContaoBootstrap\\Core\\ContaoManager\\Plugin"
+    {
+      "name": "Alexander Kehr",
+      "email": "info@kehr-solutions.de",
+      "homepage": "https://www.kehr-solutions.de",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "mail@netzmacht.de",
+    "issues": "https://github.com/contao-bootstrap/core/issues",
+    "wiki": "http://contao-bootstrap.netzmacht.de",
+    "source": "https://github.com/contao-bootstrap/core"
+  },
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "contao-community-alliance/meta-palettes": "^2.0 || ^1.11",
+    "contao/core-bundle": "^4.9",
+    "doctrine/dbal": "^2.11 || ^3.3",
+    "symfony/config": "^4.4 || ^5.4",
+    "symfony/dependency-injection": "^4.4 || ^5.4",
+    "symfony/event-dispatcher": "^4.4 || ^5.4",
+    "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
+    "symfony/http-kernel": "^4.4 || ^5.4",
+    "symfony/yaml": "^4.4 || ^5.4"
+  },
+  "require-dev": {
+    "contao/manager-plugin": "^2.0",
+    "netzmacht/phpspec-phpcq-plugin": "*@dev",
+    "phpcq/coding-standard": "^2.1.2",
+    "phpcq/plugin-api": "1.x-dev",
+    "phpcq/runner-bootstrap": "1.x-dev",
+    "phpspec/phpspec": "^7.0"
+  },
+  "conflict": {
+    "netzmacht/contao-bootstrap": "*"
+  },
+  "suggest": {
+    "components/bootstrap": "Bootstrap Components package",
+    "twbs/bootstrap": "Official Bootstrap package"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/home/netzmacht/Daten/Projekte/Entwicklung/vcs/netzmacht/phpcq-phpspec-plugin"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "ContaoBootstrap\\Core\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "contao-components/installer": false,
+      "ocramius/package-versions": true,
+      "contao/manager-plugin": true
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-develop": "2.1.x-dev",
+      "dev-master": "2.0.x-dev",
+      "dev-support/1.x": "1.1.x-dev"
+    },
+    "contao": {
+      "transifex": {
+        "languages_cto": "src/Resources/contao/languages",
+        "languages_tx": ".tx",
+        "prefix": "core-",
+        "project": "contao-bootstrap"
+      }
+    },
+    "contao-manager-plugin": "ContaoBootstrap\\Core\\ContaoManager\\Plugin"
+  }
 }

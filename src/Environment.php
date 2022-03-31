@@ -45,9 +45,9 @@ final class Environment
     /**
      * Layout model of current page.
      *
-     * @var \LayoutModel
+     * @var LayoutModel
      */
-    private \LayoutModel $layout;
+    private LayoutModel $layout;
 
     /**
      * Current context.

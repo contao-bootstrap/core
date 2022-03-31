@@ -11,7 +11,10 @@
  * @filesource
  */
 
-// define default bootstrap palette
+/*
+ * define default bootstrap palette
+ */
+
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_default_'] = array
 (
     'type'      => array('type', 'headline'),
@@ -22,13 +25,19 @@ $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_default_'] = array
     'invisible' => array(':hide', 'invisible', 'start', 'stop'),
 );
 
-// bootstrap empty palettes
+/*
+ * bootstrap empty palettes
+ */
+
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['_bootstrap_empty_'] = array
 (
     'type' => array('type'),
 );
 
-// Bootstrap parent palette.
+/*
+ * Bootstrap parent palette.
+ */
+
 $GLOBALS['TL_DCA']['tl_content']['metapalettes']['bootstrap_parent extends _bootstrap_empty_'] = array
 (
     '+type' => array('bootstrap_parentId'),
@@ -61,5 +70,5 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['bootstrap_dataAttributes'] = array
             ),
         )
     ),
-    'sql'       => "blob NULL"
+    'sql'       => 'blob NULL'
 );

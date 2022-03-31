@@ -11,17 +11,19 @@
  * @filesource
  */
 
-/**
+/*
  * Config
  */
+
 $GLOBALS['TL_DCA']['tl_layout']['config']['palettes_callback'][] = array(
     'contao_bootstrap.core.listener.layout_dca',
     'generatePalette'
 );
 
-/**
+/*
  * Fields
  */
+
 $GLOBALS['TL_DCA']['tl_layout']['fields']['name']['eval']['tl_class'] .= ' w50';
 
 $GLOBALS['TL_DCA']['tl_layout']['fields']['layoutType'] = array

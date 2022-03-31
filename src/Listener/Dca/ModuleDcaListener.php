@@ -21,6 +21,7 @@ use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
+use Contao\StringUtil;
 use MultiColumnWizard;
 
 /**
@@ -61,7 +62,7 @@ final class ModuleDcaListener
             $prefix = $config['templatePrefix'];
         }
 
-        return \Controller::getTemplateGroup($prefix);
+        return Controller::getTemplateGroup($prefix);
     }
 
     /**
@@ -85,10 +86,10 @@ final class ModuleDcaListener
             $dataContainer->table,
             $dataContainer->field,
             str_replace(array('{{link_url::', '}}'), '', $dataContainer->value),
-            specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']),
-            specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])),
+            StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']),
+            StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])),
             $dataContainer->field,
-            $dataContainer->field . ((\Input::get('act') == 'editAll') ? '_' . $dataContainer->id : ''),
+            $dataContainer->field . ((Input::get('act') == 'editAll') ? '_' . $dataContainer->id : ''),
             Image::getHtml(
                 'pickpage.gif',
                 $GLOBALS['TL_LANG']['MSC']['pagepicker'],
@@ -160,7 +161,7 @@ final class ModuleDcaListener
         $modules = array();
         $query   = 'SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id';
 
-        if (Input::get('table') == 'tl_module' && \Input::get('act') == 'edit') {
+        if (Input::get('table') == 'tl_module' && Input::get('act') == 'edit') {
             $query .= ' WHERE m.id != ?';
         }
 

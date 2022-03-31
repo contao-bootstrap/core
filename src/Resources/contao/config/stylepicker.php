@@ -14,9 +14,11 @@
 $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
     'label'   => 'Bootstrap 3',
     'classes' => array(
-        /**
+
+        /*
          * Grid
          */
+
         'container'        => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['container'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['container'][1],
@@ -32,9 +34,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['row'][1],
             'ce'          => 'semantic_html5',
         ),
-        /**
+
+        /*
          * Text
          */
+
         'text-left'        => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['text-left'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['text-left'][1],
@@ -65,9 +69,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['small'][1],
             'ce'          => '*',
         ),
-        /**
+
+        /*
          * Headline
          */
+
         'h1'               => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['h1'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['h1'][1],
@@ -98,9 +104,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['h6'][1],
             'ce'          => '*',
         ),
-        /**
+
+        /*
          * Table
          */
+
         'table-striped'    => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['table-striped'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['table-striped'][1],
@@ -126,9 +134,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['table-responsive'][1],
             'ce'          => 'table',
         ),
-        /**
+
+        /*
          * Buttons
          */
+
         'btn-lg'           => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['btn-lg'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['btn-lg'][1],
@@ -144,9 +154,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['btn-xs'][1],
             'ce'          => array('bootstrap_button', 'bootstrap_buttons'),
         ),
-        /**
+
+        /*
          * Images
          */
+
         'img-responsive'   => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['img-responsive'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['img-responsive'][1],
@@ -167,9 +179,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['img-thumbnail'][1],
             'ce'          => '*',
         ),
-        /**
+
+        /*
          * Contextual colors
          */
+
         'text-muted'       => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['text-muted'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['text-muted'][1],
@@ -200,9 +214,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['text-danger'][1],
             'ce'          => '*',
         ),
-        /**
+
+        /*
          * Contextual backgrounds
          */
+
         'bg-primary'       => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['bg-primary'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['bg-primary'][1],
@@ -228,9 +244,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['bg-danger'][1],
             'ce'          => '*',
         ),
-        /**
+
+        /*
          * Floating
          */
+
         'pull-left'        => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['pull-left'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['pull-left'][1],
@@ -246,9 +264,11 @@ $GLOBALS['STYLEPICKER_PRESET']['bootstrap'] = array(
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['center-block'][1],
             'ce'          => '*',
         ),
-        /**
+
+        /*
          * Accessibility
          */
+
         'sr-only'          => array(
             'title'       => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['sr-only'][0],
             'description' => &$GLOBALS['TL_LANG']['BOOTSTRAP']['stylepicker']['sr-only'][1],
