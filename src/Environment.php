@@ -45,23 +45,23 @@ final class Environment
     /**
      * Layout model of current page.
      *
-     * @var LayoutModel
+     * @var LayoutModel|null
      */
-    private LayoutModel $layout;
+    private ?LayoutModel $layout;
 
     /**
      * Current context.
      *
-     * @var Context
+     * @var Context|null
      */
-    private $context;
+    private ?Context $context;
 
     /**
      * List of contexts.
      *
      * @var Context[]
      */
-    private array $contextStack;
+    private array $contextStack = [];
 
     /**
      * MessageBus.
