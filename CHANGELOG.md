@@ -19,6 +19,7 @@ Unreleased
 ### Removed
 
  - Drop support for stylepicker4ward
+ - Removed field `tl_content.bootstrap_dataAttributes`
 
 
 2.0.5 (2021-02-25)
