@@ -5,6 +5,10 @@ Changelog
 Unreleased
 ----------
 
+### Added
+
+ - Add support for `contao_bootstrap.yaml` configuration files
+
 ### Changed
 
  - Bump minimum PHP version to 7.4

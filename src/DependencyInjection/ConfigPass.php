@@ -35,10 +35,16 @@ final class ConfigPass implements CompilerPass
 
         /** @psalm-suppress UndefinedDocblockClass - UnitEnum is PHP 8 onlyFix  */
         foreach ((array) $container->getParameter('kernel.bundles') as $bundleClass) {
-            $refClass   = new ReflectionClass($bundleClass);
-            $bundleDir  = dirname($refClass->getFileName());
-            $configFile = $bundleDir . '/Resources/config/contao_bootstrap.yml';
+            $refClass  = new ReflectionClass($bundleClass);
+            $bundleDir = dirname($refClass->getFileName());
 
+            $configFile = $bundleDir . '/Resources/config/contao_bootstrap.yaml';
+            if (file_exists($configFile)) {
+                $config = ArrayUtil::merge($config, Yaml::parse(file_get_contents($configFile)));
+                continue;
+            }
+
+            $configFile = $bundleDir . '/Resources/config/contao_bootstrap.yml';
             if (! file_exists($configFile)) {
                 continue;
             }
