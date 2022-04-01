@@ -8,50 +8,52 @@ use ContaoBootstrap\Core\Environment\ApplicationContext;
 use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class ThemeContextSpec extends ObjectBehavior
 {
-    const THEME_ID = 4;
+    public const THEME_ID = 4;
 
-    function let()
+    public function let(): void
     {
-        $this->beConstructedThrough('forTheme', [static::THEME_ID]);
+        $this->beConstructedThrough('forTheme', [self::THEME_ID]);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ThemeContext::class);
     }
 
-    function it_is_a_context()
+    public function it_is_a_context(): void
     {
         $this->shouldImplement(Context::class);
     }
 
-    function it_provides_theme_id()
+    public function it_provides_theme_id(): void
     {
         $this->getThemeId()->shouldReturn(self::THEME_ID);
     }
 
-    function it_supports_application_context()
+    public function it_supports_application_context(): void
     {
         $this->supports(new ApplicationContext())->shouldReturn(true);
     }
 
-    function it_supports_same_theme_context()
+    public function it_supports_same_theme_context(): void
     {
         $context = ThemeContext::forTheme(self::THEME_ID);
         $this->supports($context)->shouldReturn(true);
     }
 
-    function it_does_not_support_other_theme_context()
+    public function it_does_not_support_other_theme_context(): void
     {
         $context = ThemeContext::forTheme(5);
         $this->supports($context)->shouldReturn(false);
     }
 
-    function it_serializes_to_string()
+    public function it_serializes_to_string(): void
     {
         $this->__toString()->shouldReturn('theme:' . self::THEME_ID);
     }

@@ -4,6 +4,7 @@ phpcq:
     - https://phpcq.github.io/repository/repository.json
   directories:
     - src
+    - spec
   artifact: .phpcq/build
 
   plugins:
