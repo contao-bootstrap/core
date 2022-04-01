@@ -13,7 +13,7 @@ final class ApplicationContext extends AbstractContext
 
     public static function create(): self
     {
-        return new static();
+        return new self();
     }
 
     public function __toString(): string

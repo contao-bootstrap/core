@@ -10,7 +10,7 @@ use function is_numeric;
 /**
  * Class ArrayUtil provides a safe array merge method.
  *
- * It does not creates duplicates as the php array_merge method does.
+ * It does not create duplicates as the php array_merge method does.
  */
 final class ArrayUtil
 {
@@ -21,14 +21,16 @@ final class ArrayUtil
      * @param array<array-key,mixed> $array2 Second array.
      *
      * @return array<array-key,mixed>
+     *
+     * @noinspection PhpPluralMixedCanBeReplacedWithArrayInspection
      */
     public static function merge(array $array1, array $array2): array
     {
         $merged = $array1;
 
-        foreach ($array2 as $key => &$value) {
+        foreach ($array2 as $key => $value) {
             if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = static::merge($merged[$key], $value);
+                $merged[$key] = self::merge($merged[$key], $value);
             } elseif (is_numeric($key)) {
                 $merged[] = $value;
             } else {

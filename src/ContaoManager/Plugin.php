@@ -15,7 +15,7 @@ final class Plugin implements BundlePluginInterface
     /**
      * {@inheritdoc}
      */
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         $bundleConfig = BundleConfig::create(ContaoBootstrapCoreBundle::class)
             ->setLoadAfter([ContaoCoreBundle::class]);

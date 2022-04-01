@@ -47,7 +47,7 @@ final class TemplateFilterPass implements CompilerPassInterface
     }
 
     /**
-     * Register a tagged services to an definition argument. Returns false if service does not exist.
+     * Register a tagged services to a definition argument. Returns false if service does not exist.
      *
      * @param ContainerBuilder $container     Container builder.
      * @param string           $definitionId  Service definition id.
@@ -58,10 +58,10 @@ final class TemplateFilterPass implements CompilerPassInterface
         ContainerBuilder $container,
         string $definitionId,
         string $tagName,
-        $argumentIndex = 0
-    ): bool {
+        int $argumentIndex = 0
+    ): void {
         if (! $container->has($definitionId)) {
-            return false;
+            return;
         }
 
         $definition       = $container->findDefinition($definitionId);
@@ -73,7 +73,5 @@ final class TemplateFilterPass implements CompilerPassInterface
         }
 
         $definition->replaceArgument(0, $services);
-
-        return true;
     }
 }

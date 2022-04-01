@@ -41,7 +41,7 @@ final class ThemeContext extends AbstractContext
      */
     public static function forTheme(int $themeId): self
     {
-        return new static($themeId);
+        return new self($themeId);
     }
 
     /**
