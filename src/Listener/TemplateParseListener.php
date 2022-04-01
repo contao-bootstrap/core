@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener;
@@ -19,30 +8,19 @@ use Contao\Template;
 use ContaoBootstrap\Core\View\Template\Filter\PostRenderFilter;
 use ContaoBootstrap\Core\View\Template\Filter\PreRenderFilter;
 
-/**
- * Class TemplateModifier contains all template modifiers used by bootstrap config.
- *
- * @package ContaoBootstrap
- */
 final class TemplateParseListener
 {
     /**
      * Pre render filter.
-     *
-     * @var PreRenderFilter
      */
     private PreRenderFilter $preRenderFilter;
 
     /**
      * Post render filter.
-     *
-     * @var PostRenderFilter
      */
     private PostRenderFilter $postRenderFilter;
 
     /**
-     * Modifier constructor.
-     *
      * @param PreRenderFilter  $preRenderFilter  Pre render filter.
      * @param PostRenderFilter $postRenderFilter Post render filter.
      */
@@ -58,14 +36,14 @@ final class TemplateParseListener
      * Execute all registered template modifiers.
      *
      * @param Template $template Current template.
-     *
-     * @return void
      */
     public function prepare(Template $template): void
     {
-        if ($this->preRenderFilter->supports($template)) {
-            $this->preRenderFilter->filter($template);
+        if (! $this->preRenderFilter->supports($template)) {
+            return;
         }
+
+        $this->preRenderFilter->filter($template);
     }
 
     /**
@@ -73,8 +51,6 @@ final class TemplateParseListener
      *
      * @param string $buffer       Parsed template.
      * @param string $templateName Name of the template.
-     *
-     * @return string
      */
     public function parse(string $buffer, string $templateName): string
     {

@@ -1,36 +1,26 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Util;
+
+use function is_array;
+use function is_numeric;
 
 /**
  * Class ArrayUtil provides a safe array merge method.
  *
  * It does not creates duplicates as the php array_merge method does.
- *
- * @package ContaoBootstrap\Core\Util
  */
 final class ArrayUtil
 {
     /**
      * Merge two arrays recursively.
      *
-     * @param array $array1 First array.
-     * @param array $array2 Second array.
+     * @param array<array-key,mixed> $array1 First array.
+     * @param array<array-key,mixed> $array2 Second array.
      *
-     * @return array
+     * @return array<array-key,mixed>
      */
     public static function merge(array $array1, array $array2): array
     {

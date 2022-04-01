@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener;
@@ -22,24 +11,15 @@ use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\InitializeLayout;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Hooks contains hooks being called from Contao.
- *
- * @package ContaoBootstrap\Core\Contao
- */
 final class HookListener
 {
     /**
      * The event dispatcher.
-     *
-     * @var EventDispatcherInterface
      */
     protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * The bootstrap environment.
-     *
-     * @var Environment
      */
     protected Environment $environment;
 
@@ -59,8 +39,6 @@ final class HookListener
 
     /**
      * Initialize bootstrap at initialize system hook.
-     *
-     * @return void
      */
     public function initializeSystem(): void
     {
@@ -69,8 +47,6 @@ final class HookListener
 
     /**
      * Initialize bootstrap environment.
-     *
-     * @return void
      */
     protected function initializeEnvironment(): void
     {
@@ -83,8 +59,6 @@ final class HookListener
      *
      * @param PageModel   $page   Current page.
      * @param LayoutModel $layout Page layout.
-     *
-     * @return void
      */
     public function initializeLayout(PageModel $page, LayoutModel $layout): void
     {

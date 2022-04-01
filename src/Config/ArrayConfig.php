@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Config;
@@ -18,24 +7,24 @@ namespace ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Util\ArrayUtil;
 
-/**
- * Class Config.
- *
- * @package ContaoBootstrap
- */
+use function array_key_exists;
+use function array_shift;
+use function explode;
+use function is_string;
+
 final class ArrayConfig implements Config
 {
     /**
      * Config values.
      *
-     * @var array
+     * @var array<string,mixed>
      */
     protected array $config = [];
 
     /**
      * Construct.
      *
-     * @param array $config Initial config values.
+     * @param array<string,mixed> $config Initial config values.
      */
     public function __construct(array $config = [])
     {
@@ -51,7 +40,7 @@ final class ArrayConfig implements Config
         $value  = $this->config;
 
         while (($chunk = array_shift($chunks)) !== null) {
-            if (!array_key_exists($chunk, $value)) {
+            if (! array_key_exists($chunk, $value)) {
                 return $default;
             }
 
@@ -70,7 +59,7 @@ final class ArrayConfig implements Config
         $value  = $this->config;
 
         while (($chunk = array_shift($chunks)) !== null) {
-            if (!array_key_exists($chunk, $value)) {
+            if (! array_key_exists($chunk, $value)) {
                 return false;
             }
 
@@ -93,9 +82,9 @@ final class ArrayConfig implements Config
      *
      * @param mixed $path Passed path value.
      *
-     * @return array
+     * @return list<string>
      */
-    private function path($path)
+    private function path($path): array
     {
         if (is_string($path)) {
             return explode('.', $path);

@@ -1,15 +1,6 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
+declare(strict_types=1);
 
 namespace ContaoBootstrap\Core;
 
@@ -17,42 +8,31 @@ use Contao\LayoutModel;
 use ContaoBootstrap\Core\Config\ArrayConfig;
 use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Exception\LeavingContextFailed;
-use ContaoBootstrap\Core\Message\Event\ContextEntered;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
+use ContaoBootstrap\Core\Message\Event\ContextEntered;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as MessageBus;
 
-/**
- * Class Environment contain all things being provided in the bootstrap environment.
- *
- * @package ContaoBootstrap\Core
- */
+use function array_pop;
+
 final class Environment
 {
     /**
      * Bootstrap enabled state.
-     *
-     * @var bool
      */
     protected bool $enabled = false;
 
     /**
      * Bootstrap config.
-     *
-     * @var Config
      */
-    protected $config;
+    protected Config $config;
 
     /**
      * Layout model of current page.
-     *
-     * @var LayoutModel|null
      */
     private ?LayoutModel $layout = null;
 
     /**
      * Current context.
-     *
-     * @var Context|null
      */
     private ?Context $context = null;
 
@@ -65,8 +45,6 @@ final class Environment
 
     /**
      * MessageBus.
-     *
-     * @var MessageBus
      */
     private MessageBus $messageBus;
 
@@ -83,8 +61,6 @@ final class Environment
 
     /**
      * Get bootstrap config.
-     *
-     * @return Config
      */
     public function getConfig(): Config
     {
@@ -95,8 +71,6 @@ final class Environment
      * Enter a context.
      *
      * @param Context $context Context.
-     *
-     * @return void
      */
     public function enterContext(Context $context): void
     {
@@ -113,17 +87,16 @@ final class Environment
      *
      * @param Context|null $currentContext Optional expected current context. Won't do anything if context not match.
      *
-     * @return void
      * @throws LeavingContextFailed When context stack is empty.
      */
     public function leaveContext(?Context $currentContext = null): void
     {
-        if (!$this->context) {
+        if (! $this->context) {
             throw LeavingContextFailed::noContext();
         }
 
         // Not in expected context. Just quit.
-        if ($currentContext && !$currentContext->match($this->context)) {
+        if ($currentContext && ! $currentContext->match($this->context)) {
             return;
         }
 
@@ -142,8 +115,6 @@ final class Environment
      *
      * @param Context $context            New context.
      * @param bool    $keepCurrentInStack If true current context is added to the stack.
-     *
-     * @return void
      */
     private function switchContext(Context $context, bool $keepCurrentInStack = false): void
     {
@@ -163,8 +134,6 @@ final class Environment
 
     /**
      * Consider if bootstrap theme is enabled.
-     *
-     * @return bool
      */
     public function isEnabled(): bool
     {
@@ -201,10 +170,8 @@ final class Environment
 
     /**
      * Get the page layout.
-     *
-     * @return LayoutModel|null
      */
-    public function getLayout()
+    public function getLayout(): ?LayoutModel
     {
         return $this->layout;
     }

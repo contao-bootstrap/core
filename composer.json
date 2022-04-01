@@ -42,6 +42,7 @@
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
+    "doctrine/coding-standard": "^9.0.",
     "netzmacht/phpspec-phpcq-plugin": "*@dev",
     "phpcq/coding-standard": "^2.1.2",
     "phpcq/plugin-api": "1.x-dev",
@@ -64,7 +65,8 @@
     "allow-plugins": {
       "contao-components/installer": false,
       "ocramius/package-versions": true,
-      "contao/manager-plugin": true
+      "contao/manager-plugin": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
     },
     "sort-packages": true
   },

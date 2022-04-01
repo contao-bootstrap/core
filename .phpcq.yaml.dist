@@ -85,6 +85,9 @@ tasks:
     plugin: phpcs
     config: &phpcs-config
       standard: ~
+      standard_paths:
+        - ./vendor/slevomat/coding-standard
+        - ./vendor/doctrine/coding-standard/lib
       excluded:
         - src/Resources/contao/languages
 

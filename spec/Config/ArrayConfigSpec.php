@@ -1,11 +1,6 @@
 <?php
 
-/**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2017 netzmacht creative David Molineus
- */
+declare(strict_types=1);
 
 namespace spec\ContaoBootstrap\Core\Config;
 

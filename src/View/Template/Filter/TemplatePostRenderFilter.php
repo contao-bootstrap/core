@@ -1,25 +1,9 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\View\Template\Filter;
 
-/**
- * Class TemplatePostRenderFilter.
- *
- * @package ContaoBootstrap\Core\View\Template\Filter
- */
 class TemplatePostRenderFilter implements PostRenderFilter
 {
     /**
@@ -30,8 +14,6 @@ class TemplatePostRenderFilter implements PostRenderFilter
     private array $filters;
 
     /**
-     * TemplatePostRenderFilter constructor.
-     *
      * @param PostRenderFilter[]|array $filters Post render filters
      */
     public function __construct(array $filters)
@@ -39,9 +21,6 @@ class TemplatePostRenderFilter implements PostRenderFilter
         $this->filters = $filters;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function supports(string $templateName): bool
     {
         foreach ($this->filters as $filter) {
@@ -53,15 +32,14 @@ class TemplatePostRenderFilter implements PostRenderFilter
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function filter(string $buffer, string $templateName): string
     {
         foreach ($this->filters as $filter) {
-            if ($filter->supports($templateName)) {
-                $buffer = $filter->filter($buffer, $templateName);
+            if (! $filter->supports($templateName)) {
+                continue;
             }
+
+            $buffer = $filter->filter($buffer, $templateName);
         }
 
         return $buffer;

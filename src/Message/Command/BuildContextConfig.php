@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Message\Command;
@@ -20,39 +9,26 @@ use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Environment\Context;
 use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * Class BuildContextConfig.
- *
- * @package ContaoBootstrap\Core\Message\Command
- */
 final class BuildContextConfig extends Event
 {
-    const NAME = 'contao_bootstrap.core.build_context_config';
+    public const NAME = 'contao_bootstrap.core.build_context_config';
 
     /**
      * Context config.
-     *
-     * @var Config
      */
     private Config $config;
 
     /**
      * Bootstrap config.
-     *
-     * @var Context
      */
     private Context $context;
 
     /**
      * Bootstrap environment.
-     *
-     * @var Environment
      */
     private Environment $environment;
 
     /**
-     * BuildContextConfig constructor.
-     *
      * @param Environment $environment Environment.
      * @param Context     $context     Context.
      * @param Config      $config      Config.
@@ -66,8 +42,6 @@ final class BuildContextConfig extends Event
 
     /**
      * Get environment.
-     *
-     * @return Environment
      */
     public function getEnvironment(): Environment
     {
@@ -76,8 +50,6 @@ final class BuildContextConfig extends Event
 
     /**
      * Get context.
-     *
-     * @return Context
      */
     public function getContext(): Context
     {
@@ -86,8 +58,6 @@ final class BuildContextConfig extends Event
 
     /**
      * Get config.
-     *
-     * @return Config
      */
     public function getConfig(): Config
     {

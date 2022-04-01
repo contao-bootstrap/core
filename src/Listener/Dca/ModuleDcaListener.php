@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener\Dca;
@@ -23,14 +12,16 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use MultiColumnWizard;
-use PhpParser\Node\Expr\AssignOp\Mul;
-use function assert;
 
-/**
- * Class Module is used for tl_module.
- *
- * @package ContaoBootstrap\Core\DataContainer
- */
+use function array_key_exists;
+use function array_map;
+use function array_merge;
+use function array_unique;
+use function assert;
+use function implode;
+use function sprintf;
+use function str_replace;
+
 final class ModuleDcaListener
 {
     /**
@@ -38,13 +29,13 @@ final class ModuleDcaListener
      *
      * @param DataContainer|MultiColumnWizard $dataContainer The data container driver.
      *
-     * @return array
+     * @return array<string>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function getTemplates($dataContainer): array
     {
-        $config = array();
+        $config = [];
         $prefix = '';
 
         // MCW compatibility
@@ -72,8 +63,6 @@ final class ModuleDcaListener
      *
      * @param DataContainer $dataContainer The data container driver.
      *
-     * @return string
-     *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function pagePicker(DataContainer $dataContainer): string
@@ -87,11 +76,11 @@ final class ModuleDcaListener
             Input::get('do'),
             $dataContainer->table,
             $dataContainer->field,
-            str_replace(array('{{link_url::', '}}'), '', $dataContainer->value),
+            str_replace(['{{link_url::', '}}'], '', $dataContainer->value),
             StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']),
             StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])),
             $dataContainer->field,
-            $dataContainer->field . ((Input::get('act') === 'editAll') ? '_' . $dataContainer->id : ''),
+            $dataContainer->field . (Input::get('act') === 'editAll' ? '_' . $dataContainer->id : ''),
             Image::getHtml(
                 'pickpage.gif',
                 $GLOBALS['TL_LANG']['MSC']['pagepicker'],
@@ -103,7 +92,7 @@ final class ModuleDcaListener
     /**
      * Get all articles and return them as array.
      *
-     * @return array
+     * @return array<string,array<string|int,string>>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
@@ -112,8 +101,8 @@ final class ModuleDcaListener
         $user = BackendUser::getInstance();
         assert($user instanceof BackendUser);
 
-        $pids     = array();
-        $articles = array();
+        $pids     = [];
+        $articles = [];
 
         // Limit pages to the user's pagemounts
         if ($user->isAdmin) {
@@ -158,14 +147,14 @@ final class ModuleDcaListener
     /**
      * Get all modules prepared for select wizard.
      *
-     * @return array
+     * @return array<string,array<int|string,string>>
      */
     public function getAllModules(): array
     {
-        $modules = array();
+        $modules = [];
         $query   = 'SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id';
 
-        if (Input::get('table') == 'tl_module' && Input::get('act') == 'edit') {
+        if (Input::get('table') === 'tl_module' && Input::get('act') === 'edit') {
             $query .= ' WHERE m.id != ?';
         }
 
