@@ -7,7 +7,12 @@ services:
     arguments:
       - '@contao_bootstrap.config'
     tags:
-      - { name: kernel.event_subscriber }
+      - name: !php/const:ContaoBootstrap\Core\Message\Command\InitializeEnvironment::NAME
+        method: 'enterApplicationContext'
+      - name: !php/const:ContaoBootstrap\Core\Message\Command\InitializeLayout::NAME
+        method: 'enterThemeContext'
+      - name: !php/const:ContaoBootstrap\Core\Message\Command\BuildContextConfig::NAME
+        method: 'buildContextConfig'
 
   contao_bootstrap.core.listener.parse_template:
     class: ContaoBootstrap\Core\Listener\TemplateParseListener
