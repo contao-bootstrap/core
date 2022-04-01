@@ -60,6 +60,11 @@
       "ContaoBootstrap\\Core\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "spec\\ContaoBootstrap\\Core\\": "spec/"
+    }
+  },
   "config": {
     "allow-plugins": {
       "contao-components/installer": false,

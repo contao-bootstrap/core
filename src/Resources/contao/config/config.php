@@ -1,4 +1,4 @@
-<?php /** @noinspection ALL */
+<?php
 
 declare(strict_types=1);
 

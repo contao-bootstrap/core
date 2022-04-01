@@ -17,8 +17,6 @@ final class LeavingContextFailed extends Exception
      * @param Context        $context  Current context.
      * @param int            $code     Error code.
      * @param Throwable|null $previous Previous exception.
-     *
-     * @return self
      */
     public static function inContext(Context $context, int $code = 0, ?Throwable $previous = null): self
     {
@@ -34,8 +32,6 @@ final class LeavingContextFailed extends Exception
      *
      * @param int            $code     Error code.
      * @param Throwable|null $previous Previous exception.
-     *
-     * @return self
      */
     public static function noContext(int $code = 0, ?Throwable $previous = null): self
     {
