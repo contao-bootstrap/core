@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\Template;
 use ContaoBootstrap\Core\View\Template\Filter\PostRenderFilter;
 use ContaoBootstrap\Core\View\Template\Filter\PreRenderFilter;
@@ -36,6 +37,8 @@ final class TemplateParseListener
      * Execute all registered template modifiers.
      *
      * @param Template $template Current template.
+     *
+     * @Hook("parseTemplate")
      */
     public function prepare(Template $template): void
     {
@@ -51,6 +54,8 @@ final class TemplateParseListener
      *
      * @param string $buffer       Parsed template.
      * @param string $templateName Name of the template.
+     *
+     * @Hook("parseFrontendTemplate")
      */
     public function parse(string $buffer, string $templateName): string
     {

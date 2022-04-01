@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\LayoutModel;
 use Contao\PageModel;
 use ContaoBootstrap\Core\Environment;
@@ -39,6 +40,8 @@ final class HookListener
 
     /**
      * Initialize bootstrap at initialize system hook.
+     *
+     * @Hook("initializeSystem")
      */
     public function initializeSystem(): void
     {
@@ -59,6 +62,8 @@ final class HookListener
      *
      * @param PageModel   $page   Current page.
      * @param LayoutModel $layout Page layout.
+     *
+     * @Hook("getPageLayout")
      */
     public function initializeLayout(PageModel $page, LayoutModel $layout): void
     {
