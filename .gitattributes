@@ -8,3 +8,8 @@ build.xml export-ignore
 phpunit.xml.dist export-ignore
 /tests export-ignore
 /specs export-ignore
+.phpcq.lock export-ignore
+.phpcq.yaml.dis export-ignore
+psalm.xml export-ignore
+phpcs.xml.dis export-ignore
+composer.lock export-ignore
