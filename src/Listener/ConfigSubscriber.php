@@ -10,9 +10,8 @@ use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
 use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\InitializeLayout;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class ConfigSubscriber implements EventSubscriberInterface
+final class ConfigSubscriber
 {
     /**
      * Bootstrap application config.
@@ -25,18 +24,6 @@ final class ConfigSubscriber implements EventSubscriberInterface
     public function __construct(Config $config)
     {
         $this->config = $config;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            InitializeEnvironment::NAME => 'enterApplicationContext',
-            InitializeLayout::NAME      => 'enterThemeContext',
-            BuildContextConfig::NAME    => 'buildContextConfig',
-        ];
     }
 
     /**

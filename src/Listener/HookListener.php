@@ -9,7 +9,7 @@ use Contao\PageModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\InitializeLayout;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class HookListener
 {
