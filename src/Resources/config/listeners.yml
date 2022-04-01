@@ -5,7 +5,6 @@ services:
   contao_bootstrap.core.config_subscriber:
     class: ContaoBootstrap\Core\Listener\ConfigSubscriber
     arguments:
-      - '@database_connection'
       - '@contao_bootstrap.config'
     tags:
       - { name: kernel.event_subscriber }

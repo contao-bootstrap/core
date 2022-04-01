@@ -10,29 +10,21 @@ use ContaoBootstrap\Core\Environment\ThemeContext;
 use ContaoBootstrap\Core\Message\Command\BuildContextConfig;
 use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\InitializeLayout;
-use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ConfigSubscriber implements EventSubscriberInterface
 {
-    /**
-     * Database connection.
-     */
-    private Connection $connection;
-
     /**
      * Bootstrap application config.
      */
     private Config $config;
 
     /**
-     * @param Connection $connection Database connection.
-     * @param Config     $config     Bootstrap application config.
+     * @param Config $config Bootstrap application config.
      */
-    public function __construct(Connection $connection, Config $config)
+    public function __construct(Config $config)
     {
-        $this->connection = $connection;
-        $this->config     = $config;
+        $this->config = $config;
     }
 
     /**
