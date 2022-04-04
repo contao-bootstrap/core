@@ -7,11 +7,11 @@ services:
     arguments:
       - '@contao_bootstrap.config'
     tags:
-      - name: !php/const:ContaoBootstrap\Core\Message\Command\InitializeEnvironment::NAME
+      - name: 'contao_bootstrap.core.initialize_environment'
         method: 'enterApplicationContext'
-      - name: !php/const:ContaoBootstrap\Core\Message\Command\InitializeLayout::NAME
+      - name: 'contao_bootstrap.core.initialize_layout'
         method: 'enterThemeContext'
-      - name: !php/const:ContaoBootstrap\Core\Message\Command\BuildContextConfig::NAME
+      - name: 'contao_bootstrap.core.build_context_config'
         method: 'buildContextConfig'
 
   contao_bootstrap.core.listener.parse_template:
