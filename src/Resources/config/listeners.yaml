@@ -7,11 +7,14 @@ services:
     arguments:
       - '@contao_bootstrap.config'
     tags:
-      - name: 'contao_bootstrap.core.initialize_environment'
+      - name: kernel.event_listener
+        event: 'contao_bootstrap.core.initialize_environment'
         method: 'enterApplicationContext'
-      - name: 'contao_bootstrap.core.initialize_layout'
+      - name: kernel.event_listener
+        event: 'contao_bootstrap.core.initialize_layout'
         method: 'enterThemeContext'
-      - name: 'contao_bootstrap.core.build_context_config'
+      - name: kernel.event_listener
+        event: 'contao_bootstrap.core.build_context_config'
         method: 'buildContextConfig'
 
   contao_bootstrap.core.listener.parse_template:
