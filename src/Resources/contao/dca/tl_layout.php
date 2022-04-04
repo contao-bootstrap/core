@@ -18,7 +18,6 @@ $GLOBALS['TL_DCA']['tl_layout']['config']['palettes_callback'][] = [
 $GLOBALS['TL_DCA']['tl_layout']['fields']['name']['eval']['tl_class'] .= ' w50';
 
 $GLOBALS['TL_DCA']['tl_layout']['fields']['layoutType'] = [
-    'label'     => &$GLOBALS['TL_LANG']['tl_layout']['layoutType'],
     'default'   => 'default',
     'exclude'   => true,
     'inputType' => 'select',
