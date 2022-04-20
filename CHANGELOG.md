@@ -5,6 +5,11 @@ Changelog
 Unreleased
 ----------
 
+2.1.0 (2022-04-20)
+------------------
+
+[Full Changelog](https://github.com/contao-bootstrap/core/compare/2.0.5...2.1.0)
+
 ### Added
 
  - Add support for `contao_bootstrap.yaml` configuration files
