@@ -1,11 +1,6 @@
 <?php
 
-/**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2017 netzmacht creative David Molineus
- */
+declare(strict_types=1);
 
 namespace spec\ContaoBootstrap\Core\ContaoManager;
 
@@ -15,19 +10,22 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use ContaoBootstrap\Core\ContaoManager\Plugin;
 use PhpSpec\ObjectBehavior;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class PluginSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(Plugin::class);
     }
 
-    function it_is_a_bundle_plugin()
+    public function it_is_a_bundle_plugin(): void
     {
         $this->shouldImplement(BundlePluginInterface::class);
     }
 
-    function it_loads_after_contao_core(ParserInterface $parser)
+    public function it_loads_after_contao_core(ParserInterface $parser): void
     {
         $this->getBundles($parser)[0]->getLoadAfter()->shouldContain(ContaoCoreBundle::class);
     }

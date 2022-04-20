@@ -1,11 +1,6 @@
 <?php
 
-/**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2017 netzmacht creative David Molineus
- */
+declare(strict_types=1);
 
 namespace spec\ContaoBootstrap\Core\Environment;
 
@@ -13,37 +8,39 @@ use ContaoBootstrap\Core\Environment\ApplicationContext;
 use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class ApplicationContextSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ApplicationContext::class);
     }
 
-    function it_is_a_context()
+    public function it_is_a_context(): void
     {
         $this->shouldImplement(Context::class);
     }
 
-    function it_provides_named_constructor()
+    public function it_provides_named_constructor(): void
     {
         $this->create()->shouldHaveType(ApplicationContext::class);
     }
 
-    function it_supports_application_context()
+    public function it_supports_application_context(): void
     {
         $this->supports(new ApplicationContext())->shouldReturn(true);
     }
 
-    function it_does_not_support_theme_context()
+    public function it_does_not_support_theme_context(): void
     {
         $context = ThemeContext::forTheme(4);
         $this->supports($context)->shouldReturn(false);
     }
 
-    function it_serializes_to_string()
+    public function it_serializes_to_string(): void
     {
         $this->__toString()->shouldReturn('application');
     }

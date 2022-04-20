@@ -1,16 +1,5 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Message\Command;
@@ -18,37 +7,26 @@ namespace ContaoBootstrap\Core\Message\Command;
 use Contao\LayoutModel;
 use Contao\PageModel;
 use ContaoBootstrap\Core\Environment;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * Class InitializeLayoutEvent is emitted when page layout is initialized.
- *
- * @package ContaoBootstrap\Core\Event
- */
 final class InitializeLayout extends Event
 {
-    const NAME = 'contao_bootstrap.core.initialize_layout';
+    public const NAME = 'contao_bootstrap.core.initialize_layout';
 
     /**
      * The environment.
-     *
-     * @var Environment
      */
-    private $environment;
+    private Environment $environment;
 
     /**
      * The layout model.
-     *
-     * @var LayoutModel
      */
-    private $layoutModel;
+    private LayoutModel $layoutModel;
 
     /**
      * The page model.
-     *
-     * @var PageModel
      */
-    private $pageModel;
+    private PageModel $pageModel;
 
     /**
      * Construct.
@@ -66,8 +44,6 @@ final class InitializeLayout extends Event
 
     /**
      * Get bootstrap environment.
-     *
-     * @return Environment
      */
     public function getEnvironment(): Environment
     {
@@ -76,8 +52,6 @@ final class InitializeLayout extends Event
 
     /**
      * Get layout model.
-     *
-     * @return LayoutModel
      */
     public function getLayoutModel(): LayoutModel
     {
@@ -86,8 +60,6 @@ final class InitializeLayout extends Event
 
     /**
      * Get page model.
-     *
-     * @return PageModel
      */
     public function getPageModel(): PageModel
     {

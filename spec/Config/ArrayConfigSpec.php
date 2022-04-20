@@ -1,60 +1,56 @@
 <?php
 
-/**
- * @package   contao-bootstrap
- * @author    David Molineus <david.molineus@netzmacht.de>
- * @license   LGPL 3+
- * @copyright 2013-2017 netzmacht creative David Molineus
- */
+declare(strict_types=1);
 
 namespace spec\ContaoBootstrap\Core\Config;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\ArrayConfig;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
+/**
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ */
 class ArrayConfigSpec extends ObjectBehavior
 {
-    private $config = [
-        'foo' => [
-            'bar' => 'baz'
-        ]
+    /** @var array<string,mixed> */
+    private array $config = [
+        'foo' => ['bar' => 'baz'],
     ];
 
-    function let()
+    public function let(): void
     {
         $this->beConstructedWith($this->config);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable(): void
     {
         $this->shouldHaveType(ArrayConfig::class);
     }
 
-    function it_implements_config()
+    public function it_implements_config(): void
     {
         $this->shouldImplement(Config::class);
     }
 
-    function it_gets_config_by_string_key()
+    public function it_gets_config_by_string_key(): void
     {
         $this->get('foo.bar')->shouldReturn('baz');
     }
 
-    function it_gets_config_by_array_key()
+    public function it_gets_config_by_array_key(): void
     {
         $this->get(['foo', 'bar'])->shouldReturn('baz');
     }
 
-    function it_returns_default_value_if_config_not_exist()
+    public function it_returns_default_value_if_config_not_exist(): void
     {
         $this->has('bar')->shouldReturn(false);
         $this->get('bar')->shouldReturn(null);
         $this->get('bar', 'baz')->shouldReturn('baz');
     }
 
-    function it_checks_if_config_exists()
+    public function it_checks_if_config_exists(): void
     {
         $this->has('foo.bar')->shouldReturn(true);
         $this->has(['foo', 'bar'])->shouldReturn(true);
@@ -63,7 +59,7 @@ class ArrayConfigSpec extends ObjectBehavior
         $this->has(['foo', 'baz'])->shouldReturn(false);
     }
 
-    function it_is_imutable_when_merging_config()
+    public function it_is_imutable_when_merging_config(): void
     {
         $this->has('bar')->shouldReturn(false);
         $config = $this->merge(['bar' => true]);

@@ -1,45 +1,28 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener;
 
+use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\LayoutModel;
+use Contao\PageModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoBootstrap\Core\Message\Command\InitializeEnvironment;
 use ContaoBootstrap\Core\Message\Command\InitializeLayout;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class Hooks contains hooks being called from Contao.
- *
- * @package ContaoBootstrap\Core\Contao
- */
 final class HookListener
 {
     /**
      * The event dispatcher.
-     *
-     * @var EventDispatcherInterface
      */
-    protected $eventDispatcher;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * The bootstrap environment.
-     *
-     * @var Environment
      */
-    protected $environment;
+    protected Environment $environment;
 
     /**
      * Construct.
@@ -58,7 +41,7 @@ final class HookListener
     /**
      * Initialize bootstrap at initialize system hook.
      *
-     * @return void
+     * @Hook("initializeSystem")
      */
     public function initializeSystem(): void
     {
@@ -67,30 +50,29 @@ final class HookListener
 
     /**
      * Initialize bootstrap environment.
-     *
-     * @return void
      */
     protected function initializeEnvironment(): void
     {
         $event = new InitializeEnvironment($this->environment);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
     }
 
     /**
      * Initialize Layout.
      *
-     * @param \PageModel   $page   Current page.
-     * @param \LayoutModel $layout Page layout.
+     * @param PageModel   $page   Current page.
+     * @param LayoutModel $layout Page layout.
      *
-     * @return void
+     * @Hook("getPageLayout")
      */
-    public function initializeLayout(\PageModel $page, \LayoutModel $layout): void
+    public function initializeLayout(PageModel $page, LayoutModel $layout): void
     {
         $environment = $this->environment;
         $environment->setLayout($layout);
-        $environment->setEnabled($layout->layoutType == 'bootstrap');
+        /** @psalm-suppress UndefinedMagicPropertyFetch */
+        $environment->setEnabled($layout->layoutType === 'bootstrap');
 
         $event = new InitializeLayout($environment, $layout, $page);
-        $this->eventDispatcher->dispatch($event::NAME, $event);
+        $this->eventDispatcher->dispatch($event, $event::NAME);
     }
 }

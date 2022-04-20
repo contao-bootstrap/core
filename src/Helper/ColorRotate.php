@@ -1,63 +1,43 @@
 <?php
 
-/**
- * Contao Bootstrap
- *
- * @package    contao-bootstrap
- * @subpackage Core
- * @author     David Molineus <david.molineus@netzmacht.de>
- * @copyright  2017 netzmacht David Molineus. All rights reserved.
- * @license    LGPL-3.0 https://github.com/contao-bootstrap/core
- * @filesource
- */
-
 declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Helper;
 
+use function floor;
+use function sprintf;
+
 /**
- * Class ColorRotate.
- *
  * Inspired by https://github.com/menatwork/semantic_html5/blob/master/src/Backend/Helper.php.
- *
- * @package ContaoBootstrap\Grid\Helper
  */
 final class ColorRotate
 {
     /**
      * Color cache.
      *
-     * @var array
+     * @var array<string,string>
      */
-    private $cache = [];
+    private array $cache = [];
 
     /**
      * Rotating color value.
-     *
-     * @var string
      */
-    private $rotatingColor;
+    private float $rotatingColor;
 
     /**
      * Initial saturation.
-     *
-     * @var float
      */
-    private $saturation;
+    private float $saturation;
 
     /**
      * Color Value.
-     *
-     * @var float
      */
-    private $value;
+    private float $value;
 
     /**
-     * ColorRotate constructor.
-     *
-     * @param float|string $rotatingColor Initial hue value.
-     * @param float        $saturation    Saturation.
-     * @param float        $value         Value.
+     * @param float $rotatingColor Initial hue value.
+     * @param float $saturation    Saturation.
+     * @param float $value         Value.
      */
     public function __construct(float $rotatingColor = .5, float $saturation = 0.7, float $value = .7)
     {
@@ -66,27 +46,22 @@ final class ColorRotate
         $this->value         = $value;
     }
 
-
     /**
      * Get the color for an identifier.
      *
      * @param string $identifier Identifier.
-     *
-     * @return string
      */
     public function getColor(string $identifier): string
     {
-        if (!isset($this->cache[$identifier])) {
+        if (! isset($this->cache[$identifier])) {
             $this->cache[$identifier] = $this->rotateColor();
         }
-        
+
         return $this->cache[$identifier];
     }
 
     /**
      * Rotate the color value.
-     *
-     * @return string
      */
     private function rotateColor(): string
     {
@@ -103,12 +78,11 @@ final class ColorRotate
     /**
      * Convert hsv value to rgb value.
      *
+     * @see    http://stackoverflow.com/a/3597447
+     *
      * @param float $hue        Hue.
      * @param float $saturation Saturation.
      * @param float $value      Color value.
-     *
-     * @return string
-     * @see    http://stackoverflow.com/a/3597447
      *
      * @SuppressWarnings(PHPMD.ShortVariable)
      */
@@ -119,38 +93,38 @@ final class ColorRotate
 
         // Second
         $i = floor($hue);
-        $f = ($hue - $i);
+        $f = $hue - $i;
 
         // Third
-        $m = ($value * (1 - $saturation));
-        $n = ($value * (1 - $saturation * $f));
-        $k = ($value * (1 - $saturation * (1 - $f)));
+        $m = $value * (1 - $saturation);
+        $n = $value * (1 - $saturation * $f);
+        $k = $value * (1 - $saturation * (1 - $f));
 
         // Forth
         switch ($i) {
             case 0:
-                list($red, $green, $blue) = array($value, $k, $m);
+                [$red, $green, $blue] = [$value, $k, $m];
                 break;
             case 1:
-                list($red, $green, $blue) = array($n, $value, $m);
+                [$red, $green, $blue] = [$n, $value, $m];
                 break;
             case 2:
-                list($red, $green, $blue) = array($m, $value, $k);
+                [$red, $green, $blue] = [$m, $value, $k];
                 break;
             case 3:
-                list($red, $green, $blue) = array($m, $n, $value);
+                [$red, $green, $blue] = [$m, $n, $value];
                 break;
             case 4:
-                list($red, $green, $blue) = array($k, $m, $value);
+                [$red, $green, $blue] = [$k, $m, $value];
                 break;
             case 5:
             case 6:
                 // for when $H=1 is given
             default:
-                list($red, $green, $blue) = array($value, $m, $n);
+                [$red, $green, $blue] = [$value, $m, $n];
                 break;
         }
 
-        return sprintf('#%02x%02x%02x', ($red * 255), ($green * 255), ($blue * 255));
+        return sprintf('#%02x%02x%02x', $red * 255, $green * 255, $blue * 255);
     }
 }

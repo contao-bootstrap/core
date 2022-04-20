@@ -5,10 +5,17 @@ services:
   contao_bootstrap.core.config_subscriber:
     class: ContaoBootstrap\Core\Listener\ConfigSubscriber
     arguments:
-      - '@database_connection'
       - '@contao_bootstrap.config'
     tags:
-      - { name: kernel.event_subscriber }
+      - name: kernel.event_listener
+        event: 'contao_bootstrap.core.initialize_environment'
+        method: 'enterApplicationContext'
+      - name: kernel.event_listener
+        event: 'contao_bootstrap.core.initialize_layout'
+        method: 'enterThemeContext'
+      - name: kernel.event_listener
+        event: 'contao_bootstrap.core.build_context_config'
+        method: 'buildContextConfig'
 
   contao_bootstrap.core.listener.parse_template:
     class: ContaoBootstrap\Core\Listener\TemplateParseListener
