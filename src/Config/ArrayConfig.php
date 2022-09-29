@@ -80,7 +80,7 @@ final class ArrayConfig implements Config
     /**
      * Convert string path to array, so that always an array is used.
      *
-     * @param mixed $path Passed path value.
+     * @param string|list<string> $path Passed path value.
      *
      * @return list<string>
      */
@@ -90,6 +90,6 @@ final class ArrayConfig implements Config
             return explode('.', $path);
         }
 
-        return (array) $path;
+        return $path;
     }
 }

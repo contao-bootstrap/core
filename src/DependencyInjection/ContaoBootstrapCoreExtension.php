@@ -21,6 +21,9 @@ final class ContaoBootstrapCoreExtension extends Extension
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 
+        $config = $this->processConfiguration(new Configuration(), $configs);
+        $container->setParameter('contao_bootstrap.config.app', (array) $config['config']);
+
         $loader->load('services.yaml');
         $loader->load('listeners.yaml');
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core;
 
-use ContaoBootstrap\Core\DependencyInjection\ConfigPass;
+use ContaoBootstrap\Core\DependencyInjection\Compiler\ConfigPass;
 use ContaoBootstrap\Core\DependencyInjection\TemplateFilterPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
