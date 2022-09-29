@@ -51,6 +51,7 @@ phpcq:
     - C00543248C87FB13
     # phpmd
     - 0F9684B8B16B7AB0
+    - A4E55EA12C7C085C
 
 tasks:
   fix:
