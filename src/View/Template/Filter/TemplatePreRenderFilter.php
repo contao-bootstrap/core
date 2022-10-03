@@ -6,7 +6,7 @@ namespace ContaoBootstrap\Core\View\Template\Filter;
 
 use Contao\Template;
 
-class TemplatePreRenderFilter implements PreRenderFilter
+final class TemplatePreRenderFilter implements PreRenderFilter
 {
     /**
      * Post render filters.

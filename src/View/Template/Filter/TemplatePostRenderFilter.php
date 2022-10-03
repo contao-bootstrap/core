@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\View\Template\Filter;
 
-class TemplatePostRenderFilter implements PostRenderFilter
+final class TemplatePostRenderFilter implements PostRenderFilter
 {
     /**
      * Post render filters.
