@@ -41,3 +41,10 @@ services:
 
   contao_bootstrap.core.listener.module_dca:
     class: ContaoBootstrap\Core\Listener\Dca\ModuleDcaListener
+
+  ContaoBootstrap\Core\Listener\BackendListener:
+    arguments:
+      - '@netzmacht.contao_toolkit.assets_manager'
+      - '@netzmacht.contao_toolkit.routing.scope_matcher'
+    tags:
+      - { name: 'kernel.event_listener', event: 'kernel.request' }

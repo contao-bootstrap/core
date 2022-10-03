@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "951393d81fcf8ed731ac64eaa90028ff",
+    "content-hash": "3c6e1d56624ec92f1dd5809f2354d9da",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -4274,6 +4274,90 @@
                 "source": "https://github.com/nette/utils/tree/v3.2.8"
             },
             "time": "2022-09-12T23:36:20+00:00"
+        },
+        {
+            "name": "netzmacht/contao-toolkit",
+            "version": "3.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/netzmacht/contao-toolkit.git",
+                "reference": "262a0040d2a041be64f9d4d26a4e6131073aa8fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/netzmacht/contao-toolkit/zipball/262a0040d2a041be64f9d4d26a4e6131073aa8fc",
+                "reference": "262a0040d2a041be64f9d4d26a4e6131073aa8fc",
+                "shasum": ""
+            },
+            "require": {
+                "beberlei/assert": "^2.7 || ^3.0",
+                "composer-runtime-api": "^2",
+                "contao/core-bundle": "^4.9.10",
+                "doctrine/dbal": "^2.11 || ^3.1",
+                "php": "^7.2 || ^8.0",
+                "psr/log": "^1.1",
+                "symfony/asset": "^4.4 || ^5.1",
+                "symfony/config": "^4.4 || ^5.1",
+                "symfony/dependency-injection": "^4.4 || ^5.1",
+                "symfony/event-dispatcher": "^4.4 || ^5.4",
+                "symfony/event-dispatcher-contracts": "^1.1.6 || ^2.0.0",
+                "symfony/http-foundation": "^4.4 || ^5.1",
+                "symfony/http-kernel": "^4.4.13 || ^5.1",
+                "symfony/routing": "^4.4 || ^5.1",
+                "symfony/security-csrf": "^4.4 || ^5.0",
+                "symfony/string": "^5.4 || ^6.0",
+                "symfony/templating": "^4.4 || ^5.0",
+                "symfony/translation-contracts": "^1.1.6 || ^2.0.0"
+            },
+            "conflict": {
+                "contao/manager-plugin": "<2.0 || >=3.0",
+                "friendsofsymfony/http-cache": "<2.0 || >=3.0"
+            },
+            "require-dev": {
+                "contao/manager-plugin": "^2.0",
+                "doctrine/coding-standard": "^9.0.",
+                "friends-of-phpspec/phpspec-expect": "^4.0",
+                "friendsofsymfony/http-cache": "^2.0",
+                "phpcq/runner-bootstrap": "^1.0@dev",
+                "phpspec/phpspec": "^6.0 || ^7.0"
+            },
+            "type": "contao-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "3.9.x-dev",
+                    "dev-master": "3.8.x-dev"
+                },
+                "contao-manager-plugin": "Netzmacht\\Contao\\Toolkit\\Bundle\\ContaoManager\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Netzmacht\\Contao\\Toolkit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "David Molineus",
+                    "email": "mail@netzmacht.de",
+                    "homepage": "https://netzmacht.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This library provides tools to simplify common tasks when developing with Contao.",
+            "keywords": [
+                "contao",
+                "dev",
+                "tools"
+            ],
+            "support": {
+                "email": "mail@netzmacht.de",
+                "issues": "https://github.com/netzmacht/contao-toolkit/issues",
+                "source": "https://github.com/netzmacht/contao-toolkit"
+            },
+            "time": "2022-07-04T14:07:00+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -10030,6 +10114,74 @@
                 }
             ],
             "time": "2022-08-12T17:03:11+00:00"
+        },
+        {
+            "name": "symfony/templating",
+            "version": "v5.4.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/templating.git",
+                "reference": "3933eaad08c7f83672c53f635d7c3988252a658a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/templating/zipball/3933eaad08c7f83672c53f635d7c3988252a658a",
+                "reference": "3933eaad08c7f83672c53f635d7c3988252a658a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "require-dev": {
+                "psr/log": "^1|^2|^3"
+            },
+            "suggest": {
+                "psr/log-implementation": "For using debug logging in loaders"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Templating\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides all the tools needed to build any kind of template system",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/templating/tree/v5.4.11"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-06-27T16:58:25+00:00"
         },
         {
             "name": "symfony/translation",
