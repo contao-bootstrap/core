@@ -1,4 +1,6 @@
-layout:
-  metapalette:
-    '+title':
-      - layoutType
+contao_bootstrap:
+  config:
+    layout:
+      metapalette:
+        '+title':
+          - layoutType

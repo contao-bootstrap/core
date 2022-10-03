@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core;
 
-use ContaoBootstrap\Core\DependencyInjection\Compiler\ConfigPass;
-use ContaoBootstrap\Core\DependencyInjection\TemplateFilterPass;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use ContaoBootstrap\Core\DependencyInjection\ContaoBootstrapCoreExtension;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ContaoBootstrapCoreBundle extends Bundle
 {
-    public function build(ContainerBuilder $container): void
+    public function getContainerExtension(): Extension
     {
-        $container->addCompilerPass(new ConfigPass());
-        $container->addCompilerPass(new TemplateFilterPass());
+        return new ContaoBootstrapCoreExtension();
     }
 }

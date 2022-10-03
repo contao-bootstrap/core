@@ -21,8 +21,6 @@ final class ArrayUtil
      * @param array<array-key,mixed> $array2 Second array.
      *
      * @return array<array-key,mixed>
-     *
-     * @noinspection PhpPluralMixedCanBeReplacedWithArrayInspection
      */
     public static function merge(array $array1, array $array2): array
     {

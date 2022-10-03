@@ -11,14 +11,14 @@ class TemplatePreRenderFilter implements PreRenderFilter
     /**
      * Post render filters.
      *
-     * @var PreRenderFilter[]
+     * @var iterable<PreRenderFilter>
      */
-    private array $filters;
+    private iterable $filters;
 
     /**
-     * @param PreRenderFilter[]|array $filters Post render filters
+     * @param iterable<PreRenderFilter> $filters Post render filters
      */
-    public function __construct(array $filters)
+    public function __construct(iterable $filters)
     {
         $this->filters = $filters;
     }

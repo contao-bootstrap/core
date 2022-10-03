@@ -13,12 +13,12 @@ services:
   contao_bootstrap.view.template.pre_render_filter:
     class: ContaoBootstrap\Core\View\Template\Filter\TemplatePreRenderFilter
     arguments:
-      - []
+      - !tagged_iterator 'contao_bootstrap.pre_render_filter'
 
   contao_bootstrap.view.template.post_render_filter:
-      class: ContaoBootstrap\Core\View\Template\Filter\TemplatePostRenderFilter
-      arguments:
-        - []
+    class: ContaoBootstrap\Core\View\Template\Filter\TemplatePostRenderFilter
+    arguments:
+      - !tagged_iterator 'contao_bootstrap.post_render_filter'
 
   contao_bootstrap.core.helper.color_rotate:
     class: ContaoBootstrap\Core\Helper\ColorRotate

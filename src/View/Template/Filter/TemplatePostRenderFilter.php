@@ -9,14 +9,14 @@ class TemplatePostRenderFilter implements PostRenderFilter
     /**
      * Post render filters.
      *
-     * @var PostRenderFilter[]
+     * @var iterable<PostRenderFilter>
      */
-    private array $filters;
+    private iterable $filters;
 
     /**
-     * @param PostRenderFilter[]|array $filters Post render filters
+     * @param iterable<PostRenderFilter> $filters Post render filters
      */
-    public function __construct(array $filters)
+    public function __construct(iterable $filters)
     {
         $this->filters = $filters;
     }
