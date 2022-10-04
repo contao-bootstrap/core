@@ -8,23 +8,28 @@ use Contao\Input;
 use Contao\LayoutModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoCommunityAlliance\MetaPalettes\MetaPalettes;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener;
 
 use function array_shift;
 use function explode;
 use function preg_match;
 
-final class LayoutDcaListener
+final class LayoutDcaListener extends AbstractListener
 {
-    /**
-     * Bootstrap environment..
-     */
+    /** @var string */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected static $name = 'tl_layout';
+
     private Environment $environment;
 
     /**
      * @param Environment $environment Environment.
      */
-    public function __construct(Environment $environment)
+    public function __construct(DcaManager $dcaManager, Environment $environment)
     {
+        parent::__construct($dcaManager);
+
         $this->environment = $environment;
     }
 
@@ -32,15 +37,10 @@ final class LayoutDcaListener
      * Modify palette if bootstrap is used.
      *
      * Hook palettes_hook (MetaPalettes) is called.
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
     public function generatePalette(): void
     {
-        // @codingStandardsIgnoreStart
         // TODO: How to handle editAll actions?
-        // @codingStandardsIgnoreEnd
-
         if (Input::get('table') !== 'tl_layout' || Input::get('act') !== 'edit') {
             return;
         }
@@ -50,21 +50,32 @@ final class LayoutDcaListener
         // dynamically render palette so that extensions can plug into default palette
         /** @psalm-suppress UndefinedMagicPropertyFetch */
         if ($layout && $layout->layoutType === 'bootstrap') {
-            $metaPalettes                             = & $GLOBALS['TL_DCA']['tl_layout']['metapalettes'];
-            $metaPalettes['__base__']                 = $this->getMetaPaletteOfPalette('tl_layout');
+            $definition                               = $this->getDefinition();
+            $metaPalettes                             = $definition->get('metapalettes', []);
+            $metaPalettes['__base__']                 = $this->convertDefaultPaletteToMetaPalette();
             $metaPalettes['default extends __base__'] = $this->environment
                 ->getConfig()
                 ->get('layout.metapalette', []);
 
+            $definition->set('metapalettes', $metaPalettes);
+
             // unset default palette. otherwise metapalettes will not render this palette
-            unset($GLOBALS['TL_DCA']['tl_layout']['palettes']['default']);
+            $definition->modify(
+                'palettes',
+                static function (array $palettes): array {
+                    unset($palettes['default']);
+
+                    return $palettes;
+                }
+            );
 
             $subSelectPalettes = $this->environment->getConfig()->get('layout.metasubselectpalettes', []);
+            $subPalettes       = $definition->get('subpalettes', []);
 
             foreach ($subSelectPalettes as $field => $meta) {
                 foreach ($meta as $value => $definition) {
-                    unset($GLOBALS['TL_DCA']['tl_layout']['subpalettes'][$field . '_' . $value]);
-                    $GLOBALS['TL_DCA']['tl_layout']['metasubselectpalettes'][$field][$value] = $definition;
+                    unset($subPalettes[$field . '_' . $value]);
+                    $definition->set(['metasubselectpalettes', $field, $value], $definition);
                 }
             }
         } else {
@@ -75,16 +86,11 @@ final class LayoutDcaListener
     /**
      * Creates an meta palette of a palettes.
      *
-     * @param string $table Database table name.
-     * @param string $name  Palette name.
-     *
      * @return array<string,list<string>>
-     *
-     * @SuppressWarnings(PHPMD.Superglobals)
      */
-    protected function getMetaPaletteOfPalette(string $table, string $name = 'default'): array
+    private function convertDefaultPaletteToMetaPalette(): array
     {
-        $palette     = $GLOBALS['TL_DCA'][$table]['palettes'][$name];
+        $palette     = $this->getDefinition()->get(['palettes', 'default']);
         $metaPalette = [];
         $legends     = explode(';', $palette);
 

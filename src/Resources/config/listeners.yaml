@@ -29,18 +29,17 @@ services:
       - '@event_dispatcher'
       - '@contao_bootstrap.environment'
 
-  contao_bootstrap.core.listener.content_dca:
-    class: ContaoBootstrap\Core\Listener\Dca\ContentDcaListener
-    arguments:
-      - '@contao_bootstrap.environment'
-
   contao_bootstrap.core.listener.layout_dca:
     class: ContaoBootstrap\Core\Listener\Dca\LayoutDcaListener
     arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
       - '@contao_bootstrap.environment'
 
   contao_bootstrap.core.listener.module_dca:
     class: ContaoBootstrap\Core\Listener\Dca\ModuleDcaListener
+    arguments:
+      - '@netzmacht.contao_toolkit.dca.manager'
+      - '@translator'
 
   ContaoBootstrap\Core\Listener\BackendListener:
     arguments:

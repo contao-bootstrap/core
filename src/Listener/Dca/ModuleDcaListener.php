@@ -12,6 +12,9 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use MultiColumnWizard;
+use Netzmacht\Contao\Toolkit\Dca\DcaManager;
+use Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_key_exists;
 use function array_map;
@@ -22,8 +25,21 @@ use function implode;
 use function sprintf;
 use function str_replace;
 
-final class ModuleDcaListener
+final class ModuleDcaListener extends AbstractListener
 {
+    /** @var string */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected static $name = 'tl_module';
+
+    private TranslatorInterface $translator;
+
+    public function __construct(DcaManager $dcaManager, TranslatorInterface $translator)
+    {
+        parent::__construct($dcaManager);
+
+        $this->translator = $translator;
+    }
+
     /**
      * Get all templates. A templatePrefix can be defined using eval.templatePrefix.
      *
@@ -47,8 +63,10 @@ final class ModuleDcaListener
             $table = $dataContainer->table;
         }
 
-        if (array_key_exists('eval', $GLOBALS['TL_DCA'][$table]['fields'][$field])) {
-            $config = $GLOBALS['TL_DCA'][$table]['fields'][$field]['eval'];
+        $definition = $this->getDefinition($table);
+
+        if ($definition->has(['fields', $field, 'eval'])) {
+            $config = $definition->get(['fields', $field, 'eval']);
         }
 
         if (array_key_exists('templatePrefix', $config)) {
@@ -77,13 +95,15 @@ final class ModuleDcaListener
             $dataContainer->table,
             $dataContainer->field,
             str_replace(['{{link_url::', '}}'], '', $dataContainer->value),
-            StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['pagepicker']),
-            StringUtil::specialchars(str_replace("'", "\\'", $GLOBALS['TL_LANG']['MOD']['page'][0])),
+            StringUtil::specialchars($this->translator->trans('MSC.pagepicker', [], 'contao_default')),
+            StringUtil::specialchars(
+                str_replace("'", "\\'", $this->translator->trans('MOD.page.0', [], 'contao_default'))
+            ),
             $dataContainer->field,
             $dataContainer->field . (Input::get('act') === 'editAll' ? '_' . $dataContainer->id : ''),
             Image::getHtml(
                 'pickpage.gif',
-                $GLOBALS['TL_LANG']['MSC']['pagepicker'],
+                $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
                 'style="vertical-align:top;cursor:pointer"'
             )
         );
@@ -134,10 +154,16 @@ final class ModuleDcaListener
             Controller::loadLanguageFile('tl_article');
 
             while ($objArticle->next()) {
-                $key                             = $objArticle->parent . ' (ID ' . $objArticle->pid . ')';
+                $transKey    = 'tl_article.' . $objArticle->inColumn;
+                $translation = $this->translator->trans($transKey);
+                $key         = $objArticle->parent . ' (ID ' . $objArticle->pid . ')';
+
                 $articles[$key][$objArticle->id] = $objArticle->title
-                    . ' (' . ($GLOBALS['TL_LANG']['tl_article'][$objArticle->inColumn] ?: $objArticle->inColumn)
-                    . ', ID ' . $objArticle->id . ')';
+                    . ' ('
+                    . ($translation === $transKey ? $objArticle->inColumn : $translation)
+                    . ', ID '
+                    . $objArticle->id
+                    . ')';
             }
         }
 
