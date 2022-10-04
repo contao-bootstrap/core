@@ -16,12 +16,12 @@
     <issueHandlers>
         <UndefinedClass>
             <errorLevel type="suppress">
-                <referencedClass name="MultiColumnWizard"/>
+                <referencedClass name="MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard"/>
             </errorLevel>
         </UndefinedClass>
         <UndefinedDocblockClass>
             <errorLevel type="suppress">
-                <referencedClass name="MultiColumnWizard"/>
+                <referencedClass name="MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard"/>
             </errorLevel>
         </UndefinedDocblockClass>
     </issueHandlers>

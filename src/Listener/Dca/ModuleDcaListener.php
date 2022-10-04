@@ -11,7 +11,7 @@ use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
-use MultiColumnWizard;
+use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -45,7 +45,7 @@ final class ModuleDcaListener extends AbstractListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getTemplates($dataContainer): array
+    public function getTemplates(DataContainer|MultiColumnWizard $dataContainer): array
     {
         $config = [];
         $prefix = '';

@@ -7,6 +7,6 @@
     "Contao\\ManagerPlugin\\Bundle\\Parser\\ParserInterface",
     "Contao\\ManagerPlugin\\Bundle\\Config\\BundleConfig",
     "Contao\\ManagerPlugin\\Config\\ConfigPluginInterface",
-    "MultiColumnWizard"
+    "MenAtWork\\MultiColumnWizardBundle\\Contao\\Widgets\\MultiColumnWizard"
   ]
 }

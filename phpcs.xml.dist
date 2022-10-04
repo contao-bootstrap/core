@@ -18,7 +18,6 @@
     <!-- Include full Doctrine Coding Standard -->
     <rule ref="Doctrine">
         <exclude name="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
     </rule>
 
     <rule ref="Generic.Files.LineLength">
