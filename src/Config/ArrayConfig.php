@@ -15,26 +15,15 @@ use function is_string;
 final class ArrayConfig implements Config
 {
     /**
-     * Config values.
-     *
-     * @var array<string,mixed>
-     */
-    protected array $config = [];
-
-    /**
      * Construct.
      *
      * @param array<string,mixed> $config Initial config values.
      */
-    public function __construct(array $config = [])
+    public function __construct(private readonly array $config = [])
     {
-        $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function get($key, $default = null)
+    public function get(array|string $key, mixed $default = null): mixed
     {
         $chunks = $this->path($key);
         $value  = $this->config;
@@ -50,10 +39,7 @@ final class ArrayConfig implements Config
         return $value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function has($key): bool
+    public function has(array|string $key): bool
     {
         $chunks = $this->path($key);
         $value  = $this->config;
@@ -84,7 +70,7 @@ final class ArrayConfig implements Config
      *
      * @return list<string>
      */
-    private function path($path): array
+    private function path(array|string $path): array
     {
         if (is_string($path)) {
             return explode('.', $path);

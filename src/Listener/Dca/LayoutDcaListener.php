@@ -21,16 +21,10 @@ final class LayoutDcaListener extends AbstractListener
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected static $name = 'tl_layout';
 
-    private Environment $environment;
-
-    /**
-     * @param Environment $environment Environment.
-     */
-    public function __construct(DcaManager $dcaManager, Environment $environment)
+    /** @param Environment $environment Environment. */
+    public function __construct(DcaManager $dcaManager, private readonly Environment $environment)
     {
         parent::__construct($dcaManager);
-
-        $this->environment = $environment;
     }
 
     /**
@@ -66,7 +60,7 @@ final class LayoutDcaListener extends AbstractListener
                     unset($palettes['default']);
 
                     return $palettes;
-                }
+                },
             );
 
             $subSelectPalettes = $this->environment->getConfig()->get('layout.metasubselectpalettes', []);

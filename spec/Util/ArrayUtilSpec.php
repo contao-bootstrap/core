@@ -7,9 +7,7 @@ namespace spec\ContaoBootstrap\Core\Util;
 use ContaoBootstrap\Core\Util\ArrayUtil;
 use PhpSpec\ObjectBehavior;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- */
+/** @SuppressWarnings(PHPMD.CamelCaseMethodName) */
 class ArrayUtilSpec extends ObjectBehavior
 {
     public function it_is_initializable(): void
@@ -21,7 +19,7 @@ class ArrayUtilSpec extends ObjectBehavior
     {
         $this->merge(
             ['foo' => 'bar'],
-            ['foo' => 'baz']
+            ['foo' => 'baz'],
         )->shouldReturn(['foo' => 'baz']);
     }
 

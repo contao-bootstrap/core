@@ -15,9 +15,7 @@ final class TemplatePreRenderFilter implements PreRenderFilter
      */
     private iterable $filters;
 
-    /**
-     * @param iterable<PreRenderFilter> $filters Post render filters
-     */
+    /** @param iterable<PreRenderFilter> $filters Post render filters */
     public function __construct(iterable $filters)
     {
         $this->filters = $filters;

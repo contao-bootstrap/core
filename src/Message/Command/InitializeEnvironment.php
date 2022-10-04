@@ -11,19 +11,8 @@ final class InitializeEnvironment extends Event
 {
     public const NAME = 'contao_bootstrap.core.initialize_environment';
 
-    /**
-     * Bootstrap environment.
-     */
-    protected Environment $environment;
-
-    /**
-     * Construct.
-     *
-     * @param Environment $environment Bootstrap environment.
-     */
-    public function __construct(Environment $environment)
+    public function __construct(private readonly Environment $environment)
     {
-        $this->environment = $environment;
     }
 
     /**

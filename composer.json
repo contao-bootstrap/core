@@ -37,11 +37,12 @@
     "symfony/dependency-injection": "^5.4 || ^6.0",
     "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
     "symfony/http-kernel": "^5.4 || ^6.0",
+    "symfony/translation-contracts": "^1.1 || ^2.0",
     "symfony/yaml": "^5.4 || ^6.0"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
-    "doctrine/coding-standard": "^9.0.",
+    "doctrine/coding-standard": "^10.0.0.",
     "netzmacht/phpspec-phpcq-plugin": "*@dev",
     "phpcq/coding-standard": "^2.1.2",
     "phpcq/plugin-api": "1.x-dev",

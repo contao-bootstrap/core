@@ -12,25 +12,13 @@ use ContaoBootstrap\Core\View\Template\Filter\PreRenderFilter;
 final class TemplateParseListener
 {
     /**
-     * Pre render filter.
-     */
-    private PreRenderFilter $preRenderFilter;
-
-    /**
-     * Post render filter.
-     */
-    private PostRenderFilter $postRenderFilter;
-
-    /**
      * @param PreRenderFilter  $preRenderFilter  Pre render filter.
      * @param PostRenderFilter $postRenderFilter Post render filter.
      */
     public function __construct(
-        PreRenderFilter $preRenderFilter,
-        PostRenderFilter $postRenderFilter
+        private readonly PreRenderFilter $preRenderFilter,
+        private readonly PostRenderFilter $postRenderFilter,
     ) {
-        $this->preRenderFilter  = $preRenderFilter;
-        $this->postRenderFilter = $postRenderFilter;
     }
 
     /**

@@ -8,9 +8,7 @@ use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Config\ArrayConfig;
 use PhpSpec\ObjectBehavior;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- */
+/** @SuppressWarnings(PHPMD.CamelCaseMethodName) */
 class ArrayConfigSpec extends ObjectBehavior
 {
     /** @var array<string,mixed> */

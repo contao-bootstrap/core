@@ -10,25 +10,21 @@ interface Config
      * Get a config value.
      *
      * @param string|list<string> $key     Name of the config param.
-     * @param mixed               $default Default value if config is not set.
-     *
-     * @return mixed
+     * @param mixed|null          $default Default value if config is not set.
      */
-    public function get($key, $default = null);
+    public function get(array|string $key, mixed $default = null): mixed;
 
     /**
      * Consider if config param exists.
      *
      * @param string|list<string> $key Name of the config param.
      */
-    public function has($key): bool;
+    public function has(array|string $key): bool;
 
     /**
      * Merge new configuration values and return a new instance of Config.
      *
      * @param array<string,mixed> $config Config values.
-     *
-     * @return static
      */
     public function merge(array $config): Config;
 }

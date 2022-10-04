@@ -13,17 +13,9 @@ use ContaoBootstrap\Core\Message\Command\InitializeLayout;
 
 final class ConfigSubscriber
 {
-    /**
-     * Bootstrap application config.
-     */
-    private Config $config;
-
-    /**
-     * @param Config $config Bootstrap application config.
-     */
-    public function __construct(Config $config)
+    /** @param Config $config Bootstrap application config. */
+    public function __construct(private readonly Config $config)
     {
-        $this->config = $config;
     }
 
     /**

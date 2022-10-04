@@ -9,9 +9,7 @@ use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use PhpSpec\ObjectBehavior;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- */
+/** @SuppressWarnings(PHPMD.CamelCaseMethodName) */
 class ThemeContextSpec extends ObjectBehavior
 {
     public const THEME_ID = 4;

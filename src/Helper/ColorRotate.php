@@ -20,30 +20,15 @@ final class ColorRotate
     private array $cache = [];
 
     /**
-     * Rotating color value.
-     */
-    private float $rotatingColor;
-
-    /**
-     * Initial saturation.
-     */
-    private float $saturation;
-
-    /**
-     * Color Value.
-     */
-    private float $value;
-
-    /**
      * @param float $rotatingColor Initial hue value.
      * @param float $saturation    Saturation.
      * @param float $value         Value.
      */
-    public function __construct(float $rotatingColor = .5, float $saturation = 0.7, float $value = .7)
-    {
-        $this->rotatingColor = $rotatingColor;
-        $this->saturation    = $saturation;
-        $this->value         = $value;
+    public function __construct(
+        private float $rotatingColor = .5,
+        private readonly float $saturation = 0.7,
+        private readonly float $value = .7,
+    ) {
     }
 
     /**

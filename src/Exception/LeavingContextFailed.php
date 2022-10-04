@@ -18,12 +18,12 @@ final class LeavingContextFailed extends Exception
      * @param int            $code     Error code.
      * @param Throwable|null $previous Previous exception.
      */
-    public static function inContext(Context $context, int $code = 0, ?Throwable $previous = null): self
+    public static function inContext(Context $context, int $code = 0, Throwable|null $previous = null): self
     {
         return new self(
             sprintf('Leaving context "%s" failed. Context stack is empty', $context->__toString()),
             $code,
-            $previous
+            $previous,
         );
     }
 
@@ -33,12 +33,12 @@ final class LeavingContextFailed extends Exception
      * @param int            $code     Error code.
      * @param Throwable|null $previous Previous exception.
      */
-    public static function noContext(int $code = 0, ?Throwable $previous = null): self
+    public static function noContext(int $code = 0, Throwable|null $previous = null): self
     {
         return new self(
             'Leaving context failed. Environment has no context.',
             $code,
-            $previous
+            $previous,
         );
     }
 }

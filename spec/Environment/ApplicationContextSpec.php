@@ -9,9 +9,7 @@ use ContaoBootstrap\Core\Environment\Context;
 use ContaoBootstrap\Core\Environment\ThemeContext;
 use PhpSpec\ObjectBehavior;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- */
+/** @SuppressWarnings(PHPMD.CamelCaseMethodName) */
 class ApplicationContextSpec extends ObjectBehavior
 {
     public function it_is_initializable(): void

@@ -10,15 +10,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
-    /** @var list<ContaoBootstrapComponent> */
-    private array $components = [];
-
-    /**
-     * @param list<ContaoBootstrapComponent> $components
-     */
-    public function __construct(array $components)
+    /** @param list<ContaoBootstrapComponent> $components */
+    public function __construct(private readonly array $components = [])
     {
-        $this->components = $components;
     }
 
     public function getConfigTreeBuilder(): TreeBuilder

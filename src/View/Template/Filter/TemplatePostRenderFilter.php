@@ -13,9 +13,7 @@ final class TemplatePostRenderFilter implements PostRenderFilter
      */
     private iterable $filters;
 
-    /**
-     * @param iterable<PostRenderFilter> $filters Post render filters
-     */
+    /** @param iterable<PostRenderFilter> $filters Post render filters */
     public function __construct(iterable $filters)
     {
         $this->filters = $filters;

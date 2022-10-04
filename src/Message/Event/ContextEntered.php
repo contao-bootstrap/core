@@ -13,23 +13,11 @@ final class ContextEntered extends Event
     public const NAME = 'contao_bootstrap.core.enter_context';
 
     /**
-     * Bootstrap environment.
-     */
-    private Environment $environment;
-
-    /**
-     * Environment context.
-     */
-    private Context $context;
-
-    /**
      * @param Environment $environment Bootstrap environment.
      * @param Context     $context     Environment context.
      */
-    public function __construct(Environment $environment, Context $context)
+    public function __construct(private readonly Environment $environment, private readonly Context $context)
     {
-        $this->environment = $environment;
-        $this->context     = $context;
     }
 
     /**

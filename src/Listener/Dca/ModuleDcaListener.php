@@ -31,13 +31,9 @@ final class ModuleDcaListener extends AbstractListener
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected static $name = 'tl_module';
 
-    private TranslatorInterface $translator;
-
-    public function __construct(DcaManager $dcaManager, TranslatorInterface $translator)
+    public function __construct(DcaManager $dcaManager, private readonly TranslatorInterface $translator)
     {
         parent::__construct($dcaManager);
-
-        $this->translator = $translator;
     }
 
     /**
@@ -97,15 +93,15 @@ final class ModuleDcaListener extends AbstractListener
             str_replace(['{{link_url::', '}}'], '', $dataContainer->value),
             StringUtil::specialchars($this->translator->trans('MSC.pagepicker', [], 'contao_default')),
             StringUtil::specialchars(
-                str_replace("'", "\\'", $this->translator->trans('MOD.page.0', [], 'contao_default'))
+                str_replace("'", "\\'", $this->translator->trans('MOD.page.0', [], 'contao_default')),
             ),
             $dataContainer->field,
             $dataContainer->field . (Input::get('act') === 'editAll' ? '_' . $dataContainer->id : ''),
             Image::getHtml(
                 'pickpage.gif',
                 $this->translator->trans('MSC.pagepicker', [], 'contao_default'),
-                'style="vertical-align:top;cursor:pointer"'
-            )
+                'style="vertical-align:top;cursor:pointer"',
+            ),
         );
     }
 
@@ -128,7 +124,7 @@ final class ModuleDcaListener extends AbstractListener
         if ($user->isAdmin) {
             $objArticle = Database::getInstance()->execute(
                 'SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent FROM tl_article a
-                LEFT JOIN tl_page p ON p.id=a.pid ORDER BY parent, a.sorting'
+                LEFT JOIN tl_page p ON p.id=a.pid ORDER BY parent, a.sorting',
             );
         } else {
             foreach ($user->pagemounts as $id) {
@@ -145,7 +141,7 @@ final class ModuleDcaListener extends AbstractListener
             $objArticle = Database::getInstance()->execute(
                 'SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent
                 FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid WHERE a.pid IN(' . $pids . ')
-                ORDER BY parent, a.sorting'
+                ORDER BY parent, a.sorting',
             );
         }
 

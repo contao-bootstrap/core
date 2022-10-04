@@ -15,16 +15,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 final class HookListener
 {
     /**
-     * The event dispatcher.
-     */
-    protected EventDispatcherInterface $eventDispatcher;
-
-    /**
-     * The bootstrap environment.
-     */
-    protected Environment $environment;
-
-    /**
      * Construct.
      *
      * @param EventDispatcherInterface $eventDispatcher The event dispatcher.
@@ -32,10 +22,10 @@ final class HookListener
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher, Environment $environment)
-    {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->environment     = $environment;
+    public function __construct(
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly Environment $environment,
+    ) {
     }
 
     /**

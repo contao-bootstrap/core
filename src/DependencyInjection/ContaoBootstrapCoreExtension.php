@@ -41,7 +41,7 @@ final class ContaoBootstrapCoreExtension extends Extension
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config'),
         );
 
         $config = $this->processConfiguration(new Configuration($this->components), $configs);

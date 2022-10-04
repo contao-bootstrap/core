@@ -8,9 +8,7 @@ use ContaoBootstrap\Core\DependencyInjection\ContaoBootstrapCoreExtension;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- */
+/** @SuppressWarnings(PHPMD.CamelCaseMethodName) */
 final class ContaoBootstrapCoreBundleSpec extends ObjectBehavior
 {
     public function it_is_a_bundle(): void

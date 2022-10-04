@@ -10,9 +10,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use ContaoBootstrap\Core\ContaoManager\Plugin;
 use PhpSpec\ObjectBehavior;
 
-/**
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- */
+/** @SuppressWarnings(PHPMD.CamelCaseMethodName) */
 class PluginSpec extends ObjectBehavior
 {
     public function it_is_initializable(): void

@@ -14,30 +14,15 @@ final class BuildContextConfig extends Event
     public const NAME = 'contao_bootstrap.core.build_context_config';
 
     /**
-     * Context config.
-     */
-    private Config $config;
-
-    /**
-     * Bootstrap config.
-     */
-    private Context $context;
-
-    /**
-     * Bootstrap environment.
-     */
-    private Environment $environment;
-
-    /**
      * @param Environment $environment Environment.
      * @param Context     $context     Context.
      * @param Config      $config      Config.
      */
-    public function __construct(Environment $environment, Context $context, Config $config)
-    {
-        $this->context     = $context;
-        $this->environment = $environment;
-        $this->config      = $config;
+    public function __construct(
+        private readonly Environment $environment,
+        private readonly Context $context,
+        private Config $config,
+    ) {
     }
 
     /**

@@ -29,12 +29,12 @@ final class Environment
     /**
      * Layout model of current page.
      */
-    private ?LayoutModel $layout = null;
+    private LayoutModel|null $layout = null;
 
     /**
      * Current context.
      */
-    private ?Context $context = null;
+    private Context|null $context = null;
 
     /**
      * List of contexts.
@@ -44,19 +44,13 @@ final class Environment
     private array $contextStack = [];
 
     /**
-     * MessageBus.
-     */
-    private MessageBus $messageBus;
-
-    /**
      * Construct.
      *
      * @param MessageBus $messageBus Message bus.
      */
-    public function __construct(MessageBus $messageBus)
+    public function __construct(private readonly MessageBus $messageBus)
     {
-        $this->messageBus = $messageBus;
-        $this->config     = new ArrayConfig();
+        $this->config = new ArrayConfig();
     }
 
     /**
@@ -89,7 +83,7 @@ final class Environment
      *
      * @throws LeavingContextFailed When context stack is empty.
      */
-    public function leaveContext(?Context $currentContext = null): void
+    public function leaveContext(Context|null $currentContext = null): void
     {
         if (! $this->context) {
             throw LeavingContextFailed::noContext();
@@ -171,7 +165,7 @@ final class Environment
     /**
      * Get the page layout.
      */
-    public function getLayout(): ?LayoutModel
+    public function getLayout(): LayoutModel|null
     {
         return $this->layout;
     }
