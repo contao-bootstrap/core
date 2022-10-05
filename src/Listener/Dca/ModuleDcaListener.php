@@ -6,14 +6,18 @@ namespace ContaoBootstrap\Core\Listener\Dca;
 
 use Contao\BackendUser;
 use Contao\Controller;
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
+use Doctrine\DBAL\Connection;
 use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_key_exists;
@@ -31,8 +35,15 @@ final class ModuleDcaListener extends AbstractListener
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected static $name = 'tl_module';
 
-    public function __construct(DcaManager $dcaManager, private readonly TranslatorInterface $translator)
-    {
+    /** @param Adapter<Input> $inputAdapter */
+    public function __construct(
+        DcaManager $dcaManager,
+        private readonly TranslatorInterface $translator,
+        private readonly Connection $connection,
+        private readonly ContaoFramework $framework,
+        private readonly RouterInterface $router,
+        private readonly Adapter $inputAdapter,
+    ) {
         parent::__construct($dcaManager);
     }
 
@@ -81,16 +92,21 @@ final class ModuleDcaListener extends AbstractListener
      */
     public function pagePicker(DataContainer $dataContainer): string
     {
-        $template  = ' <a href="contao/page.php?do=%s&amp;table=%s&amp;field=%s&amp;value=%s" title="%s"';
+        $template  = ' <a href="%s" title="%s"';
         $template .= ' onclick="Backend.getScrollOffset();Backend.openModalSelector({\'width\':765,\'title\':\'%s\'';
         $template .= ',\'url\':this.href,\'id\':\'%s\',\'tag\':\'ctrl_%s\',\'self\':this});return false">%s</a>';
 
         return sprintf(
             $template,
-            Input::get('do'),
-            $dataContainer->table,
-            $dataContainer->field,
-            str_replace(['{{link_url::', '}}'], '', $dataContainer->value),
+            $this->router->generate(
+                'contao_backend_page',
+                [
+                    'do'    => $this->inputAdapter->get('do'),
+                    'table' => $dataContainer->table,
+                    'field' => $dataContainer->field,
+                    'value' => str_replace(['{{link_url::', '}}'], '', $dataContainer->value),
+                ],
+            ),
             StringUtil::specialchars($this->translator->trans('MSC.pagepicker', [], 'contao_default')),
             StringUtil::specialchars(
                 str_replace("'", "\\'", $this->translator->trans('MOD.page.0', [], 'contao_default')),
@@ -122,14 +138,17 @@ final class ModuleDcaListener extends AbstractListener
 
         // Limit pages to the user's pagemounts
         if ($user->isAdmin) {
-            $objArticle = Database::getInstance()->execute(
+            $result = $this->connection->executeQuery(
                 'SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent FROM tl_article a
                 LEFT JOIN tl_page p ON p.id=a.pid ORDER BY parent, a.sorting',
             );
         } else {
             foreach ($user->pagemounts as $id) {
                 $pids[] = $id;
-                $pids   = array_merge($pids, Database::getInstance()->getChildRecords($id, 'tl_page'));
+                $pids   = array_merge(
+                    $pids,
+                    $this->framework->createInstance(Database::class)->getChildRecords($id, 'tl_page'),
+                );
             }
 
             if ($pids === []) {
@@ -138,7 +157,7 @@ final class ModuleDcaListener extends AbstractListener
 
             $pids = implode(',', array_map('intval', array_unique($pids)));
 
-            $objArticle = Database::getInstance()->execute(
+            $result = $this->connection->executeQuery(
                 'SELECT a.id, a.pid, a.title, a.inColumn, p.title AS parent
                 FROM tl_article a LEFT JOIN tl_page p ON p.id=a.pid WHERE a.pid IN(' . $pids . ')
                 ORDER BY parent, a.sorting',
@@ -146,19 +165,19 @@ final class ModuleDcaListener extends AbstractListener
         }
 
         // Edit the result
-        if ($objArticle->numRows) {
+        if ($result->rowCount()) {
             Controller::loadLanguageFile('tl_article');
 
-            while ($objArticle->next()) {
-                $transKey    = 'tl_article.' . $objArticle->inColumn;
+            while ($row = $result->fetchAssociative()) {
+                $transKey    = 'tl_article.' . $row['inColumn'];
                 $translation = $this->translator->trans($transKey);
-                $key         = $objArticle->parent . ' (ID ' . $objArticle->pid . ')';
+                $key         = $row['parent'] . ' (ID ' . $row['pid'] . ')';
 
-                $articles[$key][$objArticle->id] = $objArticle->title
+                $articles[$key][$row['id']] = $row['title']
                     . ' ('
-                    . ($translation === $transKey ? $objArticle->inColumn : $translation)
+                    . ($translation === $transKey ? $row['inColumn'] : $translation)
                     . ', ID '
-                    . $objArticle->id
+                    . $row['id']
                     . ')';
             }
         }
@@ -176,17 +195,15 @@ final class ModuleDcaListener extends AbstractListener
         $modules = [];
         $query   = 'SELECT m.id, m.name, t.name AS theme FROM tl_module m LEFT JOIN tl_theme t ON m.pid=t.id';
 
-        if (Input::get('table') === 'tl_module' && Input::get('act') === 'edit') {
-            $query .= ' WHERE m.id != ?';
+        if ($this->inputAdapter->get('table') === 'tl_module' && $this->inputAdapter->get('act') === 'edit') {
+            $query .= ' WHERE m.id != :id';
         }
 
         $query .= ' ORDER BY t.name, m.name';
-        $result = Database::getInstance()
-            ->prepare($query)
-            ->execute(Input::get('id'));
+        $result = $this->connection->executeQuery($query, ['id' => $this->inputAdapter->get('id')]);
 
-        while ($result->next()) {
-            $modules[$result->theme][$result->id] = $result->name . ' (ID ' . $result->id . ')';
+        while ($row = $result->fetchAssociative()) {
+            $modules[$row['theme']][$row['id']] = $row['name'] . ' (ID ' . $row['id'] . ')';
         }
 
         return $modules;

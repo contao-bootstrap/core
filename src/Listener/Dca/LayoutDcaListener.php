@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Listener\Dca;
 
+use Contao\CoreBundle\Framework\Adapter;
 use Contao\Input;
 use Contao\LayoutModel;
 use ContaoBootstrap\Core\Environment;
 use ContaoCommunityAlliance\MetaPalettes\MetaPalettes;
+use Netzmacht\Contao\Toolkit\Data\Model\RepositoryManager;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener;
 
@@ -21,9 +23,13 @@ final class LayoutDcaListener extends AbstractListener
     // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected static $name = 'tl_layout';
 
-    /** @param Environment $environment Environment. */
-    public function __construct(DcaManager $dcaManager, private readonly Environment $environment)
-    {
+    /** @param Adapter<Input> $inputAdapter */
+    public function __construct(
+        DcaManager $dcaManager,
+        private readonly Environment $environment,
+        private readonly Adapter $inputAdapter,
+        private readonly RepositoryManager $repositories,
+    ) {
         parent::__construct($dcaManager);
     }
 
@@ -35,11 +41,11 @@ final class LayoutDcaListener extends AbstractListener
     public function generatePalette(): void
     {
         // TODO: How to handle editAll actions?
-        if (Input::get('table') !== 'tl_layout' || Input::get('act') !== 'edit') {
+        if ($this->inputAdapter->get('table') !== 'tl_layout' || $this->inputAdapter->get('act') !== 'edit') {
             return;
         }
 
-        $layout = LayoutModel::findByPk(Input::get('id'));
+        $layout = $this->repositories->getRepository(LayoutModel::class)->find((int) $this->inputAdapter->get('id'));
 
         // dynamically render palette so that extensions can plug into default palette
         /** @psalm-suppress UndefinedMagicPropertyFetch */

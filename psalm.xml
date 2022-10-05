@@ -24,6 +24,11 @@
                 <referencedClass name="MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard"/>
             </errorLevel>
         </UndefinedDocblockClass>
+        <InternalMethod>
+            <errorLevel type="suppress">
+                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>
+            </errorLevel>
+        </InternalMethod>
     </issueHandlers>
 
     <universalObjectCrates>

@@ -34,12 +34,18 @@ services:
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@contao_bootstrap.environment'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
+      - '@netzmacht.contao_toolkit.repository_manager'
 
   contao_bootstrap.core.listener.module_dca:
     class: ContaoBootstrap\Core\Listener\Dca\ModuleDcaListener
     arguments:
       - '@netzmacht.contao_toolkit.dca.manager'
       - '@translator'
+      - '@database_connection'
+      - '@contao.framework'
+      - '@router'
+      - '@netzmacht.contao_toolkit.contao.input_adapter'
 
   ContaoBootstrap\Core\Listener\BackendListener:
     arguments:

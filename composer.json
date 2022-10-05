@@ -32,11 +32,13 @@
     "php": "^8.1",
     "contao-community-alliance/meta-palettes": "^2.0",
     "contao/core-bundle": "^4.9 || ^5.0",
+    "doctrine/dbal": "^3.1",
     "netzmacht/contao-toolkit": "^3.8",
     "symfony/config": "^5.4 || ^6.0",
     "symfony/dependency-injection": "^5.4 || ^6.0",
     "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
     "symfony/http-kernel": "^5.4 || ^6.0",
+    "symfony/routing": "^5.4 || ^6.0",
     "symfony/translation-contracts": "^1.1 || ^2.0",
     "symfony/yaml": "^5.4 || ^6.0"
   },
