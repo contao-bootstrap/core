@@ -1,11 +1,11 @@
 Contao-Bootstrap Core
 =====================
 
-[![Version](http://img.shields.io/packagist/v/contao-bootstrap/core.svg?style=for-the-badge&label=Latest)](http://packagist.org/packages/contao-bootstrap/core)
+[![Version](https://img.shields.io/packagist/v/contao-bootstrap/core.svg?style=for-the-badge&label=Latest)](http://packagist.org/packages/contao-bootstrap/core)
 [![GitHub issues](https://img.shields.io/github/issues/contao-bootstrap/core.svg?style=for-the-badge&logo=github)](https://github.com/contao-bootstrap/core/issues)
-[![License](http://img.shields.io/packagist/l/contao-bootstrap/core.svg?style=for-the-badge&label=License)](http://packagist.org/packages/contao-bootstrap/core)
-[![Build Status](https://github.com/contao-bootstrap/core/actions/workflows/diagnostics.yml/badge.svg?branch=master)](https://travis-ci.org/contao-bootstrap/core)
-[![Downloads](http://img.shields.io/packagist/dt/contao-bootstrap/core.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/core)
+[![License](https://img.shields.io/packagist/l/contao-bootstrap/core.svg?style=for-the-badge&label=License)](http://packagist.org/packages/contao-bootstrap/core)
+[![Build Status](https://img.shields.io/github/workflow/status/contao-bootstrap/core/Code%20Quality%20Diagnostics/master?style=for-the-badge)](https://github.com/contao-bootstrap/core/actions/workflows/diagnostics.yml)
+[![Downloads](https://img.shields.io/packagist/dt/contao-bootstrap/core.svg?style=for-the-badge&label=Downloads)](http://packagist.org/packages/contao-bootstrap/core)
 
 This extension provides Bootstrap 4 integration into Contao.
 
