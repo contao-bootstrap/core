@@ -11,8 +11,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class InitializeLayout extends Event
 {
-    public const NAME = 'contao_bootstrap.core.initialize_layout';
-
     /**
      * Construct.
      *

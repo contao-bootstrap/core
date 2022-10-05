@@ -44,7 +44,7 @@ final class HookListener
     protected function initializeEnvironment(): void
     {
         $event = new InitializeEnvironment($this->environment);
-        $this->eventDispatcher->dispatch($event, $event::NAME);
+        $this->eventDispatcher->dispatch($event);
     }
 
     /**
@@ -63,6 +63,6 @@ final class HookListener
         $environment->setEnabled($layout->layoutType === 'bootstrap');
 
         $event = new InitializeLayout($environment, $layout, $page);
-        $this->eventDispatcher->dispatch($event, $event::NAME);
+        $this->eventDispatcher->dispatch($event);
     }
 }

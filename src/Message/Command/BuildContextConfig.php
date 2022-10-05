@@ -11,8 +11,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class BuildContextConfig extends Event
 {
-    public const NAME = 'contao_bootstrap.core.build_context_config';
-
     /**
      * @param Environment $environment Environment.
      * @param Context     $context     Context.

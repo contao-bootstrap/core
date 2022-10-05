@@ -26,8 +26,8 @@ See [changelog](CHANGELOG.md)
 Requirements
 ------------
 
- - PHP ^7.4 || ^8.0
- - Contao ^4.9
+ - PHP ^8.1
+ - Contao ^4.13
 
 
 Install
@@ -49,11 +49,11 @@ $ php composer.phar require contao-bootstrap/core~2.0
 ### Symfony application
 
 If you use Contao in a symfony application without contao/manager-bundle, you have to register following bundles
-manually:
+manually and register the bundle configuration:
 
 ```php
 
-class AppKernel
+final class AppKernel
 {
     public function registerBundles()
     {
@@ -64,5 +64,13 @@ class AppKernel
         ];
     }
 }
+
+```
+
+```yaml
+
+# Application config.yaml
+imports:
+  - { resource: vendor/contao-bootstrap/core/Resources/config/contao_bootstrap.yaml }
 
 ```

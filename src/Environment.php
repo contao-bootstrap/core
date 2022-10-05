@@ -113,7 +113,7 @@ final class Environment
     private function switchContext(Context $context, bool $keepCurrentInStack = false): void
     {
         $command = new BuildContextConfig($this, $context, $this->config);
-        $this->messageBus->dispatch($command, $command::NAME);
+        $this->messageBus->dispatch($command);
 
         if ($keepCurrentInStack && $this->context) {
             $this->contextStack[] = $this->context;

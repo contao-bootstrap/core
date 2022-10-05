@@ -9,8 +9,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class InitializeEnvironment extends Event
 {
-    public const NAME = 'contao_bootstrap.core.initialize_environment';
-
     public function __construct(private readonly Environment $environment)
     {
     }

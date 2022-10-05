@@ -8,13 +8,13 @@ services:
       - '@contao_bootstrap.config'
     tags:
       - name: kernel.event_listener
-        event: 'contao_bootstrap.core.initialize_environment'
+        event: 'ContaoBootstrap\Core\Message\Command\InitializeEnvironment'
         method: 'enterApplicationContext'
       - name: kernel.event_listener
-        event: 'contao_bootstrap.core.initialize_layout'
+        event: 'ContaoBootstrap\Core\Message\Command\InitializeLayout'
         method: 'enterThemeContext'
       - name: kernel.event_listener
-        event: 'contao_bootstrap.core.build_context_config'
+        event: 'ContaoBootstrap\Core\Message\Command\BuildContextConfig'
         method: 'buildContextConfig'
 
   contao_bootstrap.core.listener.parse_template:
