@@ -19,7 +19,7 @@ final class Environment
     /**
      * Bootstrap enabled state.
      */
-    protected bool $enabled = false;
+    public bool $enabled = false;
 
     /**
      * Bootstrap config.
@@ -29,7 +29,7 @@ final class Environment
     /**
      * Layout model of current page.
      */
-    private LayoutModel|null $layout = null;
+    public LayoutModel|null $layout = null;
 
     /**
      * Current context.
@@ -119,54 +119,10 @@ final class Environment
             $this->contextStack[] = $this->context;
         }
 
-        $this->config  = $command->getConfig();
+        $this->config  = $command->config;
         $this->context = $context;
 
         $event = new ContextEntered($this, $context);
-        $this->messageBus->dispatch($event, $event::NAME);
-    }
-
-    /**
-     * Consider if bootstrap theme is enabled.
-     */
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * Enable current bootstrap theme.
-     *
-     * @param bool $enabled Enabled state.
-     *
-     * @return $this
-     */
-    public function setEnabled(bool $enabled): self
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * Set the layout.
-     *
-     * @param LayoutModel $layout Page layout.
-     *
-     * @return $this
-     */
-    public function setLayout(LayoutModel $layout): self
-    {
-        $this->layout = $layout;
-
-        return $this;
-    }
-
-    /**
-     * Get the page layout.
-     */
-    public function getLayout(): LayoutModel|null
-    {
-        return $this->layout;
+        $this->messageBus->dispatch($event);
     }
 }

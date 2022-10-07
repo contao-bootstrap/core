@@ -9,15 +9,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class InitializeEnvironment extends Event
 {
-    public function __construct(private readonly Environment $environment)
+    public function __construct(public readonly Environment $environment)
     {
-    }
-
-    /**
-     * Get the Bootstrap environment.
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->environment;
     }
 }

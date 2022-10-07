@@ -7,7 +7,7 @@ namespace ContaoBootstrap\Core\Environment;
 final class ThemeContext extends AbstractContext
 {
     /** @param int $themeId Theme id. */
-    private function __construct(private readonly int $themeId)
+    private function __construct(public readonly int $themeId)
     {
     }
 
@@ -34,14 +34,6 @@ final class ThemeContext extends AbstractContext
     public static function forTheme(int $themeId): self
     {
         return new self($themeId);
-    }
-
-    /**
-     * Get themeId.
-     */
-    public function getThemeId(): int
-    {
-        return $this->themeId;
     }
 
     public function toString(): string

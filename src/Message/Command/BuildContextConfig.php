@@ -17,47 +17,9 @@ final class BuildContextConfig extends Event
      * @param Config      $config      Config.
      */
     public function __construct(
-        private readonly Environment $environment,
-        private readonly Context $context,
-        private Config $config,
+        public readonly Environment $environment,
+        public readonly Context $context,
+        public Config $config,
     ) {
-    }
-
-    /**
-     * Get environment.
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->environment;
-    }
-
-    /**
-     * Get context.
-     */
-    public function getContext(): Context
-    {
-        return $this->context;
-    }
-
-    /**
-     * Get config.
-     */
-    public function getConfig(): Config
-    {
-        return $this->config;
-    }
-
-    /**
-     * Set config.
-     *
-     * @param Config $config Config.
-     *
-     * @return $this
-     */
-    public function setConfig(Config $config): self
-    {
-        $this->config = $config;
-
-        return $this;
     }
 }

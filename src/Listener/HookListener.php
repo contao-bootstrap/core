@@ -57,10 +57,10 @@ final class HookListener
      */
     public function initializeLayout(PageModel $page, LayoutModel $layout): void
     {
-        $environment = $this->environment;
-        $environment->setLayout($layout);
+        $environment         = $this->environment;
+        $environment->layout = $layout;
         /** @psalm-suppress UndefinedMagicPropertyFetch */
-        $environment->setEnabled($layout->layoutType === 'bootstrap');
+        $environment->enabled = $layout->layoutType === 'bootstrap';
 
         $event = new InitializeLayout($environment, $layout, $page);
         $this->eventDispatcher->dispatch($event);

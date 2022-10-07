@@ -19,33 +19,9 @@ final class InitializeLayout extends Event
      * @param PageModel   $pageModel   Page model.
      */
     public function __construct(
-        private readonly Environment $environment,
-        private readonly LayoutModel $layoutModel,
-        private readonly PageModel $pageModel,
+        public readonly Environment $environment,
+        public readonly LayoutModel $layoutModel,
+        public readonly PageModel $pageModel,
     ) {
-    }
-
-    /**
-     * Get bootstrap environment.
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->environment;
-    }
-
-    /**
-     * Get layout model.
-     */
-    public function getLayoutModel(): LayoutModel
-    {
-        return $this->layoutModel;
-    }
-
-    /**
-     * Get page model.
-     */
-    public function getPageModel(): PageModel
-    {
-        return $this->pageModel;
     }
 }

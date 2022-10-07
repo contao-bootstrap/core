@@ -10,29 +10,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 final class ContextEntered extends Event
 {
-    public const NAME = 'contao_bootstrap.core.enter_context';
-
     /**
      * @param Environment $environment Bootstrap environment.
      * @param Context     $context     Environment context.
      */
-    public function __construct(private readonly Environment $environment, private readonly Context $context)
+    public function __construct(public readonly Environment $environment, public readonly Context $context)
     {
-    }
-
-    /**
-     * Get environment.
-     */
-    public function getEnvironment(): Environment
-    {
-        return $this->environment;
-    }
-
-    /**
-     * Get context.
-     */
-    public function getContext(): Context
-    {
-        return $this->context;
     }
 }

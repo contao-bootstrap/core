@@ -31,7 +31,7 @@ class ThemeContextSpec extends ObjectBehavior
 
     public function it_provides_theme_id(): void
     {
-        $this->getThemeId()->shouldReturn(self::THEME_ID);
+        $this->themeId->shouldReturn(self::THEME_ID);
     }
 
     public function it_supports_application_context(): void
