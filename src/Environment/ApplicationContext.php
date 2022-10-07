@@ -16,7 +16,7 @@ final class ApplicationContext extends AbstractContext
         return new self();
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'application';
     }

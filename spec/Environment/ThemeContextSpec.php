@@ -53,6 +53,6 @@ class ThemeContextSpec extends ObjectBehavior
 
     public function it_serializes_to_string(): void
     {
-        $this->__toString()->shouldReturn('theme:' . self::THEME_ID);
+        $this->toString()->shouldReturn('theme:' . self::THEME_ID);
     }
 }

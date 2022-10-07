@@ -23,5 +23,5 @@ interface Context
     /**
      * Get string representation of context.
      */
-    public function __toString(): string;
+    public function toString(): string;
 }

@@ -8,6 +8,6 @@ abstract class AbstractContext implements Context
 {
     public function match(Context $context): bool
     {
-        return $this->__toString() === $context->__toString();
+        return $this->toString() === $context->toString();
     }
 }

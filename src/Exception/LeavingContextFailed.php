@@ -21,7 +21,7 @@ final class LeavingContextFailed extends Exception
     public static function inContext(Context $context, int $code = 0, Throwable|null $previous = null): self
     {
         return new self(
-            sprintf('Leaving context "%s" failed. Context stack is empty', $context->__toString()),
+            sprintf('Leaving context "%s" failed. Context stack is empty', $context->toString()),
             $code,
             $previous,
         );

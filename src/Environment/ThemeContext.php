@@ -44,7 +44,7 @@ final class ThemeContext extends AbstractContext
         return $this->themeId;
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return 'theme:' . $this->themeId;
     }

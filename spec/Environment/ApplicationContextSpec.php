@@ -40,6 +40,6 @@ class ApplicationContextSpec extends ObjectBehavior
 
     public function it_serializes_to_string(): void
     {
-        $this->__toString()->shouldReturn('application');
+        $this->toString()->shouldReturn('application');
     }
 }
