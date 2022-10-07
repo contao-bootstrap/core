@@ -9,17 +9,17 @@ interface Config
     /**
      * Get a config value.
      *
-     * @param string|list<string> $key     Name of the config param.
-     * @param mixed|null          $default Default value if config is not set.
+     * @param list<string> $key     Name of the config param.
+     * @param mixed|null   $default Default value if config is not set.
      */
-    public function get(array|string $key, mixed $default = null): mixed;
+    public function get(array $key, mixed $default = null): mixed;
 
     /**
      * Consider if config param exists.
      *
-     * @param string|list<string> $key Name of the config param.
+     * @param list<string> $key Name of the config param.
      */
-    public function has(array|string $key): bool;
+    public function has(array $key): bool;
 
     /**
      * Merge new configuration values and return a new instance of Config.

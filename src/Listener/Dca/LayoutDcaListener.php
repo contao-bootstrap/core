@@ -55,7 +55,7 @@ final class LayoutDcaListener extends AbstractListener
             $metaPalettes['__base__']                 = $this->convertDefaultPaletteToMetaPalette();
             $metaPalettes['default extends __base__'] = $this->environment
                 ->getConfig()
-                ->get('layout.metapalette', []);
+                ->get(['layout', 'metapalette'], []);
 
             $definition->set('metapalettes', $metaPalettes);
 
@@ -69,7 +69,7 @@ final class LayoutDcaListener extends AbstractListener
                 },
             );
 
-            $subSelectPalettes = $this->environment->getConfig()->get('layout.metasubselectpalettes', []);
+            $subSelectPalettes = $this->environment->getConfig()->get(['layout', 'metasubselectpalettes'], []);
             $subPalettes       = $definition->get('subpalettes', []);
 
             foreach ($subSelectPalettes as $field => $meta) {

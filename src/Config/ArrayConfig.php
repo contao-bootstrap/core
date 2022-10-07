@@ -9,8 +9,6 @@ use ContaoBootstrap\Core\Util\ArrayUtil;
 
 use function array_key_exists;
 use function array_shift;
-use function explode;
-use function is_string;
 
 final class ArrayConfig implements Config
 {
@@ -23,12 +21,12 @@ final class ArrayConfig implements Config
     {
     }
 
-    public function get(array|string $key, mixed $default = null): mixed
+    /** {@inheritDoc} */
+    public function get(array $key, mixed $default = null): mixed
     {
-        $chunks = $this->path($key);
-        $value  = $this->config;
+        $value = $this->config;
 
-        while (($chunk = array_shift($chunks)) !== null) {
+        while (($chunk = array_shift($key)) !== null) {
             if (! array_key_exists($chunk, $value)) {
                 return $default;
             }
@@ -39,12 +37,12 @@ final class ArrayConfig implements Config
         return $value;
     }
 
-    public function has(array|string $key): bool
+    /** {@inheritDoc} */
+    public function has(array $key): bool
     {
-        $chunks = $this->path($key);
-        $value  = $this->config;
+        $value = $this->config;
 
-        while (($chunk = array_shift($chunks)) !== null) {
+        while (($chunk = array_shift($key)) !== null) {
             if (! array_key_exists($chunk, $value)) {
                 return false;
             }
@@ -61,21 +59,5 @@ final class ArrayConfig implements Config
     public function merge(array $config): Config
     {
         return new self(ArrayUtil::merge($this->config, $config));
-    }
-
-    /**
-     * Convert string path to array, so that always an array is used.
-     *
-     * @param string|list<string> $path Passed path value.
-     *
-     * @return list<string>
-     */
-    private function path(array|string $path): array
-    {
-        if (is_string($path)) {
-            return explode('.', $path);
-        }
-
-        return $path;
     }
 }
