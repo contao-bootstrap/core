@@ -10,9 +10,11 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 final class BackendListener
 {
+    /** @param list<string> $styles */
     public function __construct(
         private readonly AssetsManager $assets,
         private readonly RequestScopeMatcher $scopeMatcher,
+        private readonly array $styles,
     ) {
     }
 
@@ -23,6 +25,6 @@ final class BackendListener
             return;
         }
 
-        $this->assets->addStylesheet('contao_bootstrap_core::css/backend.css');
+        $this->assets->addStylesheets($this->styles);
     }
 }

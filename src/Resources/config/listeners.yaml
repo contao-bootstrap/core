@@ -51,5 +51,6 @@ services:
     arguments:
       - '@netzmacht.contao_toolkit.assets_manager'
       - '@netzmacht.contao_toolkit.routing.scope_matcher'
+      - '%contao_bootstrap.backend.css%'
     tags:
       - { name: 'kernel.event_listener', event: 'kernel.request' }

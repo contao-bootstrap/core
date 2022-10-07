@@ -45,7 +45,8 @@ final class ContaoBootstrapCoreExtension extends Extension
         );
 
         $config = $this->processConfiguration(new Configuration($this->components), $configs);
-        $container->setParameter('contao_bootstrap.config', (array) $config['config']);
+        $container->setParameter('contao_bootstrap.config', $config['config'] ?? []);
+        $container->setParameter('contao_bootstrap.backend.css', $config['backend']['css']);
 
         $loader->load('services.yaml');
         $loader->load('listeners.yaml');

@@ -21,9 +21,19 @@ final class Configuration implements ConfigurationInterface
         $rootNode    = $treeBuilder->getRootNode();
 
         $configNode = $rootNode
-            ->children()
-                ->arrayNode('config')
-                    ->info('Customize the bootstrap configuration');
+                ->children()
+                    ->arrayNode('backend')
+                        ->info('Backend related configuration')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->arrayNode('css')
+                                ->scalarPrototype()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->arrayNode('config')
+                        ->info('Customize the bootstrap configuration');
 
         $configNode
             ->children()

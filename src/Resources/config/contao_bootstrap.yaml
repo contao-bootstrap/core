@@ -1,4 +1,7 @@
 contao_bootstrap:
+  backend:
+    css:
+      - 'contao_bootstrap_core::css/backend.css'
   config:
     layout:
       metapalette:
