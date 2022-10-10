@@ -73,11 +73,13 @@ final class LayoutDcaListener extends AbstractListener
             $subPalettes       = $definition->get('subpalettes', []);
 
             foreach ($subSelectPalettes as $field => $meta) {
-                foreach ($meta as $value => $definition) {
+                foreach ($meta as $value => $subSelectPalette) {
                     unset($subPalettes[$field . '_' . $value]);
-                    $definition->set(['metasubselectpalettes', $field, $value], $definition);
+                    $definition->set(['metasubselectpalettes', $field, $value], $subSelectPalette);
                 }
             }
+
+            $definition->set('subpalettes', $subPalettes);
         } else {
             MetaPalettes::appendFields('tl_layout', 'title', ['layoutType']);
         }

@@ -57,6 +57,7 @@ final class ContaoBootstrapCoreExtensionSpec extends ObjectBehavior
                         'metapalette' => [
                             '+title' => ['layoutType'],
                         ],
+                        'metasubselectpalettes' => [],
                     ],
                 ],
             )
@@ -72,6 +73,7 @@ final class ContaoBootstrapCoreExtensionSpec extends ObjectBehavior
                             'metapalette' => [
                                 '+title' => ['layoutType'],
                             ],
+                            'metasubselectpalettes' => [],
                         ],
                     ],
                     'backend' => [
