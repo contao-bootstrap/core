@@ -45,7 +45,7 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
             . $this->connection->quoteIdentifier($this->tableName)
             . ' WHERE '
             . $this->connection->quoteIdentifier($this->columnName)
-            . ' LIKE \'a:1:{i:0;%\'',
+            . ' LIKE \'a:%:{i:0;%\'',
         );
 
         return $affected > 0;
@@ -54,11 +54,11 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
     public function run(): MigrationResult
     {
         $result = $this->connection->fetchAllAssociative(
-            'SELECT COUNT(*) FROM '
+            'SELECT * FROM '
             . $this->connection->quoteIdentifier($this->tableName)
             . ' WHERE '
             . $this->connection->quoteIdentifier($this->columnName)
-            . ' LIKE \'a:1:{i:0;%\'',
+            . ' LIKE \'a:%:{i:0;%\'',
         );
 
         foreach ($result as $row) {
