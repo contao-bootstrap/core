@@ -1,5 +1,6 @@
 # composer related
 vendor/
+composer.lock
 
 # Translations
 .tx

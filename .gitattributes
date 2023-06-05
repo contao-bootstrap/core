@@ -1,15 +1,11 @@
-.check-author.yml export-ignore
+.composer-require-checker.json export-ignore
+.editorconfig export-ignore
 .gitattributes export-ignore
 .github export-ignore
-.gitignore export-ignore
-.travis.yml export-ignore
-build.default.properties export-ignore
-build.xml export-ignore
-phpunit.xml.dist export-ignore
-/tests export-ignore
+/.gitignore export-ignore
 /specs export-ignore
 .phpcq.lock export-ignore
-.phpcq.yaml.dis export-ignore
+.phpcq.yaml.dist export-ignore
+phpcs.xml.dist export-ignore
+phpspec.yaml
 psalm.xml export-ignore
-phpcs.xml.dis export-ignore
-composer.lock export-ignore
