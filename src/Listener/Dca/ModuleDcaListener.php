@@ -14,7 +14,6 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
-use MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard;
 use Netzmacht\Contao\Toolkit\Dca\DcaManager;
 use Netzmacht\Contao\Toolkit\Dca\Listener\AbstractListener;
 use Symfony\Component\Routing\RouterInterface;
@@ -50,26 +49,19 @@ final class ModuleDcaListener extends AbstractListener
     /**
      * Get all templates. A templatePrefix can be defined using eval.templatePrefix.
      *
-     * @param DataContainer|MultiColumnWizard $dataContainer The data container driver.
+     * @param DataContainer $dataContainer The data container driver.
      *
      * @return array<string>
      *
      * @SuppressWarnings(PHPMD.Superglobals)
      */
-    public function getTemplates(DataContainer|MultiColumnWizard $dataContainer): array
+    public function getTemplates(DataContainer $dataContainer): array
     {
         $config = [];
         $prefix = '';
 
-        // MCW compatibility
-        if ($dataContainer instanceof MultiColumnWizard) {
-            $field = $dataContainer->strField;
-            $table = $dataContainer->strTable;
-        } else {
-            $field = $dataContainer->field;
-            $table = $dataContainer->table;
-        }
-
+        $field      = $dataContainer->field;
+        $table      = $dataContainer->table;
         $definition = $this->getDefinition($table);
 
         if ($definition->has(['fields', $field, 'eval'])) {
