@@ -5,6 +5,19 @@ Changelog
 Unreleased
 ----------
 
+### Added
+
+ - Rewrite configuration system: bundle configuration are used now
+ - Provide backend assets system
+
+### Breaking
+
+ - Use event class name as event name
+ - Use public properties in message and context objects
+ - Drop support for multi column wizard
+ - Do not allow string based config paths
+
+
 2.1.0 (2022-04-20)
 ------------------
 
