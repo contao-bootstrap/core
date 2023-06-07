@@ -10,5 +10,3 @@
 phpcs.xml.dist export-ignore
 phpspec.yaml
 psalm.xml export-ignore
-phpcs.xml.dis export-ignore
-composer.lock export-ignore
