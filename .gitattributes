@@ -2,6 +2,7 @@
 .editorconfig export-ignore
 .gitattributes export-ignore
 .github export-ignore
+.gitlab-ci.yml
 /.gitignore export-ignore
 /specs export-ignore
 .phpcq.lock export-ignore
@@ -9,3 +10,5 @@
 phpcs.xml.dist export-ignore
 phpspec.yaml
 psalm.xml export-ignore
+phpcs.xml.dis export-ignore
+composer.lock export-ignore

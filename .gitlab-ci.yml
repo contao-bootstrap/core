@@ -1,0 +1,35 @@
+variables:
+  GIT_DEPTH: 0
+  GIT_STRATEGY: clone
+
+stages:
+  - pre-test
+  - build
+
+before_script:
+  - echo "ipv6" >> /etc/modules
+
+job_test_ci:
+  image: discordier/php-runner:8.1-alpine
+  stage: pre-test
+  except:
+    - tags
+  before_script:
+    - composer self-update -vvv && composer --version
+    - composer install --prefer-dist --no-interaction --no-progress --no-scripts
+    - vendor/bin/phpcq self-update --unsigned
+  script:
+    - vendor/bin/phpcq install -vvv
+    - vendor/bin/phpcq run -v -o default -r code-climate -r file-report
+  cache:
+    paths:
+      - vendor/
+      - ~/.cache/composer/
+      - .phpcq/plugins
+  artifacts:
+    paths:
+      - .phpcq/build*
+    expire_in: 1 week
+    name: pre-test
+    reports:
+      codequality: .phpcq/build/code-climate.json
