@@ -10,3 +10,4 @@
 phpcs.xml.dist export-ignore
 phpspec.yaml
 psalm.xml export-ignore
+ctb.json

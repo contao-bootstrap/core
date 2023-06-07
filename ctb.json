@@ -1,0 +1,9 @@
+{
+  "transifex": {
+    "project": "contao-bootstrap/contao-bootstrap",
+    "prefix": "core-",
+    "languages_cto": "src/Resources/contao/languages",
+    "languages_tx": ".tx",
+    "php-file-header": []
+  }
+}
