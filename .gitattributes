@@ -4,7 +4,7 @@
 .github export-ignore
 .gitlab-ci.yml export-ignore
 /.gitignore export-ignore
-/specs export-ignore
+/spec export-ignore
 .phpcq.lock export-ignore
 .phpcq.yaml.dist export-ignore
 phpcs.xml.dist export-ignore
