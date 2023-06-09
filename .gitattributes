@@ -2,12 +2,12 @@
 .editorconfig export-ignore
 .gitattributes export-ignore
 .github export-ignore
-.gitlab-ci.yml
+.gitlab-ci.yml export-ignore
 /.gitignore export-ignore
 /specs export-ignore
 .phpcq.lock export-ignore
 .phpcq.yaml.dist export-ignore
 phpcs.xml.dist export-ignore
-phpspec.yaml
+phpspec.yml export-ignore
 psalm.xml export-ignore
-ctb.json
+ctb.json export-ignore
