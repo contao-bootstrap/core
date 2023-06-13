@@ -45,6 +45,7 @@ final class LayoutDcaListener extends AbstractListener
             return;
         }
 
+        /** @psalm-suppress RiskyCast */
         $layout = $this->repositories->getRepository(LayoutModel::class)->find((int) $this->inputAdapter->get('id'));
 
         // dynamically render palette so that extensions can plug into default palette

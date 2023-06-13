@@ -31,8 +31,8 @@ final class ContaoBootstrapCoreExtensionSpec extends ObjectBehavior
     public function it_loads_default_configuration(ContainerBuilder $container): void
     {
         $container->fileExists(Argument::any())->willReturn(true);
-        $container->removeBindings(Argument::cetera())->willReturn();
-        $container->setDefinition(Argument::cetera())->willReturn();
+        $container->removeBindings(Argument::cetera());
+        $container->setDefinition(Argument::cetera());
 
         $container
             ->setParameter('contao_bootstrap.config', [])
@@ -46,8 +46,8 @@ final class ContaoBootstrapCoreExtensionSpec extends ObjectBehavior
     public function it_loads_custom_configuration(ContainerBuilder $container): void
     {
         $container->fileExists(Argument::any())->willReturn(true);
-        $container->removeBindings(Argument::cetera())->willReturn();
-        $container->setDefinition(Argument::cetera())->willReturn();
+        $container->removeBindings(Argument::cetera());
+        $container->setDefinition(Argument::cetera());
 
         $container
             ->setParameter(

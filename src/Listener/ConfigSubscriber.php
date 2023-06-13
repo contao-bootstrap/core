@@ -35,6 +35,7 @@ final class ConfigSubscriber
      */
     public function enterThemeContext(InitializeLayout $event): void
     {
+        /** @psalm-suppress RedundantCastGivenDocblockType */
         $event->environment->enterContext(ThemeContext::forTheme((int) $event->layoutModel->pid));
     }
 

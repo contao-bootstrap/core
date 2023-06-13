@@ -29,6 +29,11 @@
                 <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>
             </errorLevel>
         </InternalMethod>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Contao\Template"/>
+            </errorLevel>
+        </DeprecatedClass>
     </issueHandlers>
 
     <universalObjectCrates>

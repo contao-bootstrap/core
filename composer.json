@@ -40,7 +40,8 @@
     "symfony/http-kernel": "^5.4 || ^6.0",
     "symfony/routing": "^5.4 || ^6.0",
     "symfony/translation-contracts": "^1.1 || ^2.0",
-    "symfony/yaml": "^5.4 || ^6.0"
+    "symfony/yaml": "^5.4 || ^6.0",
+    "twig/twig": "^3.1"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
@@ -57,6 +58,8 @@
     "components/bootstrap": "Bootstrap Components package",
     "twbs/bootstrap": "Official Bootstrap package"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "ContaoBootstrap\\Core\\": "src/"
