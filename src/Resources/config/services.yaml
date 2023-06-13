@@ -22,3 +22,10 @@ services:
 
   contao_bootstrap.core.helper.color_rotate:
     class: ContaoBootstrap\Core\Helper\ColorRotate
+
+  contao_bootstrap.core.view.twig_extension:
+    class: ContaoBootstrap\Core\View\Twig\TwigExtension
+    arguments:
+      - '@contao_bootstrap.environment'
+    tags:
+      - {name: 'twig.extension'}
