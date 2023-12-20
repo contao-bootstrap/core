@@ -15,7 +15,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 final class Plugin implements BundlePluginInterface, ConfigPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getBundles(ParserInterface $parser): array
     {
@@ -26,7 +26,7 @@ final class Plugin implements BundlePluginInterface, ConfigPluginInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {

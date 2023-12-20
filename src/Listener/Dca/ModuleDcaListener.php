@@ -30,9 +30,7 @@ use function str_replace;
 
 final class ModuleDcaListener extends AbstractListener
 {
-    /** @var string */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-    protected static $name = 'tl_module';
+    protected static string $name = 'tl_module';
 
     /** @param Adapter<Input> $inputAdapter */
     public function __construct(

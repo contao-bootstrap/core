@@ -54,7 +54,7 @@ final class ArrayConfig implements Config
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function merge(array $config): Config
     {

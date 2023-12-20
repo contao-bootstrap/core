@@ -33,7 +33,7 @@
     "contao-community-alliance/meta-palettes": "^2.0",
     "contao/core-bundle": "^4.13 || ^5.0",
     "doctrine/dbal": "^3.4",
-    "netzmacht/contao-toolkit": "^3.8 || ^4.0",
+    "netzmacht/contao-toolkit": "^4.0",
     "symfony/config": "^5.4 || ^6.0",
     "symfony/dependency-injection": "^5.4 || ^6.0",
     "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
@@ -45,7 +45,7 @@
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
-    "doctrine/coding-standard": "^11.0.0",
+    "doctrine/coding-standard": "^12.0.0",
     "netzmacht/phpspec-phpcq-plugin": "*@dev",
     "phpcq/coding-standard": "^2.1.2",
     "phpcq/runner-bootstrap": "1.x-dev",
@@ -73,9 +73,9 @@
   "config": {
     "allow-plugins": {
       "contao-components/installer": false,
-      "ocramius/package-versions": true,
       "contao/manager-plugin": true,
       "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ocramius/package-versions": true,
       "php-http/discovery": true
     },
     "sort-packages": true

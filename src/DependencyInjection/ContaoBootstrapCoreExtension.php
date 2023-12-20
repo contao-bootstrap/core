@@ -27,7 +27,7 @@ final class ContaoBootstrapCoreExtension extends Extension
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
@@ -35,7 +35,7 @@ final class ContaoBootstrapCoreExtension extends Extension
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container): void
     {

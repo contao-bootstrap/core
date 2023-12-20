@@ -19,9 +19,7 @@ use function preg_match;
 
 final class LayoutDcaListener extends AbstractListener
 {
-    /** @var string */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-    protected static $name = 'tl_layout';
+    protected static string $name = 'tl_layout';
 
     /** @param Adapter<Input> $inputAdapter */
     public function __construct(

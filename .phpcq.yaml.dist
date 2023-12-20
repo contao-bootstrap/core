@@ -52,6 +52,7 @@ phpcq:
     # phpmd
     - 0F9684B8B16B7AB0
     - A4E55EA12C7C085C
+    - 9093F8B32E4815AA
 
 tasks:
   fix:
@@ -99,7 +100,13 @@ tasks:
       <<: *phpcs-config
       fix: true
 
+  composer-normalize:
+    config: &composer-normalize-config
+      ignore_output:
+        - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+
   composer-normalize-fix:
     plugin: composer-normalize
     config:
+      <<: *composer-normalize-config
       dry_run: false
