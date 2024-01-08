@@ -42,7 +42,7 @@ final class ModuleDcaListener extends AbstractListener
         parent::__construct($dcaManager);
     }
 
-    public function getName(): string
+    public static function getName(): string
     {
         return 'tl_module';
     }
