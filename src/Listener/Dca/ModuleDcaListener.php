@@ -30,8 +30,6 @@ use function str_replace;
 
 final class ModuleDcaListener extends AbstractListener
 {
-    protected static string $name = 'tl_module';
-
     /** @param Adapter<Input> $inputAdapter */
     public function __construct(
         DcaManager $dcaManager,
@@ -42,6 +40,11 @@ final class ModuleDcaListener extends AbstractListener
         private readonly Adapter $inputAdapter,
     ) {
         parent::__construct($dcaManager);
+    }
+
+    public function getName(): string
+    {
+        return 'tl_module';
     }
 
     /**

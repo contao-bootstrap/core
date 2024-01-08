@@ -33,7 +33,7 @@
     "contao-community-alliance/meta-palettes": "^2.0",
     "contao/core-bundle": "^4.13 || ^5.0",
     "doctrine/dbal": "^3.4",
-    "netzmacht/contao-toolkit": "^4.0",
+    "netzmacht/contao-toolkit": "^3.9 || ^4.0",
     "symfony/config": "^5.4 || ^6.0",
     "symfony/dependency-injection": "^5.4 || ^6.0",
     "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",

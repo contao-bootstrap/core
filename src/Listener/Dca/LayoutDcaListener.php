@@ -19,8 +19,6 @@ use function preg_match;
 
 final class LayoutDcaListener extends AbstractListener
 {
-    protected static string $name = 'tl_layout';
-
     /** @param Adapter<Input> $inputAdapter */
     public function __construct(
         DcaManager $dcaManager,
@@ -29,6 +27,11 @@ final class LayoutDcaListener extends AbstractListener
         private readonly RepositoryManager $repositories,
     ) {
         parent::__construct($dcaManager);
+    }
+
+    public function getName(): string
+    {
+        return 'tl_layout';
     }
 
     /**
