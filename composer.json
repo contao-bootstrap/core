@@ -36,10 +36,10 @@
     "netzmacht/contao-toolkit": "^3.9 || ^4.0",
     "symfony/config": "^5.4 || ^6.0",
     "symfony/dependency-injection": "^5.4 || ^6.0",
-    "symfony/event-dispatcher-contracts": "^1.1 || ^2.0",
+    "symfony/event-dispatcher-contracts": "^1.1 || ^2.0 || ^3.0",
     "symfony/http-kernel": "^5.4 || ^6.0",
     "symfony/routing": "^5.4 || ^6.0",
-    "symfony/translation-contracts": "^1.1 || ^2.0",
+    "symfony/translation-contracts": "^1.1 || ^2.0 || ^3.0",
     "symfony/yaml": "^5.4 || ^6.0",
     "twig/twig": "^3.1"
   },
