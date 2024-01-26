@@ -19,7 +19,7 @@ job_test_ci:
     - composer install --prefer-dist --no-interaction --no-progress --no-scripts
     - vendor/bin/phpcq self-update --unsigned
   script:
-    - vendor/bin/phpcq install -vvv
+    - vendor/bin/phpcq update -vvv
     - vendor/bin/phpcq run -v -o default -r code-climate -r file-report
   cache:
     paths:
