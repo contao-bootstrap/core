@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Core\View\Template\Filter;
 
 use Contao\Template;
+use Override;
 
 final class TemplatePreRenderFilter implements PreRenderFilter
 {
@@ -21,6 +22,7 @@ final class TemplatePreRenderFilter implements PreRenderFilter
         $this->filters = $filters;
     }
 
+    #[Override]
     public function supports(Template $template): bool
     {
         foreach ($this->filters as $filter) {
@@ -32,6 +34,7 @@ final class TemplatePreRenderFilter implements PreRenderFilter
         return false;
     }
 
+    #[Override]
     public function filter(Template $template): void
     {
         foreach ($this->filters as $filter) {

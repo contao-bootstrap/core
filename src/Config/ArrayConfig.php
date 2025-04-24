@@ -6,6 +6,7 @@ namespace ContaoBootstrap\Core\Config;
 
 use ContaoBootstrap\Core\Config;
 use ContaoBootstrap\Core\Util\ArrayUtil;
+use Override;
 
 use function array_key_exists;
 use function array_shift;
@@ -22,6 +23,7 @@ final class ArrayConfig implements Config
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function get(array $key, mixed $default = null): mixed
     {
         $value = $this->config;
@@ -38,6 +40,7 @@ final class ArrayConfig implements Config
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function has(array $key): bool
     {
         $value = $this->config;
@@ -56,6 +59,7 @@ final class ArrayConfig implements Config
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function merge(array $config): Config
     {
         return new self(ArrayUtil::merge($this->config, $config));

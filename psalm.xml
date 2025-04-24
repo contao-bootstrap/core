@@ -2,6 +2,7 @@
 <psalm
         errorLevel="3"
         hideExternalErrors="true"
+        findUnusedCode="false"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="https://getpsalm.org/schema/config"
         xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
@@ -14,16 +15,6 @@
     </projectFiles>
 
     <issueHandlers>
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard"/>
-            </errorLevel>
-        </UndefinedClass>
-        <UndefinedDocblockClass>
-            <errorLevel type="suppress">
-                <referencedClass name="MenAtWork\MultiColumnWizardBundle\Contao\Widgets\MultiColumnWizard"/>
-            </errorLevel>
-        </UndefinedDocblockClass>
         <InternalMethod>
             <errorLevel type="suppress">
                 <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>

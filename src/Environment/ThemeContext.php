@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\Environment;
 
+use Override;
+
 final class ThemeContext extends AbstractContext
 {
     /** @param int $themeId Theme id. */
@@ -11,6 +13,7 @@ final class ThemeContext extends AbstractContext
     {
     }
 
+    #[Override]
     public function supports(Context $context): bool
     {
         if ($context instanceof ApplicationContext) {
@@ -36,6 +39,7 @@ final class ThemeContext extends AbstractContext
         return new self($themeId);
     }
 
+    #[Override]
     public function toString(): string
     {
         return 'theme:' . $this->themeId;

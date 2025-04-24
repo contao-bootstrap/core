@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace ContaoBootstrap\Core\View\Template\Filter;
 
+use Override;
+
 final class TemplatePostRenderFilter implements PostRenderFilter
 {
     /**
@@ -19,6 +21,7 @@ final class TemplatePostRenderFilter implements PostRenderFilter
         $this->filters = $filters;
     }
 
+    #[Override]
     public function supports(string $templateName): bool
     {
         foreach ($this->filters as $filter) {
@@ -30,6 +33,7 @@ final class TemplatePostRenderFilter implements PostRenderFilter
         return false;
     }
 
+    #[Override]
     public function filter(string $buffer, string $templateName): string
     {
         foreach ($this->filters as $filter) {

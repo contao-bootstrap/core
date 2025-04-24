@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ContaoBootstrap\Core\DependencyInjection;
 
 use ContaoBootstrap\Core\ContaoBootstrapComponent;
+use Override;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -16,6 +17,7 @@ final class ContaoBootstrapCoreExtension extends Extension
     /** @var list<ContaoBootstrapComponent> */
     private array $components = [];
 
+    #[Override]
     public function getAlias(): string
     {
         return 'contao_bootstrap';
@@ -29,6 +31,7 @@ final class ContaoBootstrapCoreExtension extends Extension
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function getConfiguration(array $config, ContainerBuilder $container): ConfigurationInterface
     {
         return new Configuration($this->components);
@@ -37,6 +40,7 @@ final class ContaoBootstrapCoreExtension extends Extension
     /**
      * {@inheritDoc}
      */
+    #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader(

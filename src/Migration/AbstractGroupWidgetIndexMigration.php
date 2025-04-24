@@ -8,6 +8,7 @@ use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
+use Override;
 
 use function is_numeric;
 use function serialize;
@@ -28,6 +29,7 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
     ) {
     }
 
+    #[Override]
     public function shouldRun(): bool
     {
         $schemaManager = $this->connection->createSchemaManager();
@@ -51,6 +53,7 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
         return $affected > 0;
     }
 
+    #[Override]
     public function run(): MigrationResult
     {
         $result = $this->connection->fetchAllAssociative(
@@ -66,6 +69,7 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
 
             foreach (StringUtil::deserialize($row[$this->columnName], true) as $key => $template) {
                 if (is_numeric($key)) {
+                    $key = (int) $key;
                     ++$key;
                 }
 

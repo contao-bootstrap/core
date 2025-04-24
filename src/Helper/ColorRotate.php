@@ -54,7 +54,7 @@ final class ColorRotate
         $this->rotatingColor += .3;
 
         if ($this->rotatingColor > 1) {
-            $this->rotatingColor -= 1;
+            $this->rotatingColor -= 1.0;
         }
 
         return $color;
@@ -74,16 +74,16 @@ final class ColorRotate
     private function convertHSVtoRGB(float $hue, float $saturation, float $value): string
     {
         // First
-        $hue *= 6;
+        $hue *= 6.0;
 
         // Second
         $i = floor($hue);
         $f = $hue - $i;
 
         // Third
-        $m = $value * (1 - $saturation);
-        $n = $value * (1 - $saturation * $f);
-        $k = $value * (1 - $saturation * (1 - $f));
+        $m = $value * (1.0 - $saturation);
+        $n = $value * (1.0 - $saturation * $f);
+        $k = $value * (1.0 - $saturation * (1.0 - $f));
 
         // Forth
         switch ($i) {
@@ -110,6 +110,6 @@ final class ColorRotate
                 break;
         }
 
-        return sprintf('#%02x%02x%02x', $red * 255, $green * 255, $blue * 255);
+        return sprintf('#%02x%02x%02x', $red * 255.0, $green * 255.0, $blue * 255.0);
     }
 }
