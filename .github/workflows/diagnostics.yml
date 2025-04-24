@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - php: '8.1'
-            phpcq_install: 'install'
+            phpcq_install: 'setup-php'
             phpcq_flags: ''
             composer_install: 'update --prefer-lowest'
           - php: '8.1'
@@ -28,7 +28,7 @@ jobs:
             composer_install: 'update'
           - php: '8.3'
             phpcq_install: 'update'
-            phpcq_flags: '--exit-0'
+            phpcq_flags: ''
             composer_install: 'update'
 
     steps:
@@ -65,7 +65,7 @@ jobs:
         run: composer ${{ matrix.composer_install }} --prefer-stable --no-interaction --no-progress
 
       - name: PHP ${{ matrix.php }} Update phpcq
-        run: ./vendor/bin/phpcq self-update --unsigned
+        run: ./vendor/bin/phpcq self-update
 
       - name: PHP ${{ matrix.php }} Install phpcq toolchain
         run: ./vendor/bin/phpcq ${{ matrix.phpcq_install }} -v
