@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - php: '8.1'
-            phpcq_install: 'setup-php'
+            phpcq_install: 'update'
             phpcq_flags: ''
             composer_install: 'update --prefer-lowest'
           - php: '8.1'
@@ -46,7 +46,7 @@ jobs:
       - name: PHP ${{ matrix.php }} Cache composer cache directory
         uses: actions/cache@v4
         env:
-          cache-name: composer-cache-dir-${{ matrix.php }}
+          cache-name: phpcq-composer-cache-dir-${{ matrix.php }}
         with:
           path: ~/.cache/composer
           key: ${{ runner.os }}-build-${{ env.cache-name }}
@@ -54,7 +54,7 @@ jobs:
       - name: PHP ${{ matrix.php }} Cache vendor directory
         uses: actions/cache@v4
         env:
-          cache-name: composer-vendor-${{ matrix.php }}
+          cache-name: phpcq-composer-vendor-${{ matrix.php }}
         with:
           path: vendor
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/composer.lock') }}
