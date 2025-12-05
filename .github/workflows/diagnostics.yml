@@ -73,7 +73,7 @@ jobs:
         run: ./vendor/bin/phpcq run -v -o github-action -o default ${{ matrix.phpcq_flags }}
 
       - name: PHP ${{ matrix.php }} Upload build directory to artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: ${{ success() }} || ${{ failure() }}
         with:
           name: phpcq-builds-php-${{ matrix.php }}
