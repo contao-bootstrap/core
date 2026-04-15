@@ -48,11 +48,11 @@
     "netzmacht/phpspec-phpcq-plugin": "@dev",
     "phpcq/coding-standard": "^2.1.2",
     "phpcq/runner-bootstrap": "@dev",
-    "phpspec/phpspec": "^6.3.0 || ^7.0"
+    "phpspec/phpspec": "^7.0 || ^8.0"
   },
   "conflict": {
-    "netzmacht/contao-bootstrap": "*",
-    "contao/manager-plugin": "<2.1 || >= 3.0"
+    "contao/manager-plugin": "<2.1 || >= 3.0",
+    "netzmacht/contao-bootstrap": "*"
   },
   "suggest": {
     "components/bootstrap": "Bootstrap Components package",

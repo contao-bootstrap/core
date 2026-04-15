@@ -8,11 +8,6 @@
     </projectFiles>
 
     <issueHandlers>
-        <InternalMethod>
-            <errorLevel type="suppress">
-                <referencedMethod name="Contao\CoreBundle\Framework\ContaoFramework::createInstance"/>
-            </errorLevel>
-        </InternalMethod>
         <DeprecatedClass>
             <errorLevel type="suppress">
                 <referencedClass name="Contao\Template"/>
