@@ -1,114 +1,98 @@
 phpcq:
   repositories:
+    - 'https://phpcq.github.io/repository/repository.json'
     - vendor/netzmacht/phpspec-phpcq-plugin/repository.json
-    - https://phpcq.github.io/repository/repository.json
   directories:
     - src
-    - spec
   artifact: .phpcq/build
-
   plugins:
-    psalm:
+    doctrine-coding-standard:
+      version: ^1.0
+      signed: false
+      requirements:
+        composer:
+          doctrine/coding-standard: ^14.0
+    composer-normalize:
       version: ^1.0
       signed: false
     composer-require-checker:
       version: ^1.0
       signed: false
-    phpmd:
-      version: ^1.0
-      signed: false
-      requirements:
-        phpmd:
-          signed: false
     phpcpd:
       version: ^1.1
       signed: false
     phploc:
       version: ^1.0
       signed: false
-    phpcs:
+    phpmd:
       version: ^1.0
       signed: false
-    composer-normalize:
+    psalm:
+      version: ^1.0
+      signed: false
+    phpcs:
       version: ^1.0
       signed: false
     phpspec:
       version: ^1.0
       signed: false
   trusted-keys:
-    # composer-require-checker
+    - 6659B17090D6C5D3
+    - C00543248C87FB13
     - 033E5F8D801A2F8D
-    # sb@sebastian-bergmann.de
+    - D2CCAC42F6295E7D
     - 4AA394086372C20A
-    # psalm
+    - 9093F8B32E4815AA
     - 8A03EA3B385DBAA1
     - 12CE0F1D262429A5
-    # magl@magll.net
-    - D2CCAC42F6295E7D
-    # PHP_CodeSniffer
+    - 99BF4D9A33D65E1E
     - 31C7E470E2138192
     - 5E6DDE998AB73B8E
     - A978220305CD5C32
-    # Composer normalize
-    - C00543248C87FB13
-    # phpmd
-    - 0F9684B8B16B7AB0
-    - A4E55EA12C7C085C
-    - 9093F8B32E4815AA
-
+    - 97B02DD8E5071466
 tasks:
   fix:
     - composer-normalize-fix
     - phpcbf
-
   verify:
-    - composer-require-checker
     - composer-normalize
-
+    - composer-require-checker
   analyze:
-    - phploc
     - phpcpd
+    - phploc
     - phpmd
-    - phpcs
     - psalm
+    - phpcs
     - phpspec
-
   default:
     - verify
     - analyze
-
-  phpmd:
+  composer-normalize-fix:
     config:
-      ruleset:
-        - vendor/phpcq/coding-standard/phpmd/ruleset.xml
-
+      dry_run: false
+      ignore_output:
+        - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+        - '#Root package is not of type "project" or "contao-theme", we will not be installing Contao extensions.#'
+    plugin: composer-normalize
+  composer-normalize:
+    config:
+      ignore_output:
+        - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
+        - '#Root package is not of type "project" or "contao-theme", we will not be installing Contao extensions.#'
   composer-require-checker:
     config:
-      config_file: '.composer-require-checker.json'
-
+      config_file: .composer-require-checker.json
   phpcs:
-    plugin: phpcs
-    config: &phpcs-config
+    config:
       standard: ~
-      standard_paths:
-        - ./vendor/slevomat/coding-standard
-        - ./vendor/doctrine/coding-standard/lib
-      excluded:
-        - src/Resources/contao/languages
-
+    uses:
+      doctrine-coding-standard:
+        phpcs_standard: ignore
   phpcbf:
     plugin: phpcs
     config:
-      <<: *phpcs-config
+      standard: ~
       fix: true
-
-  composer-normalize:
-    config: &composer-normalize-config
-      ignore_output:
-        - '#> pre-command-run: Contao\\ManagerPlugin\\Composer\\ArtifactsPlugin->preCommandRun#'
-
-  composer-normalize-fix:
-    plugin: composer-normalize
-    config:
-      <<: *composer-normalize-config
-      dry_run: false
+    uses:
+      doctrine-coding-standard:
+        phpcs_standard: ignore

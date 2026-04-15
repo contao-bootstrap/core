@@ -1,12 +1,5 @@
 <?xml version="1.0"?>
-<psalm
-        errorLevel="3"
-        hideExternalErrors="true"
-        findUnusedCode="false"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="https://getpsalm.org/schema/config"
-        xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config"
->
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://getpsalm.org/schema/config" errorLevel="3" hideExternalErrors="true" findUnusedCode="false" xsi:schemaLocation="https://getpsalm.org/schema/config https://getpsalm.org/schema/config" findUnusedBaselineEntry="false">
     <projectFiles>
         <directory name="src"/>
         <ignoreFiles>

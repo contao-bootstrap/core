@@ -1,10 +1,11 @@
-# composer related
-vendor/
-composer.lock
+# Companion
+/.env.companion
 
-# Translations
-.tx
+# Composer
+/composer.lock
+/vendor
 
-# phpcq
-/.phpcq/
-.phpcs-cache
+# PHPCQ
+/.phpcq
+/.phpcq.yaml
+/.phpcs-cache
