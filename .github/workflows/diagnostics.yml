@@ -14,11 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: '8.2 prefer-lowest'
-            php: '8.2'
-            phpcq_install: 'update'
-            phpcq_flags: ''
-            composer_install: 'update --prefer-lowest'
           - name: '8.2'
             php: '8.2'
             phpcq_install: 'update'
@@ -29,7 +24,16 @@ jobs:
             phpcq_install: 'update'
             phpcq_flags: ''
             composer_install: 'update'
-
+          - name: '8.4'
+            php: '8.4'
+            phpcq_install: 'update'
+            phpcq_flags: ''
+            composer_install: 'update'
+          - name: '8.5'
+            php: '8.5'
+            phpcq_install: 'update'
+            phpcq_flags: ''
+            composer_install: 'update'
     steps:
       - name: PHP ${{ matrix.php }} Pull source
         uses: actions/checkout@v6
@@ -74,7 +78,7 @@ jobs:
 
       - name: PHP ${{ matrix.php }} Upload build directory to artifact
         uses: actions/upload-artifact@v7
-        if: ${{ success() }} || ${{ failure() }}
+        if: ${{ success() || failure() }}
         with:
           name: phpcq-builds-php-${{ matrix.php }}
           path: .phpcq/build/
