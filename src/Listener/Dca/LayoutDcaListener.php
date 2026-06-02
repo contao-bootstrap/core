@@ -54,10 +54,14 @@ final class LayoutDcaListener extends AbstractListener
         // dynamically render palette so that extensions can plug into default palette
         /** @psalm-suppress UndefinedMagicPropertyFetch */
         if ($layout && $layout->layoutType === 'bootstrap') {
-            $definition                               = $this->getDefinition();
-            $metaPalettes                             = $definition->get('metapalettes', []);
-            $metaPalettes['__base__']                 = $this->convertDefaultPaletteToMetaPalette();
-            $metaPalettes['default extends __base__'] = $this->environment
+            $definition                                  = $this->getDefinition();
+            $metaPalettes                                = $definition->get('metapalettes', []);
+            $metaPalettes['__default__']                 = $this->convertPaletteToMetaPalette('default');
+            $metaPalettes['__modern__']                  = $this->convertPaletteToMetaPalette('modern');
+            $metaPalettes['default extends __default__'] = $this->environment
+                ->getConfig()
+                ->get(['layout', 'metapalette'], []);
+            $metaPalettes['modern extends __modern__']   = $this->environment
                 ->getConfig()
                 ->get(['layout', 'metapalette'], []);
 
@@ -68,6 +72,7 @@ final class LayoutDcaListener extends AbstractListener
                 'palettes',
                 static function (array $palettes): array {
                     unset($palettes['default']);
+                    unset($palettes['modern']);
 
                     return $palettes;
                 },
@@ -85,7 +90,7 @@ final class LayoutDcaListener extends AbstractListener
 
             $definition->set('subpalettes', $subPalettes);
         } else {
-            MetaPalettes::appendFields('tl_layout', 'title', ['layoutType']);
+            MetaPalettes::appendFields('tl_layout', $layout?->type ?? 'default', 'title', ['layoutType']);
         }
     }
 
@@ -94,9 +99,9 @@ final class LayoutDcaListener extends AbstractListener
      *
      * @return array<string,list<string>>
      */
-    private function convertDefaultPaletteToMetaPalette(): array
+    private function convertPaletteToMetaPalette(string $name = 'default'): array
     {
-        $palette     = $this->getDefinition()->get(['palettes', 'default']);
+        $palette     = $this->getDefinition()->get(['palettes', $name]);
         $metaPalette = [];
         $legends     = explode(';', $palette);
 
