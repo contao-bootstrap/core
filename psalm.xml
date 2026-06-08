@@ -13,6 +13,15 @@
                 <referencedClass name="Contao\Template"/>
             </errorLevel>
         </DeprecatedClass>
+        <DeprecatedMethod>
+            <errorLevel type="suppress">
+                <!--
+                    introspectTable() deprecated in DBAL 4.4 in favor of introspectTableByUnquotedName().
+                    The replacement is not available in DBAL ^3.9 || ^4.0-4.3, so suppressed for compatibility.
+                -->
+                <referencedMethod name="Doctrine\DBAL\Schema\AbstractSchemaManager::introspectTable"/>
+            </errorLevel>
+        </DeprecatedMethod>
     </issueHandlers>
 
     <universalObjectCrates>

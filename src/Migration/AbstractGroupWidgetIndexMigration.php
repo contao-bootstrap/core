@@ -12,7 +12,6 @@ use Override;
 
 use function is_numeric;
 use function serialize;
-use function strtolower;
 
 /**
  * Abstract migration class which support to migrate from the Multicolumnwizard to the group widget.
@@ -37,16 +36,16 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
             return false;
         }
 
-        $columns = $schemaManager->listTableColumns($this->tableName);
-        if (! isset($columns[strtolower($this->columnName)])) {
+        if (! $schemaManager->introspectTable($this->tableName)->hasColumn($this->columnName)) {
             return false;
         }
 
+        $platform = $this->connection->getDatabasePlatform();
         $affected = (int) $this->connection->fetchOne(
             'SELECT COUNT(*) FROM '
-            . $this->connection->quoteIdentifier($this->tableName)
+            . $platform->quoteSingleIdentifier($this->tableName)
             . ' WHERE '
-            . $this->connection->quoteIdentifier($this->columnName)
+            . $platform->quoteSingleIdentifier($this->columnName)
             . ' LIKE \'a:%:{i:0;%\'',
         );
 
@@ -56,11 +55,12 @@ abstract class AbstractGroupWidgetIndexMigration extends AbstractMigration
     #[Override]
     public function run(): MigrationResult
     {
-        $result = $this->connection->fetchAllAssociative(
+        $platform = $this->connection->getDatabasePlatform();
+        $result   = $this->connection->fetchAllAssociative(
             'SELECT * FROM '
-            . $this->connection->quoteIdentifier($this->tableName)
+            . $platform->quoteSingleIdentifier($this->tableName)
             . ' WHERE '
-            . $this->connection->quoteIdentifier($this->columnName)
+            . $platform->quoteSingleIdentifier($this->columnName)
             . ' LIKE \'a:%:{i:0;%\'',
         );
 
