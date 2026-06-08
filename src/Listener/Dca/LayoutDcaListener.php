@@ -55,15 +55,15 @@ final class LayoutDcaListener extends AbstractListener
         /** @psalm-suppress UndefinedMagicPropertyFetch */
         if ($layout && $layout->layoutType === 'bootstrap') {
             $definition                                  = $this->getDefinition();
+            $config                                      = $this->environment->getConfig();
             $metaPalettes                                = $definition->get('metapalettes', []);
             $metaPalettes['__default__']                 = $this->convertPaletteToMetaPalette('default');
-            $metaPalettes['__modern__']                  = $this->convertPaletteToMetaPalette('modern');
-            $metaPalettes['default extends __default__'] = $this->environment
-                ->getConfig()
-                ->get(['layout', 'metapalette'], []);
-            $metaPalettes['modern extends __modern__']   = $this->environment
-                ->getConfig()
-                ->get(['layout', 'metapalette'], []);
+            $metaPalettes['default extends __default__'] = $config->get(['layout', 'metapalette'], []);
+
+            if ($definition->has(['palettes', 'modern'])) {
+                $metaPalettes['__modern__']                = $this->convertPaletteToMetaPalette('modern');
+                $metaPalettes['modern extends __modern__'] = $config->get(['layout', 'metapalette'], []);
+            }
 
             $definition->set('metapalettes', $metaPalettes);
 
